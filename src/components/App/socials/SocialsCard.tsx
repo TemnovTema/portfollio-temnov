@@ -1,0 +1,59 @@
+import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storage'
+import {BUTTON_VARIANTS} from '~/UI/Button'
+
+import {cn} from '@/lib/utils'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import {H3, P} from '~/UI/Typography'
+import SocialsIcon from './SocialsIcon'
+
+export default function SocialsCard({item}: {item: SocialsItem}) {
+  const {slug, source, link, title, content, image, video} = item
+  const isExternalLink = Boolean(link?.startsWith('http'))
+  const cardClassName = cn(BUTTON_VARIANTS.outline, 'block p-5 lap:p-4 mob:p-3.5 space-y-3.5 group', 'rounded-lg duration-300 bg-black-card hover:bg-gray-dark', 'border border-white/20 ring-[0.5px] ring-white/20')
+  const cardContent = (
+    <>
+      <div className="flex gap-1.5">
+        <SocialsIcon mode="light" source={source as SocialSource} />
+
+        <div className="font-mono text-sm mob:text-base font-medium uppercase text-gray">{SOCIALS[source]}</div>
+      </div>
+
+      <div className="space-y-4">
+        {(image || video) && (
+          <div className="relative overflow-hidden rounded-md">
+            <div className="relative z-20">
+              {image ? (
+                <Image quality={100} className={cn('duration-300 group-hover:scale-[1.015]', 'w-full object-contain')} src={image} width={1000} height={1000} alt={`${source} preview`} />
+              ) : (
+                <video autoPlay muted loop className={cn('duration-300 group-hover:scale-[1.015]', 'w-full')}>
+                  <source src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </div>
+
+            <div className="absolute inset-0 size-full bg-gray-medium animate-pulse"></div>
+          </div>
+        )}
+
+        <div className="space-y-2">
+          {title && <H3 className="!mt-4 lap:!mt-5 mb-3 mob:mb-2 max-w-[29ch] mob:max-w-[18ch]">{title}</H3>}
+
+          {content?.map((unit, idx) => <P key={idx}>{unit}</P>)}
+        </div>
+      </div>
+    </>
+  )
+
+  if (link) {
+    return (
+      <Link href={link} id={slug} className={cardClassName} target={isExternalLink ? '_blank' : undefined}>
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return <article id={slug} className={cardClassName}>{cardContent}</article>
+}

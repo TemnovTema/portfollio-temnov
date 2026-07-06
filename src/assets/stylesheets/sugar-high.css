@@ -1,0 +1,30 @@
+:root {
+  --code-primary: #a3a3a3;
+  --code-secondary: #666666;
+
+  --sh-class: var(--code-primary);
+  --sh-identifier: var(--code-secondary);
+  --sh-sign: var(--code-secondary);
+  --sh-property: var(--code-primary);
+  --sh-entity: var(--code-secondary);
+  --sh-jsxliterals: var(--code-primary);
+  --sh-string: var(--code-secondary);
+  --sh-keyword: var(--code-secondary);
+  --sh-comment: var(--code-secondary);
+}
+
+pre {
+  @apply overflow-x-hidden mob:overflow-x-scroll rounded-sm bg-neutral-900 mob:text-xs! mob:leading-[1.3];
+}
+
+pre code {
+  counter-reset: sh-line-number;
+  @apply flex flex-col px-3.5 py-2 mob:pt-3 mob:pb-0 mob:mb-4;
+}
+
+.sh__line::before {
+  counter-increment: sh-line-number 1;
+  content: counter(sh-line-number);
+
+  @apply mr-6 text-neutral-600;
+}
