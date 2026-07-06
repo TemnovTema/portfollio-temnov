@@ -225,10 +225,40 @@ export default function ArchiveDashboard({items}: {items: SocialsItem[]}) {
         </div>
       </div>
 
-      <div className="grid gap-4 md:hidden">
-        {items.map((item) => (
-          <DashboardCard item={item} key={item.slug} onClick={() => handleNavigate(item)} />
-        ))}
+      <div className="rounded-[28px] border border-white/10 bg-black-light p-3 md:hidden">
+        <div
+          className={cn(
+            'relative overflow-hidden rounded-[22px] border border-white/8 bg-[#090909]',
+            'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.06),_transparent_34%),linear-gradient(180deg,_rgba(11,11,11,1),_rgba(6,6,6,1))]',
+          )}
+        >
+          <div className="flex items-center justify-between gap-3 border-b border-white/8 px-4 py-3">
+            <div className="space-y-1">
+              <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/40">Dashboard</div>
+              <div className="text-sm font-mono uppercase text-white/70">Листай карточки вбок</div>
+            </div>
+
+            <div className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-mono uppercase text-white/45">
+              {items.length} карточек
+            </div>
+          </div>
+
+          <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:28px_28px]" />
+
+          <div className="relative flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {items.map((item, index) => (
+              <div
+                key={item.slug}
+                className={cn(
+                  'min-w-[84vw] max-w-[84vw] snap-center',
+                  index % 2 === 0 ? 'rotate-[-1.8deg]' : 'rotate-[1.8deg]',
+                )}
+              >
+                <DashboardCard item={item} onClick={() => handleNavigate(item)} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

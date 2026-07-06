@@ -7,14 +7,35 @@ import Button from '~/UI/Button'
 
 export default function Launch() {
   return (
-    <section id="form" data-section="launch-teaser" className={cn('max-w-[29vw] lap:max-w-[34vw] mob:max-w-none mx-auto mob:px-2', 'flex flex-col items-center justify-center gap-3 lap:gap-2.5')}>
-      <div className="space-y-3 mob:space-y-5 w-full">
-        <H4 className="text-lg text-center lap:text-base mob:px-14">Открыт к продуктовым задачам, где важны ясная структура, зрелый UX и аккуратная работа на стыке стратегии, интерфейса и системы.</H4>
+    <section
+      id="form"
+      data-section="launch-teaser"
+      className={cn(
+        'mx-auto flex w-full max-w-[34rem] flex-col items-center justify-center gap-3',
+        'lap:max-w-[30rem] lap:gap-2.5',
+        'mob:max-w-none mob:px-0',
+      )}
+    >
+      <div className="w-full space-y-3 mob:space-y-4">
+        <H4 className="max-w-[28ch] text-balance text-center text-lg leading-[1.35] lap:text-base mob:max-w-none mob:text-[15px] mob:leading-[1.45] mob:px-0">
+          Открыт к продуктовым задачам, где важны ясная структура, зрелый UX и аккуратная работа на стыке стратегии, интерфейса и системы.
+        </H4>
       </div>
 
-      <div className="w-full flex mob:flex-col gap-2">
-        <Button to={WEBSITE_PATHS.archive} className="w-full" icon={<ArrowUpRight />} text="Смотреть архив" />
-        <Button to={WEBSITE_PATHS.about} className="w-full" icon={<UserRound />} variant="outline" text="Обо мне" />
+      <div className="flex w-full gap-2 mob:flex-col mob:gap-2.5">
+        <Button
+          to={WEBSITE_PATHS.archive}
+          className="w-full whitespace-nowrap mob:min-h-[4.25rem] mob:text-sm"
+          icon={<ArrowUpRight />}
+          text="Смотреть архив"
+        />
+        <Button
+          to={WEBSITE_PATHS.about}
+          className="w-full whitespace-nowrap mob:min-h-[4.25rem] mob:text-sm"
+          icon={<UserRound />}
+          variant="outline"
+          text="Обо мне"
+        />
       </div>
     </section>
   )
