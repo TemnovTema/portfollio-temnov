@@ -11,13 +11,13 @@ export default function Launch() {
       id="form"
       data-section="launch-teaser"
       className={cn(
-        'mx-auto flex w-full max-w-[34rem] flex-col items-center justify-center gap-3',
-        'lap:max-w-[30rem] lap:gap-2.5',
+        'mx-auto flex w-full max-w-[44rem] flex-col items-center justify-center gap-3',
+        'lap:max-w-[38rem] lap:gap-2.5',
         'mob:max-w-none mob:px-0',
       )}
     >
       <div className="w-full space-y-3 mob:space-y-4">
-        <H4 className="max-w-[28ch] text-balance text-center text-lg leading-[1.35] lap:text-base mob:max-w-none mob:text-[15px] mob:leading-[1.45] mob:px-0">
+        <H4 className="max-w-[34ch] text-balance text-center text-lg leading-[1.35] lap:max-w-[32ch] lap:text-base mob:max-w-none mob:text-[15px] mob:leading-[1.45] mob:px-0">
           Открыт к продуктовым задачам, где важны ясная структура, зрелый UX и аккуратная работа на стыке стратегии, интерфейса и системы.
         </H4>
       </div>
