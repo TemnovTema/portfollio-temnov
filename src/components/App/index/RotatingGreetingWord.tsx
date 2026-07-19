@@ -1,6 +1,6 @@
 'use client'
 
-import {AnimatePresence, motion, useAnimationControls, useReducedMotion} from 'framer-motion'
+import {animate, AnimatePresence, motion, useMotionValue, useReducedMotion} from 'framer-motion'
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react'
 
 const WORDS = ['эйчар!', 'коллега!', 'заказчик!', 'Дмитрий!'] as const
@@ -14,7 +14,8 @@ export default function RotatingGreetingWord() {
   const [width, setWidth] = useState<number | null>(null)
   const measureRefs = useRef<Array<HTMLSpanElement | null>>([])
   const shimmerRef = useRef<HTMLSpanElement>(null)
-  const shimmerControls = useAnimationControls()
+  const shimmerPosition = useMotionValue(0)
+  const shimmerAnimation = useRef<ReturnType<typeof animate> | null>(null)
   const currentWord = WORDS[index]
 
   const updateShimmer = useCallback(() => {
@@ -24,15 +25,14 @@ export default function RotatingGreetingWord() {
     const startPos = wordWidth * -0.5
     const endPos = wordWidth * 1.25
 
-    shimmerControls.start({
-      backgroundPosition: [`${startPos}px`, `${endPos}px`],
-      transition: {
-        duration: SHIMMER_DURATION,
-        ease: 'linear',
-        repeat: Infinity,
-      },
+    shimmerAnimation.current?.stop()
+    shimmerPosition.set(startPos)
+    shimmerAnimation.current = animate(shimmerPosition, endPos, {
+      duration: SHIMMER_DURATION,
+      ease: 'linear',
+      repeat: Infinity,
     })
-  }, [shimmerControls])
+  }, [shimmerPosition])
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -58,6 +58,7 @@ export default function RotatingGreetingWord() {
 
     return () => {
       window.removeEventListener('resize', updateLayout)
+      shimmerAnimation.current?.stop()
     }
   }, [updateShimmer])
 
@@ -66,16 +67,8 @@ export default function RotatingGreetingWord() {
       <motion.span
         ref={shimmerRef}
         data-rotating-greeting
-        className="relative inline-flex h-[1.1em] items-center bg-clip-text align-baseline text-transparent"
-        style={{
-          ...(width ? {width: `${width}px`} : {}),
-          backgroundImage: 'linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)',
-          backgroundSize: '200%',
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-        animate={shimmerControls}
+        className="relative inline-flex h-[1.1em] items-center align-baseline"
+        style={width ? {width: `${width}px`} : undefined}
       >
         <span aria-hidden="true" className="invisible whitespace-nowrap">
           {FALLBACK_WORD}
@@ -84,7 +77,15 @@ export default function RotatingGreetingWord() {
         <AnimatePresence initial={false} mode="sync">
           <motion.span
             key={currentWord}
-            className="absolute left-0 top-1/2 block whitespace-nowrap"
+            className="absolute left-0 top-1/2 block whitespace-nowrap bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)',
+              backgroundSize: '200%',
+              backgroundPositionX: shimmerPosition,
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
             initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(4px)'}}
             animate={shouldReduceMotion ? {opacity: 1, transform: 'translateY(-50%)'} : {opacity: 1, transform: 'translateY(-50%)', filter: 'blur(0px)'}}
             exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(-1.35em)', filter: 'blur(4px)'}}
