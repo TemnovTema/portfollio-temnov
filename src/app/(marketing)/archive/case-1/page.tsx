@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'KODO: сообщество о вайбкодинге',
+  title: 'KODO — сообщество о вайбкодинге и AI-разработке',
   description: 'Продуктовый кейс KODO: онлайн-сообщество с публикациями, библиотекой ресурсов и Prompt Lab.',
 }
 
@@ -25,9 +25,38 @@ const META_ITEMS = [
   {label: 'Формат', value: 'Сообщество + инструменты'},
   {label: 'Роль', value: 'Продуктовый дизайн'},
   {label: 'Фокус', value: 'Структура, сценарии, UI'},
-  {label: 'Продукт', value: 'Kodo'},
+  {label: 'Продукт', value: 'KODO'},
   {label: 'Сайт', value: 'Открыть KODO', href: 'https://kodo-media.vercel.app/profile', icon: Globe},
 ]
+
+const PRODUCT_CYCLE = ['Читаю', 'Обсуждаю', 'Сохраняю', 'Применяю', 'Делюсь']
+
+function ProductCycle() {
+  return (
+    <figure className="my-10 border-y border-white/12 py-6" aria-label="Концептуальная схема основного цикла KODO">
+      <figcaption className="mb-5 font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">Основной цикл KODO</figcaption>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-3 text-lg text-neutral-200 mob:text-base">
+        {PRODUCT_CYCLE.map((step, index) => (
+          <div key={step} className="flex items-center gap-3">
+            <span>{step}</span>
+            {index < PRODUCT_CYCLE.length - 1 && <span className="text-neutral-600" aria-hidden="true">→</span>}
+          </div>
+        ))}
+      </div>
+    </figure>
+  )
+}
+
+function CaseScreen({src, alt, caption}: {src: string; alt: string; caption: string}) {
+  return (
+    <figure className="my-10">
+      <div className="overflow-hidden rounded-2xl border border-white/12 bg-black-light">
+        <Image src={src} alt={alt} width={1440} height={812} className="h-auto w-full" />
+      </div>
+      <figcaption className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{caption}</figcaption>
+    </figure>
+  )
+}
 
 export default async function CaseOnePage() {
   const content = await getContent()
@@ -49,15 +78,15 @@ export default async function CaseOnePage() {
               <div className="grid grid-cols-[minmax(0,34rem)_minmax(0,1fr)] gap-x-10 gap-y-8 items-end max-[1280px]:grid-cols-1">
                 <div className="max-w-[34rem] space-y-5 lap:space-y-4">
                   <h1 className="max-w-[16ch] text-5xl font-semibold tracking-tighter leading-[1.02]! text-balance text-neutral-500 lap:text-[2.65rem] mob:text-3xl">
-                    KODO: сообщество о вайбкодинге
+                    KODO — сообщество о вайбкодинге и AI-разработке
                   </h1>
 
                   <div className="max-w-[33rem] space-y-3 text-lg leading-[1.45] text-neutral-400 mob:text-base">
                     <p>
-                      KODO — онлайн-сообщество о вайбкодинге и AI-разработке. Здесь можно читать и публиковать материалы, обсуждать их с другими участниками и делиться находками.
+                      Пользователи публикуют статьи и посты, обсуждают AI, делятся полезными ресурсами и находят инструменты для работы.
                     </p>
                     <p>
-                      Библиотека собирает skills, шаблоны, гайды и курсы, а Prompt Lab помогает структурировать задачу и улучшить промпт.
+                      В библиотеке собраны skills, шаблоны, дизайн-системы, гайды и открытые курсы. Prompt Lab помогает структурировать задачу и улучшить промпт.
                     </p>
                   </div>
                 </div>
@@ -109,7 +138,7 @@ export default async function CaseOnePage() {
             </section>
 
             <article className="max-w-[60rem]">
-              <MDXRemote source={content} components={MDX} />
+              <MDXRemote source={content} components={{...MDX, ProductCycle, CaseScreen}} />
             </article>
           </main>
         </div>
