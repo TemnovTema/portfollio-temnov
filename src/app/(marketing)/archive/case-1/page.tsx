@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'KODO: сообщество о лайв-кодинге',
-  description: 'Кейс о продуктовой модели KODO: сообщество, знания и рабочие инструменты для людей, которые собирают продукты с ИИ-агентами.',
+  title: 'KODO: сообщество о вайбкодинге',
+  description: 'Продуктовый кейс KODO: онлайн-сообщество с публикациями, библиотекой ресурсов и Prompt Lab.',
 }
 
 import path from 'path'
@@ -23,8 +23,8 @@ async function getContent() {
 const META_LABELS = ['Case Study', 'Community Product']
 const META_ITEMS = [
   {label: 'Формат', value: 'Сообщество + инструменты'},
-  {label: 'Роль', value: 'Product direction'},
-  {label: 'Фокус', value: 'Контекст, знания, связи'},
+  {label: 'Роль', value: 'Продуктовый дизайн'},
+  {label: 'Фокус', value: 'Структура, сценарии, UI'},
   {label: 'Продукт', value: 'Kodo'},
   {label: 'Сайт', value: 'Открыть KODO', href: 'https://kodo-media.vercel.app/profile', icon: Globe},
 ]
@@ -49,15 +49,15 @@ export default async function CaseOnePage() {
               <div className="grid grid-cols-[minmax(0,34rem)_minmax(0,1fr)] gap-x-10 gap-y-8 items-end max-[1280px]:grid-cols-1">
                 <div className="max-w-[34rem] space-y-5 lap:space-y-4">
                   <h1 className="max-w-[16ch] text-5xl font-semibold tracking-tighter leading-[1.02]! text-balance text-neutral-500 lap:text-[2.65rem] mob:text-3xl">
-                    KODO: сообщество о лайв-кодинге
+                    KODO: сообщество о вайбкодинге
                   </h1>
 
                   <div className="max-w-[33rem] space-y-3 text-lg leading-[1.45] text-neutral-400 mob:text-base">
                     <p>
-                      KODO больше не учебный веб-сервис и не обычное медиа. Это живое сообщество для тех, кто собирает продукты вместе с ИИ-агентами и хочет делать это осознаннее.
+                      KODO — онлайн-сообщество о вайбкодинге и AI-разработке. Здесь можно читать и публиковать материалы, обсуждать их с другими участниками и делиться находками.
                     </p>
                     <p>
-                      Профили, заметки, библиотека, ПромтЛаб и диагностики связаны в один маршрут: увидеть чужой опыт, понять его контекст, забрать подход в свою работу и вернуться с собственным результатом.
+                      Библиотека собирает skills, шаблоны, гайды и курсы, а Prompt Lab помогает структурировать задачу и улучшить промпт.
                     </p>
                   </div>
                 </div>
