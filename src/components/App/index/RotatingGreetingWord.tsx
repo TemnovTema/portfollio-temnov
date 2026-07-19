@@ -77,21 +77,27 @@ export default function RotatingGreetingWord() {
         <AnimatePresence initial={false} mode="sync">
           <motion.span
             key={currentWord}
-            className="absolute left-0 top-1/2 block whitespace-nowrap bg-clip-text text-transparent"
-            style={{
-              backgroundImage: 'linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)',
-              backgroundSize: '200%',
-              backgroundPositionX: shimmerPosition,
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+            className="absolute left-0 top-1/2 block whitespace-nowrap text-[#707070]"
             initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(4px)'}}
             animate={shouldReduceMotion ? {opacity: 1, transform: 'translateY(-50%)'} : {opacity: 1, transform: 'translateY(-50%)', filter: 'blur(0px)'}}
             exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(-1.35em)', filter: 'blur(4px)'}}
             transition={{duration: shouldReduceMotion ? 0.2 : 0.38, ease: [0.77, 0, 0.175, 1]}}
           >
             {currentWord}
+            <motion.span
+              aria-hidden="true"
+              className="absolute inset-0 block bg-clip-text text-transparent"
+              style={{
+                backgroundImage: 'linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)',
+                backgroundSize: '200%',
+                backgroundPositionX: shimmerPosition,
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              {currentWord}
+            </motion.span>
           </motion.span>
         </AnimatePresence>
       </motion.span>
