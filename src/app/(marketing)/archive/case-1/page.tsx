@@ -29,7 +29,7 @@ const META_ITEMS = [
   {label: 'Сайт', value: 'Открыть KODO', href: 'https://kodo-media.vercel.app/profile', icon: Globe},
 ]
 
-const PRODUCT_CYCLE = ['Читаю', 'Обсуждаю', 'Сохраняю', 'Применяю', 'Делюсь']
+const PRODUCT_CYCLE = ['Нахожу', 'Обсуждаю', 'Сохраняю', 'Использую', 'Публикую']
 
 function ProductCycle() {
   return (
@@ -54,6 +54,17 @@ function CaseScreen({src, alt, caption}: {src: string; alt: string; caption: str
         <Image src={src} alt={alt} width={1440} height={812} className="h-auto w-full" />
       </div>
       <figcaption className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{caption}</figcaption>
+    </figure>
+  )
+}
+
+function BrandScreen() {
+  return (
+    <figure className="my-10">
+      <div className="overflow-hidden rounded-2xl border border-white/12 bg-black-light">
+        <Image src="/cases/kodo-case-cover.jpg" alt="Логотип, графика и интерфейс KODO" width={2400} height={1530} className="h-auto w-full" />
+      </div>
+      <figcaption className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">Логотип, айдентика и интерфейс продукта</figcaption>
     </figure>
   )
 }
@@ -125,20 +136,10 @@ export default async function CaseOnePage() {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-[24px] border border-white/15 bg-black-light">
-                <Image
-                  src="/cases/kodo-case-cover.jpg"
-                  alt="Обложка кейса Kodo"
-                  width={1600}
-                  height={900}
-                  priority
-                  className="h-auto w-full object-cover"
-                />
-              </div>
             </section>
 
             <article className="max-w-[60rem]">
-              <MDXRemote source={content} components={{...MDX, ProductCycle, CaseScreen}} />
+              <MDXRemote source={content} components={{...MDX, ProductCycle, CaseScreen, BrandScreen}} />
             </article>
           </main>
         </div>
