@@ -77,7 +77,8 @@ export const ITEMS: SocialsItem[] = [
     slug: 'case-7',
     source: 'systems',
     title: 'PT Mono',
-    link: 'https://temnovtema.github.io/PTMONO.project/',
+    image: '/cases/vibecode/pt-mono.png',
+    link: '/archive/case-7',
     content: [
       'Продуктовый лендинг о шрифте PT Mono, собранный как ясный цифровой рассказ о ритме, данных и интерфейсной строгости.',
       'Проект переводит типографическую тему в веб-формат с акцентом на структуру, характер гарнитуры и ее практическое применение.',
@@ -87,7 +88,8 @@ export const ITEMS: SocialsItem[] = [
     slug: 'case-8',
     source: 'research',
     title: 'Путь самурая',
-    link: 'https://temnovtema.github.io/samurai3modul/',
+    image: '/cases/vibecode/samurai.png',
+    link: '/archive/case-8',
     content: [
       'Интерактивный веб-постер, где история строится через три состояния: действие, дыхание и след.',
       'Проект соединяет сценографию, ритм и ритуальные интеракции, превращая просмотр в последовательное прохождение.',

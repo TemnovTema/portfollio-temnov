@@ -46,10 +46,10 @@ const ARCHIVE_FOLDERS: ReadonlyArray<{
   },
   {
     source: 'systems',
-    title: 'WipeCode',
+    title: 'VibeCode',
     description: 'Веб-эксперименты, интерактивные истории и учебные проекты',
     tags: ['Эксперименты', 'Web'],
-    href: '/archive/wipecode',
+    href: '/archive/vibecode',
     projectSlugs: ['case-6', 'case-7', 'case-8'],
   },
   {

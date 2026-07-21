@@ -15,10 +15,10 @@ export default function CaseCard({item, index}: {item: SocialsItem; index: numbe
   const isExternal = href.startsWith('http')
 
   return (
-    <Link href={href} className="group block" target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined}>
+    <Link href={href} className="group block h-full" target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined}>
       <article
         className={cn(
-          'flex min-h-[34rem] flex-col gap-4 p-4 mob:min-h-0 mob:p-3.5',
+          'flex h-full min-h-[34rem] flex-col gap-4 p-4 mob:min-h-0 mob:p-3.5',
           'rounded-[22px] border border-white/15 bg-black-light',
           'transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card',
         )}
@@ -40,7 +40,7 @@ export default function CaseCard({item, index}: {item: SocialsItem; index: numbe
               alt={item.title ?? 'Обложка кейса'}
               fill
               sizes="(max-width: 500px) calc(100vw - 48px), 44vw"
-              loading={index === 0 ? 'eager' : 'lazy'}
+              loading={index < 2 ? 'eager' : 'lazy'}
               className="object-cover duration-500 group-hover:scale-[1.025]"
             />
           ) : item.video ? (
