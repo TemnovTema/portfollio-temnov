@@ -3,8 +3,9 @@
 import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 
-import {ArrowUpRight, FolderOpen, LayoutDashboard} from 'lucide-react'
+import {ArrowRight, ArrowUpRight, FolderOpen, LayoutDashboard} from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {useState} from 'react'
 
 import ArchiveDashboard from '~~/archive/ArchiveDashboard'
@@ -32,8 +33,11 @@ const VIEW_MODES = [
 
 const ARCHIVE_FOLDERS: ReadonlyArray<{
   source: SocialSource
+  title?: string
   description: string
   tags: string[]
+  href?: string
+  projectSlugs?: string[]
 }> = [
   {
     source: 'product',
@@ -42,8 +46,11 @@ const ARCHIVE_FOLDERS: ReadonlyArray<{
   },
   {
     source: 'systems',
-    description: 'Айдентика, типографика и дизайн-системы',
-    tags: ['Айдентика', 'Типографика'],
+    title: 'WipeCode',
+    description: 'Веб-эксперименты, интерактивные истории и учебные проекты',
+    tags: ['Эксперименты', 'Web'],
+    href: '/archive/wipecode',
+    projectSlugs: ['case-6', 'case-7', 'case-8'],
   },
   {
     source: 'research',
@@ -104,15 +111,19 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
           className="grid grid-cols-2 gap-4 mob:grid-cols-1"
         >
           {ARCHIVE_FOLDERS.map((folder) => {
-            const projectsCount = items.filter((item) => item.source === folder.source).length
-            const cover = items.find((item) => item.source === folder.source)
+            const folderItems = folder.projectSlugs ? items.filter((item) => folder.projectSlugs?.includes(item.slug)) : items.filter((item) => item.source === folder.source)
+            const projectsCount = folderItems.length
+            const cover = folderItems[0]
+            const folderTitle = folder.title ?? SOCIALS[folder.source]
 
             return (
               <article
                 key={folder.source}
-                className="group flex min-h-[34rem] flex-col gap-4 rounded-[22px] border border-white/15 bg-black-light p-4 transition-colors duration-300 hover:border-white/35 hover:bg-black-card mob:min-h-0 mob:p-3.5"
-                aria-label={`${SOCIALS[folder.source]}, ${getProjectsLabel(projectsCount)}`}
+                className="group relative flex min-h-[34rem] flex-col gap-4 rounded-[22px] border border-white/15 bg-black-light p-4 transition-colors duration-300 hover:border-white/35 hover:bg-black-card mob:min-h-0 mob:p-3.5"
+                aria-label={`${folderTitle}, ${getProjectsLabel(projectsCount)}`}
               >
+                {folder.href && <Link href={folder.href} className="absolute inset-0 z-20 rounded-[22px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`Открыть папку ${folderTitle}`} />}
+
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex flex-wrap gap-1.5">
                     {folder.tags.map((tag) => (
@@ -128,7 +139,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                   {cover?.image ? (
                     <Image
                       src={cover.image}
-                      alt={`Обложка категории ${SOCIALS[folder.source]}`}
+                      alt={`Обложка категории ${folderTitle}`}
                       fill
                       sizes="(max-width: 500px) calc(100vw - 48px), 44vw"
                       loading={folder.source === 'product' ? 'eager' : 'lazy'}
@@ -142,13 +153,16 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                 </div>
 
                 <div className="space-y-3">
-                  <h2 className="text-2xl font-medium leading-[1.12] tracking-[-0.025em] text-neutral-300 mob:text-xl">{SOCIALS[folder.source]}</h2>
+                  <h2 className="text-2xl font-medium leading-[1.12] tracking-[-0.025em] text-neutral-300 mob:text-xl">{folderTitle}</h2>
                   <p className="min-h-[3rem] max-w-[54ch] text-base leading-[1.5] text-neutral-400">{folder.description}</p>
                 </div>
 
                 <div className="mt-auto">
-                  <span className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'pointer-events-none')} aria-hidden="true">
-                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.5} />
+                  <span className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'pointer-events-none group-hover:bg-white/80')} aria-hidden="true">
+                    <span className="relative size-5">
+                      <ArrowRight className="absolute inset-0 size-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-0" strokeWidth={1.5} />
+                      <ArrowUpRight className="absolute inset-0 size-5 -translate-x-1 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" strokeWidth={1.5} />
+                    </span>
                     Открыть
                   </span>
                 </div>
