@@ -1,6 +1,7 @@
 import {MDXRemote} from 'next-mdx-remote/rsc'
 import {cn} from '@/lib/utils'
 import {Mail, Send} from 'lucide-react'
+import Image from 'next/image'
 
 import Container from '~/Global/Container'
 import AnchorLinks from '~~/research/AnchorLinks'
@@ -12,9 +13,22 @@ const PHOTO_SLOTS = ['Портрет 01', 'Портрет 02']
 
 export default function Content({data}: {data: string}) {
   return (
-    <Container variant="default" className="space-y-4 lap:space-y-3">
+    <Container variant="default" className="space-y-4 lap:space-y-3 mob:pt-24!">
       <div className="w-full space-y-6">
-        <div className={cn('flex justify-between', 'text-sm font-medium tracking-tight uppercase text-neutral-300')}>
+        <div className="-mx-2.5 hidden mob:block">
+          <div className="relative aspect-[4/5] w-full overflow-hidden">
+            <Image
+              src="/about/about-profile-placeholder.png"
+              alt="Временный портрет для страницы обо мне"
+              fill
+              priority
+              sizes="(max-width: 500px) calc(100vw - 44px), 1px"
+              className="object-cover object-center"
+            />
+          </div>
+        </div>
+
+        <div className={cn('flex justify-between mob:hidden', 'text-sm font-medium tracking-tight uppercase text-neutral-300')}>
           {META_LABELS.map((item, index) => (
             <span key={index} className={cn('border-b border-transparent duration-200')}>
               {item}
@@ -55,7 +69,7 @@ export default function Content({data}: {data: string}) {
                 <AnchorLinks />
               </div>
 
-              <div className="grid w-full max-w-[49rem] grid-cols-2 gap-4 justify-self-end self-start max-[1280px]:justify-self-start max-[740px]:grid-cols-1">
+              <div className="grid w-full max-w-[49rem] grid-cols-2 gap-4 justify-self-end self-start max-[1280px]:justify-self-start max-[740px]:grid-cols-1 mob:hidden">
                 {PHOTO_SLOTS.map((slot) => (
                   <div
                     key={slot}
