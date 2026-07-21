@@ -19,7 +19,7 @@ export default function Content({data}: {data: string}) {
           <div className="relative aspect-[4/5] w-full overflow-hidden">
             <Image
               src="/about/about-profile-placeholder.png"
-              alt="Временный портрет для страницы обо мне"
+              alt="Портрет Артема Темнова"
               fill
               priority
               sizes="(max-width: 500px) calc(100vw - 44px), 1px"
