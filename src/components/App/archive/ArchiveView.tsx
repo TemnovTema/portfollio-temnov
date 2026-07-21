@@ -4,6 +4,7 @@ import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storag
 import {cn} from '@/lib/utils'
 
 import {ArrowUpRight, FolderOpen, LayoutDashboard} from 'lucide-react'
+import Image from 'next/image'
 import {useState} from 'react'
 
 import ArchiveDashboard from '~~/archive/ArchiveDashboard'
@@ -32,22 +33,27 @@ const VIEW_MODES = [
 const ARCHIVE_FOLDERS: ReadonlyArray<{
   source: SocialSource
   description: string
+  tags: string[]
 }> = [
   {
     source: 'product',
     description: 'Продуктовые сценарии и интерфейсы',
+    tags: ['UX', 'Mobile'],
   },
   {
     source: 'systems',
     description: 'Айдентика, типографика и дизайн-системы',
+    tags: ['Айдентика', 'Типографика'],
   },
   {
     source: 'research',
     description: 'Эксперименты и интерактивные форматы',
+    tags: ['Интерактив', '3D'],
   },
   {
     source: 'launches',
     description: 'Проекты, доведённые до работающего продукта',
+    tags: ['Сообщество', 'E-commerce'],
   },
 ]
 
@@ -105,6 +111,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
         >
           {ARCHIVE_FOLDERS.map((folder) => {
             const projectsCount = items.filter((item) => item.source === folder.source).length
+            const cover = items.find((item) => item.source === folder.source)
 
             return (
               <article key={folder.source} className="group relative min-h-0 pt-3" aria-label={`${SOCIALS[folder.source]}, ${getProjectsLabel(projectsCount)}`}>
@@ -112,20 +119,46 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                   className="absolute left-0 top-0 h-6 w-[38%] rounded-t-[18px] border border-b-0 border-white/15 bg-black-light transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card mob:h-5 mob:w-[48%] mob:rounded-t-xl"
                   aria-hidden="true"
                 />
-                <div className="relative flex h-full min-h-0 flex-col rounded-[22px] rounded-tl-none border border-white/15 bg-black-light p-6 transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card mob:rounded-2xl mob:rounded-tl-none mob:p-3.5">
-                  <span className="font-mono text-sm uppercase tracking-wide text-neutral-500 mob:text-[11px]">{getProjectsLabel(projectsCount)}</span>
+                <div className="relative grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-3 rounded-[22px] rounded-tl-none border border-white/15 bg-black-light p-4 transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card mob:gap-2.5 mob:rounded-2xl mob:rounded-tl-none mob:p-3">
+                  <div className="flex min-w-0 items-center justify-between gap-2 overflow-hidden">
+                    <div className="flex min-w-0 gap-1.5 overflow-hidden mob:gap-1">
+                      {folder.tags.map((tag) => (
+                        <span key={tag} className="shrink-0 rounded-full border border-white/12 px-2 py-1 font-mono text-[11px] uppercase text-neutral-400 mob:px-1 mob:py-0.5 mob:text-[8px]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="shrink-0 font-mono text-xs uppercase text-neutral-500 mob:hidden">{getProjectsLabel(projectsCount)}</span>
+                  </div>
 
-                  <div className="mt-auto space-y-4 mob:space-y-3">
-                    <div className="space-y-2.5 mob:space-y-0">
+                  <div className="relative min-h-0 overflow-hidden rounded-[16px] border border-dashed border-white/15 bg-black-card mob:rounded-xl">
+                    {cover?.image ? (
+                      <Image
+                        src={cover.image}
+                        alt={`Обложка категории ${SOCIALS[folder.source]}`}
+                        fill
+                        sizes="(max-width: 500px) 34vw, 44vw"
+                        loading={folder.source === 'product' ? 'eager' : 'lazy'}
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                      />
+                    ) : cover?.video ? (
+                      <video autoPlay muted loop playsInline className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]">
+                        <source src={cover.video} type="video/mp4" />
+                      </video>
+                    ) : null}
+                  </div>
+
+                  <div className="space-y-3 mob:space-y-2">
+                    <div className="space-y-1.5 mob:space-y-0">
                       <h2
                         className={cn(
-                          'text-[clamp(1.8rem,3.4vw,3.75rem)] font-medium leading-[0.95] tracking-[-0.045em] text-neutral-300 transition-transform duration-300 group-hover:translate-x-1 mob:leading-none',
-                          folder.source === 'research' ? 'mob:text-[1.05rem] mob:tracking-[-0.035em]' : 'mob:text-[1.35rem]',
+                          'text-2xl font-medium leading-none tracking-[-0.035em] text-neutral-300 transition-transform duration-300 group-hover:translate-x-1 mob:text-lg',
+                          folder.source === 'research' && 'mob:text-[1rem] mob:tracking-[-0.03em]',
                         )}
                       >
                         {SOCIALS[folder.source]}
                       </h2>
-                      <p className="max-w-[32ch] text-base leading-[1.4] text-neutral-500 mob:hidden">{folder.description}</p>
+                      <p className="max-w-[36ch] text-sm leading-[1.4] text-neutral-500 mob:hidden">{folder.description}</p>
                     </div>
 
                     <span
@@ -133,7 +166,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                         BUTTON_VARIANTS.DEFAULT,
                         BUTTON_VARIANTS.solid,
                         BUTTON_SIZES.small,
-                        'pointer-events-none mob:w-full mob:px-2.5 mob:text-xs',
+                        'pointer-events-none mob:w-full mob:px-2.5 mob:py-2 mob:text-[11px]',
                       )}
                       aria-hidden="true"
                     >
