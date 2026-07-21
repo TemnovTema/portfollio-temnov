@@ -10,7 +10,7 @@ import ArchiveView from '~~/archive/ArchiveView'
 
 export default function ArchivePage() {
   return (
-    <Container variant="default" className="space-y-8 pb-4 mob:space-y-8 mob:pb-4">
+    <Container variant="default" className="space-y-8 mob:space-y-8">
       <ArchiveView items={ITEMS} />
     </Container>
   )
