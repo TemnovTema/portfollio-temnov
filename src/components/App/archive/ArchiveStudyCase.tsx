@@ -18,12 +18,27 @@ type ArchiveStudyCaseProps = {
   cover: string
   detailImage: string
   detailAlt: string
+  detailWidth?: number
+  detailHeight?: number
+  detailClassName?: string
   tags: string[]
   sections: StudySection[]
   liveUrl: string
 }
 
-export default function ArchiveStudyCase({title, intro, cover, detailImage, detailAlt, tags, sections, liveUrl}: ArchiveStudyCaseProps) {
+export default function ArchiveStudyCase({
+  title,
+  intro,
+  cover,
+  detailImage,
+  detailAlt,
+  detailWidth = 1440,
+  detailHeight = 1080,
+  detailClassName,
+  tags,
+  sections,
+  liveUrl,
+}: ArchiveStudyCaseProps) {
   return (
     <Container variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
       <section className="space-y-8 mob:space-y-6">
@@ -61,7 +76,7 @@ export default function ArchiveStudyCase({title, intro, cover, detailImage, deta
       </section>
 
       <figure className="overflow-hidden rounded-[28px] border border-white/12 bg-black-light mob:rounded-2xl">
-        <Image src={detailImage} alt={detailAlt} width={1440} height={1080} className="h-auto w-full" />
+        <Image src={detailImage} alt={detailAlt} width={detailWidth} height={detailHeight} className={cn('h-auto w-full', detailClassName)} />
       </figure>
     </Container>
   )
