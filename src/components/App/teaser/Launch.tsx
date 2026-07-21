@@ -17,7 +17,7 @@ export default function Launch() {
       )}
     >
       <div className="w-full space-y-3 mob:space-y-4">
-        <H4 className="max-w-[34ch] text-balance text-center text-lg leading-[1.35] lap:max-w-[32ch] lap:text-base mob:max-w-none mob:text-[15px] mob:leading-[1.45] mob:px-0">
+        <H4 className="max-w-[38ch] text-balance text-center font-sans text-lg normal-case leading-[1.45] text-neutral-400 lap:max-w-[36ch] lap:text-base mob:max-w-none mob:px-0 mob:text-base mob:leading-[1.5]">
           Открыт к продуктовым задачам, где важны ясная структура, зрелый UX и аккуратная работа на стыке стратегии, интерфейса и системы.
         </H4>
       </div>

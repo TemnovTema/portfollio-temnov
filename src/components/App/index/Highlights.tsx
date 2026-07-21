@@ -14,8 +14,10 @@ export default function Highlights() {
   return (
     <section id="featured-cases" data-section="featured-cases" className={cn('space-y-8 scroll-mt-28')}>
       <div className="space-y-3">
-        <H2>Избранные кейсы</H2>
-        <H4 className="max-w-[56ch]">
+        <H2 className="text-[clamp(2.5rem,4.2vw,3.75rem)] leading-[1.02]! tracking-[-0.045em] mob:text-[2.125rem] mob:leading-[1.06]!">
+          Избранные кейсы
+        </H2>
+        <H4 className="max-w-[54ch] font-sans text-lg normal-case leading-[1.5] text-neutral-400 mob:text-base mob:leading-[1.45]">
           Четыре направления, через которые лучше всего видно мой подход: сценарии, продуктовая структура, системность интерфейса и работа с запуском.
         </H4>
       </div>
@@ -69,8 +71,8 @@ export default function Highlights() {
               </div>
 
               <div className="space-y-3">
-                <H5 className="text-gray">{item.title}</H5>
-                <P>{item.content[0]}</P>
+                <H5 className="font-sans text-2xl normal-case leading-[1.12] tracking-[-0.025em] text-neutral-300 mob:text-xl">{item.title}</H5>
+                <P className="max-w-[54ch] text-base normal-case leading-[1.5]! text-neutral-400">{item.content[0]}</P>
               </div>
 
               <div className="mt-auto">

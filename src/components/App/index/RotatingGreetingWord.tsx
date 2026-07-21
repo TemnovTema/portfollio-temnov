@@ -67,7 +67,7 @@ export default function RotatingGreetingWord() {
       <motion.span
         ref={shimmerRef}
         data-rotating-greeting
-        className="relative inline-flex h-[1.1em] items-center align-baseline"
+        className="relative inline-flex h-[1.08em] max-w-full items-center overflow-hidden align-baseline"
         style={width ? {width: `${width}px`} : undefined}
       >
         <span aria-hidden="true" className="invisible whitespace-nowrap">
@@ -78,10 +78,10 @@ export default function RotatingGreetingWord() {
           <motion.span
             key={currentWord}
             className="absolute left-0 top-1/2 block whitespace-nowrap text-[#707070]"
-            initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(4px)'}}
+            initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(0.18em)', filter: 'blur(3px)'}}
             animate={shouldReduceMotion ? {opacity: 1, transform: 'translateY(-50%)'} : {opacity: 1, transform: 'translateY(-50%)', filter: 'blur(0px)'}}
-            exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(-1.35em)', filter: 'blur(4px)'}}
-            transition={{duration: shouldReduceMotion ? 0.2 : 0.38, ease: [0.77, 0, 0.175, 1]}}
+            exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(-1.18em)', filter: 'blur(3px)'}}
+            transition={{duration: shouldReduceMotion ? 0.18 : 0.32, ease: [0.23, 1, 0.32, 1]}}
           >
             {currentWord}
             <motion.span

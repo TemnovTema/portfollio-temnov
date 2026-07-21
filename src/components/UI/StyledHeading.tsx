@@ -45,7 +45,7 @@ export function Heading({children}: {children: React.ReactNode}) {
   return (
     <motion.h1
       ref={textRef}
-      className={cn(typoClasses.h1, 'relative text-transparent w-fit bg-clip-text selection:text-gray')}
+      className={cn(typoClasses.h1, 'relative max-w-full bg-clip-text text-center text-transparent selection:text-gray')}
       style={{
         backgroundImage: `linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)`,
         backgroundSize: '200%',

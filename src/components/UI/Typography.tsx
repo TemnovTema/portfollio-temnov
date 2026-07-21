@@ -9,7 +9,11 @@ type Props = {
 export type TypoTypes = keyof typeof typoClasses
 
 export const typoClasses = {
-  h1: cn('text-8xl mob:text-6xl leading-none! font-semibold tracking-tighter', 'text-gray'),
+  h1: cn(
+    'text-[clamp(3.25rem,6.7vw,6rem)] leading-[0.96]! font-semibold tracking-[-0.055em]',
+    'mob:text-[clamp(2.875rem,12.4vw,3.25rem)] mob:leading-[1.02]!',
+    'text-gray',
+  ),
   h2: cn('text-6xl mob:text-4xl leading-none! font-medium tracking-tighter', 'text-white-dirty'),
   h3: cn('text-[32px] lap:text-[26px] mob:text-2xl leading-none! font-semibold tracking-tight', 'text-white'),
 
