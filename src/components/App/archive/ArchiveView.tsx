@@ -3,10 +3,11 @@
 import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 
-import {FolderOpen, LayoutDashboard} from 'lucide-react'
+import {ArrowUpRight, FolderOpen, LayoutDashboard} from 'lucide-react'
 import {useState} from 'react'
 
 import ArchiveDashboard from '~~/archive/ArchiveDashboard'
+import {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
 import {H2, H4} from '~/UI/Typography'
 
 type ArchiveMode = 'folder' | 'dashboard'
@@ -106,21 +107,39 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
             const projectsCount = items.filter((item) => item.source === folder.source).length
 
             return (
-              <article key={folder.source} className="relative min-h-0 pt-3" aria-label={`${SOCIALS[folder.source]}, ${getProjectsLabel(projectsCount)}`}>
-                <div className="absolute left-0 top-0 h-6 w-[38%] rounded-t-[18px] border border-b-0 border-white/15 bg-black-light mob:h-5 mob:w-[48%] mob:rounded-t-xl" aria-hidden="true" />
-                <div className="relative flex h-full min-h-0 flex-col rounded-[22px] rounded-tl-none border border-white/15 bg-black-light p-6 mob:rounded-2xl mob:rounded-tl-none mob:p-3.5">
+              <article key={folder.source} className="group relative min-h-0 pt-3" aria-label={`${SOCIALS[folder.source]}, ${getProjectsLabel(projectsCount)}`}>
+                <div
+                  className="absolute left-0 top-0 h-6 w-[38%] rounded-t-[18px] border border-b-0 border-white/15 bg-black-light transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card mob:h-5 mob:w-[48%] mob:rounded-t-xl"
+                  aria-hidden="true"
+                />
+                <div className="relative flex h-full min-h-0 flex-col rounded-[22px] rounded-tl-none border border-white/15 bg-black-light p-6 transition-colors duration-300 group-hover:border-white/35 group-hover:bg-black-card mob:rounded-2xl mob:rounded-tl-none mob:p-3.5">
                   <span className="font-mono text-sm uppercase tracking-wide text-neutral-500 mob:text-[11px]">{getProjectsLabel(projectsCount)}</span>
 
-                  <div className="mt-auto space-y-2.5 mob:space-y-0">
-                    <h2
+                  <div className="mt-auto space-y-4 mob:space-y-3">
+                    <div className="space-y-2.5 mob:space-y-0">
+                      <h2
+                        className={cn(
+                          'text-[clamp(1.8rem,3.4vw,3.75rem)] font-medium leading-[0.95] tracking-[-0.045em] text-neutral-300 transition-transform duration-300 group-hover:translate-x-1 mob:leading-none',
+                          folder.source === 'research' ? 'mob:text-[1.05rem] mob:tracking-[-0.035em]' : 'mob:text-[1.35rem]',
+                        )}
+                      >
+                        {SOCIALS[folder.source]}
+                      </h2>
+                      <p className="max-w-[32ch] text-base leading-[1.4] text-neutral-500 mob:hidden">{folder.description}</p>
+                    </div>
+
+                    <span
                       className={cn(
-                        'text-[clamp(1.8rem,3.4vw,3.75rem)] font-medium leading-[0.95] tracking-[-0.045em] text-neutral-300 mob:leading-none',
-                        folder.source === 'research' ? 'mob:text-[1.05rem] mob:tracking-[-0.035em]' : 'mob:text-[1.35rem]',
+                        BUTTON_VARIANTS.DEFAULT,
+                        BUTTON_VARIANTS.solid,
+                        BUTTON_SIZES.small,
+                        'pointer-events-none mob:w-full mob:px-2.5 mob:text-xs',
                       )}
+                      aria-hidden="true"
                     >
-                      {SOCIALS[folder.source]}
-                    </h2>
-                    <p className="max-w-[32ch] text-base leading-[1.4] text-neutral-500 mob:hidden">{folder.description}</p>
+                      <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.5} />
+                      Открыть
+                    </span>
                   </div>
                 </div>
               </article>
