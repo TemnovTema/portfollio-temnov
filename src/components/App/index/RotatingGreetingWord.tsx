@@ -8,7 +8,7 @@ const INTERVAL_MS = 2000
 const FALLBACK_WORD = 'заказчик!'
 const SHIMMER_DURATION = 3
 
-export default function RotatingGreetingWord() {
+export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'inline' | 'mobile-stage'}) {
   const shouldReduceMotion = useReducedMotion()
   const [index, setIndex] = useState(0)
   const [width, setWidth] = useState<number | null>(null)
@@ -17,6 +17,10 @@ export default function RotatingGreetingWord() {
   const shimmerPosition = useMotionValue(0)
   const shimmerAnimation = useRef<ReturnType<typeof animate> | null>(null)
   const currentWord = WORDS[index]
+  const isMobileStage = variant === 'mobile-stage'
+  const restingTransform = isMobileStage ? 'translate(-50%, -50%)' : 'translateY(-50%)'
+  const enterTransform = isMobileStage ? 'translate(-50%, 0.18em)' : 'translateY(0.18em)'
+  const exitTransform = isMobileStage ? 'translate(-50%, -1.18em)' : 'translateY(-1.18em)'
 
   const updateShimmer = useCallback(() => {
     if (!shimmerRef.current) return
@@ -67,20 +71,24 @@ export default function RotatingGreetingWord() {
       <motion.span
         ref={shimmerRef}
         data-rotating-greeting
-        className="relative inline-flex h-[1.08em] max-w-full items-center overflow-hidden align-baseline"
-        style={width ? {width: `${width}px`} : undefined}
+        className={isMobileStage
+          ? 'relative flex h-[1.3em] w-full items-center justify-center overflow-hidden'
+          : 'relative inline-flex h-[1.08em] max-w-full items-center overflow-hidden align-baseline'}
+        style={!isMobileStage && width ? {width: `${width}px`} : undefined}
       >
-        <span aria-hidden="true" className="invisible whitespace-nowrap">
-          {FALLBACK_WORD}
-        </span>
+        {!isMobileStage && (
+          <span aria-hidden="true" className="invisible whitespace-nowrap">
+            {FALLBACK_WORD}
+          </span>
+        )}
 
         <AnimatePresence initial={false} mode="sync">
           <motion.span
             key={currentWord}
-            className="absolute left-0 top-1/2 block whitespace-nowrap text-[#707070]"
-            initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(0.18em)', filter: 'blur(3px)'}}
-            animate={shouldReduceMotion ? {opacity: 1, transform: 'translateY(-50%)'} : {opacity: 1, transform: 'translateY(-50%)', filter: 'blur(0px)'}}
-            exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(-1.18em)', filter: 'blur(3px)'}}
+            className={`absolute top-1/2 block whitespace-nowrap text-[#707070] ${isMobileStage ? 'left-1/2' : 'left-0'}`}
+            initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: enterTransform, filter: 'blur(3px)'}}
+            animate={shouldReduceMotion ? {opacity: 1, transform: restingTransform} : {opacity: 1, transform: restingTransform, filter: 'blur(0px)'}}
+            exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: exitTransform, filter: 'blur(3px)'}}
             transition={{duration: shouldReduceMotion ? 0.18 : 0.32, ease: [0.23, 1, 0.32, 1]}}
           >
             {currentWord}
