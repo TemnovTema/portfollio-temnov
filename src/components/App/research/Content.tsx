@@ -18,12 +18,20 @@ export default function Content({data}: {data: string}) {
         <div className="-mx-2.5 hidden mob:block">
           <div className="relative aspect-[4/5] w-full overflow-hidden">
             <Image
-              src="/about/about-profile-placeholder.png"
+              src="/about/artem-front-portrait.png"
               alt="Портрет Артема Темнова"
               fill
               priority
               sizes="(max-width: 500px) calc(100vw - 44px), 1px"
               className="object-cover object-center"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#040404_0%,transparent_18%,transparent_82%,#040404_100%)]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,transparent_0%,rgba(4,4,4,0.35)_42%,#040404_100%)]"
             />
           </div>
         </div>
