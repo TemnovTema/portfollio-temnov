@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Архив веб-экспериментов, интерактивных историй и учебных проектов Артёма Темнова.',
 }
 
-const VIBECODE_SLUGS = ['case-6', 'case-7', 'case-8', 'case-9']
+const VIBECODE_SLUGS = ['case-6', 'case-7', 'case-8', 'case-9', 'case-10']
 const VIBECODE_ITEMS = VIBECODE_SLUGS.map((slug) => ITEMS.find((item) => item.slug === slug)).filter((item) => item !== undefined)
 
 export default function VibeCodePage() {

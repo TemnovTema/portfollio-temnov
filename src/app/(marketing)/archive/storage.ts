@@ -15,6 +15,7 @@ export type SocialsItem = {
   content: string[]
   image?: string
   video?: string
+  gallery?: string[]
 }
 
 export const ITEMS: SocialsItem[] = [
@@ -104,6 +105,23 @@ export const ITEMS: SocialsItem[] = [
     content: [
       'Промо-сайт дня открытых дверей школы DZEN, собранный как масштабный цифровой плакат о современных восточных практиках.',
       'Крупная типографика, монохромная фотография и интерактивная завеса из японских знаков связывают айдентику события с поведением страницы.',
+    ],
+  },
+  {
+    slug: 'case-10',
+    source: 'research',
+    title: 'Назови меня бабушкой',
+    image: '/cases/vibecode/web-novella/scenes/arrival-v1.webp',
+    gallery: [
+      '/cases/vibecode/web-novella/scenes/arrival-v1.webp',
+      '/cases/vibecode/web-novella/scenes/grandma-room-v1.webp',
+      '/cases/vibecode/web-novella/scenes/secret-room-v1.webp',
+      '/cases/vibecode/web-novella/scenes/end-trust-v1.webp',
+    ],
+    link: '/archive/case-10',
+    content: [
+      'Интерактивная хоррор-новелла о бабушкином доме, чужом голосе и памяти. Решения читателя меняют маршрут истории и приводят к разным финалам.',
+      'Для проекта создана система из 27 генеративных сцен, объединённых светом, цветом, повторяющимися объектами и общей кинематографичной атмосферой.',
     ],
   },
 ]

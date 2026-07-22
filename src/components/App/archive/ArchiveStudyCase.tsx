@@ -16,14 +16,15 @@ type ArchiveStudyCaseProps = {
   title: string
   intro: string
   cover: string
-  detailImage: string
-  detailAlt: string
+  detailImage?: string
+  detailAlt?: string
   detailWidth?: number
   detailHeight?: number
   detailClassName?: string
   tags: string[]
   sections: StudySection[]
   liveUrl: string
+  children?: React.ReactNode
 }
 
 export default function ArchiveStudyCase({
@@ -38,6 +39,7 @@ export default function ArchiveStudyCase({
   tags,
   sections,
   liveUrl,
+  children,
 }: ArchiveStudyCaseProps) {
   return (
     <Container variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
@@ -75,9 +77,13 @@ export default function ArchiveStudyCase({
         ))}
       </section>
 
-      <figure className="overflow-hidden rounded-[28px] border border-white/12 bg-black-light mob:rounded-2xl">
-        <Image src={detailImage} alt={detailAlt} width={detailWidth} height={detailHeight} className={cn('h-auto w-full', detailClassName)} />
-      </figure>
+      {children}
+
+      {detailImage && (
+        <figure className="overflow-hidden rounded-[28px] border border-white/12 bg-black-light mob:rounded-2xl">
+          <Image src={detailImage} alt={detailAlt ?? ''} width={detailWidth} height={detailHeight} className={cn('h-auto w-full', detailClassName)} />
+        </figure>
+      )}
     </Container>
   )
 }

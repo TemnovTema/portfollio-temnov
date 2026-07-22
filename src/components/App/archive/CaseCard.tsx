@@ -34,7 +34,22 @@ export default function CaseCard({item, index}: {item: SocialsItem; index: numbe
             'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_45%),linear-gradient(180deg,_rgba(18,18,18,0.98),_rgba(8,8,8,1))]',
           )}
         >
-          {item.image ? (
+          {item.gallery?.length ? (
+            <div className="grid h-full grid-cols-2 grid-rows-2 gap-px bg-white/10">
+              {item.gallery.slice(0, 4).map((image, galleryIndex) => (
+                <div key={image} className="relative overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={`${item.title ?? 'Проект'}, сцена ${galleryIndex + 1}`}
+                    fill
+                    sizes="(max-width: 500px) 45vw, 22vw"
+                    loading="lazy"
+                    className="object-cover duration-500 group-hover:scale-[1.035]"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : item.image ? (
             <Image
               src={item.image}
               alt={item.title ?? 'Обложка кейса'}
