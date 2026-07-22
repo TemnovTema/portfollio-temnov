@@ -2,7 +2,7 @@ import ArchiveStudyCase from '~~/archive/ArchiveStudyCase'
 import SceneGallery from '~~/archive/SceneGallery'
 
 export const metadata = {
-  title: 'Назови меня бабушкой',
+  title: 'Интерактивная веб-новелла',
   description: 'Интерактивная хоррор-новелла с разветвлённым сюжетом и системой генеративных сцен.',
 }
 
@@ -63,9 +63,9 @@ const sections = [
 export default function WebNovellaCasePage() {
   return (
     <ArchiveStudyCase
-      title="Назови меня бабушкой"
+      title="Интерактивная веб-новелла"
       intro="Интерактивная веб-новелла, где читатель исследует бабушкин дом, принимает решения и собирает историю по фрагментам. Визуальный маршрут построен на системе генеративных сцен."
-      cover="/cases/vibecode/web-novella/scenes/arrival-v1.webp"
+      cover="/cases/vibecode/web-novella/scenes/scare-bad-v1.webp"
       tags={['Веб-новелла', 'Генеративные сцены', 'Narrative UX', 'HTML / CSS / JS']}
       sections={sections}
       liveUrl="https://temnovtema.github.io/web-novella/"

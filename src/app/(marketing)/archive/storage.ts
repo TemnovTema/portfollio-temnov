@@ -110,10 +110,10 @@ export const ITEMS: SocialsItem[] = [
   {
     slug: 'case-10',
     source: 'research',
-    title: 'Назови меня бабушкой',
-    image: '/cases/vibecode/web-novella/scenes/arrival-v1.webp',
+    title: 'Интерактивная веб-новелла',
+    image: '/cases/vibecode/web-novella/scenes/scare-bad-v1.webp',
     gallery: [
-      '/cases/vibecode/web-novella/scenes/arrival-v1.webp',
+      '/cases/vibecode/web-novella/scenes/scare-bad-v1.webp',
       '/cases/vibecode/web-novella/scenes/grandma-room-v1.webp',
       '/cases/vibecode/web-novella/scenes/secret-room-v1.webp',
       '/cases/vibecode/web-novella/scenes/end-trust-v1.webp',

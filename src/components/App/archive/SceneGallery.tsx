@@ -1,8 +1,9 @@
 'use client'
 
+import {AnimatePresence, motion, useReducedMotion} from 'framer-motion'
 import {ArrowLeft, ArrowRight} from 'lucide-react'
 import Image from 'next/image'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
 type Scene = {
   src: string
@@ -11,7 +12,18 @@ type Scene = {
 
 export default function SceneGallery({scenes}: {scenes: Scene[]}) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const shouldReduceMotion = useReducedMotion()
   const activeScene = scenes[activeIndex]
+
+  useEffect(() => {
+    if (shouldReduceMotion || scenes.length < 2) return
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % scenes.length)
+    }, 2000)
+
+    return () => window.clearInterval(intervalId)
+  }, [scenes.length, shouldReduceMotion])
 
   const selectRelative = (direction: -1 | 1) => {
     setActiveIndex((current) => (current + direction + scenes.length) % scenes.length)
@@ -41,18 +53,28 @@ export default function SceneGallery({scenes}: {scenes: Scene[]}) {
 
       <figure className="overflow-hidden rounded-[28px] border border-white/12 bg-black-light mob:rounded-2xl">
         <div className="relative aspect-[16/9]">
-          <Image
-            key={activeScene.src}
-            src={activeScene.src}
-            alt={`Сцена веб-новеллы: ${activeScene.label}`}
-            fill
-            sizes="(max-width: 500px) calc(100vw - 20px), 96vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/80 to-transparent p-6 pt-20 mob:p-4 mob:pt-14">
-            <figcaption className="text-xl font-medium tracking-[-0.02em] text-white mob:text-base">{activeScene.label}</figcaption>
-            <span className="font-mono text-xs text-neutral-300">{String(activeIndex + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
-          </div>
+          <AnimatePresence initial={false} mode="sync">
+            <motion.div
+              key={activeScene.src}
+              className="absolute inset-0"
+              initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, x: '4%'}}
+              animate={{opacity: 1, x: 0}}
+              exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, x: '-4%'}}
+              transition={{duration: shouldReduceMotion ? 0.15 : 0.45, ease: [0.22, 1, 0.36, 1]}}
+            >
+              <Image
+                src={activeScene.src}
+                alt={`Сцена веб-новеллы: ${activeScene.label}`}
+                fill
+                sizes="(max-width: 500px) calc(100vw - 20px), 96vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/80 to-transparent p-6 pt-20 mob:p-4 mob:pt-14">
+                <figcaption className="text-xl font-medium tracking-[-0.02em] text-white mob:text-base">{activeScene.label}</figcaption>
+                <span className="font-mono text-xs text-neutral-300">{String(activeIndex + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </figure>
 
