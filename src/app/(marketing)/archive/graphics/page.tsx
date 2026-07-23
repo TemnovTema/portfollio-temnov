@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Плакаты, типографические серии и визуальные эксперименты Артёма Темнова.',
 }
 
-const GRAPHICS_SLUGS = ['case-2', 'case-12']
+const GRAPHICS_SLUGS = ['case-2', 'case-12', 'case-13']
 const GRAPHICS_ITEMS = GRAPHICS_SLUGS.map((slug) => ITEMS.find((item) => item.slug === slug)).filter((item) => item !== undefined)
 
 export default function GraphicsPage() {

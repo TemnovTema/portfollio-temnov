@@ -152,4 +152,21 @@ export const ITEMS: SocialsItem[] = [
       'Работы исследуют общий визуальный язык бренда через крупную типографику, японские мотивы и контрастную цветовую систему.',
     ],
   },
+  {
+    slug: 'case-13',
+    source: 'product',
+    title: 'KODO. Брендинг',
+    image: '/cases/kodo-brand/stationery.jpg',
+    gallery: [
+      '/cases/kodo-brand/logo.jpg',
+      '/cases/kodo-brand/stationery.jpg',
+      '/cases/kodo-brand/merch.jpg',
+      '/cases/kodo-brand/social-media.jpg',
+    ],
+    link: '/archive/case-13',
+    content: [
+      'Айдентика KODO — школы о программировании, технологиях и цифровом мышлении.',
+      'В проект вошли логотип, цветовая и графическая системы, печатные носители, наружная реклама, мерч и оформление социальных сетей.',
+    ],
+  },
 ]

@@ -45,7 +45,7 @@ const ARCHIVE_FOLDERS: ReadonlyArray<{
     description: 'Плакаты, типографические серии и визуальные эксперименты',
     tags: ['Плакаты', 'Типографика'],
     href: '/archive/graphics',
-    projectSlugs: ['case-2', 'case-12'],
+    projectSlugs: ['case-2', 'case-12', 'case-13'],
   },
   {
     source: 'systems',
