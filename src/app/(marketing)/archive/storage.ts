@@ -56,7 +56,7 @@ export const ITEMS: SocialsItem[] = [
     slug: 'case-4',
     source: 'systems',
     title: 'Портфолио как цифровой продукт',
-    image: '/cases/portfolio/archive.png',
+    image: '/cases/portfolio/cover.png',
     link: '/archive/case-4',
     content: [
       'Личный сайт, который помогает быстро понять подход дизайнера, выбрать релевантный кейс и перейти к контакту.',
