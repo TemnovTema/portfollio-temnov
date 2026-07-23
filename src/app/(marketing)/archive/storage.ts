@@ -1,5 +1,5 @@
 export const SOCIALS = {
-  product: 'Продукт',
+  product: 'Графика',
   systems: 'Системы',
   research: 'Исследования',
   launches: 'Концепты',
@@ -133,6 +133,23 @@ export const ITEMS: SocialsItem[] = [
     content: [
       'Учебный проект, с которым я поступил в университет: концепция музыкального приложения, связывающего прослушивание песни, текст, перевод и контекст.',
       'Это ранняя и неидеальная работа. В архиве опубликован только фрагмент проекта, который помогает увидеть отправную точку моего дизайнерского пути.',
+    ],
+  },
+  {
+    slug: 'case-12',
+    source: 'product',
+    title: 'Серия плакатов. Дзен',
+    image: '/cases/dzen-posters/graphic-series.jpg',
+    gallery: [
+      '/cases/dzen-posters/graphic-series.jpg',
+      '/cases/dzen-posters/typographic-series.jpg',
+      '/cases/dzen-posters/graphic-series-2.jpg',
+      '/cases/dzen-posters/graphic-series-3.jpg',
+    ],
+    link: '/archive/case-12',
+    content: [
+      'Серия плакатов для школы новых самураев «Дзен»: типографические композиции, фотоколлажи и графические афиши.',
+      'Работы исследуют общий визуальный язык бренда через крупную типографику, японские мотивы и контрастную цветовую систему.',
     ],
   },
 ]
