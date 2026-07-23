@@ -59,8 +59,11 @@ const ARCHIVE_FOLDERS: ReadonlyArray<{
   },
   {
     source: 'launches',
-    description: 'Проекты, доведённые до работающего продукта',
-    tags: ['Сообщество', 'E-commerce'],
+    title: 'Концепты',
+    description: 'Учебные идеи, ранние продукты и проекты в стадии концепции',
+    tags: ['Идеи', 'Учебные'],
+    href: '/archive/concepts',
+    projectSlugs: ['case-1', 'case-3', 'case-11'],
   },
 ]
 
