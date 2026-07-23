@@ -22,9 +22,12 @@ const BRAND_ASSETS = [
   {src: '/cases/kodo-brand/merch-2.jpg', caption: 'Шоппер', alt: 'Чёрный шоппер KODO с цветной модульной графикой'},
   {src: '/cases/kodo-brand/social-media.jpg', caption: 'Социальные сети', alt: 'Оформление профиля и публикаций KODO в социальных сетях'},
   {src: '/cases/kodo-brand/poster.png', caption: 'Имиджевый постер', alt: 'Имиджевый плакат KODO с фигурой самурая и крупным логотипом'},
-  {src: '/cases/kodo-brand/cover-1.jpg', caption: 'Digital cover 01', alt: 'Цифровая обложка KODO с фигурой в маске'},
-  {src: '/cases/kodo-brand/cover-2.jpg', caption: 'Digital cover 02', alt: 'Цифровая обложка KODO о сильном промпте'},
-  {src: '/cases/kodo-brand/cover-4.jpg', caption: 'Digital cover 03', alt: 'Цифровая обложка KODO с кибернетической фигурой'},
+] as const
+
+const CONTENT_COVERS = [
+  {src: '/cases/kodo-brand/cover-1.jpg', alt: 'Обложка контента KODO с фигурой в маске'},
+  {src: '/cases/kodo-brand/cover-2.jpg', alt: 'Обложка контента KODO о сильном промпте'},
+  {src: '/cases/kodo-brand/cover-4.jpg', alt: 'Обложка контента KODO с кибернетической фигурой'},
 ] as const
 
 const META = [
@@ -91,6 +94,37 @@ export default function KodoBrandPage() {
               </figcaption>
             </figure>
           ))}
+        </section>
+
+        <section className="space-y-10 border-t border-white/12 pt-10 mob:space-y-7">
+          <div className="grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-16 max-[900px]:grid-cols-1 max-[900px]:gap-5">
+            <h2 className="max-w-[9ch] text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-neutral-400 mob:text-4xl">
+              Обложки для контента
+            </h2>
+            <p className="max-w-[42ch] text-xl leading-[1.4] text-neutral-500 mob:text-base">
+              Единая серия обложек для публикаций и образовательных материалов KODO. Модульная графика связывает разные темы, а персонажи помогают быстро различать содержание.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-[28px] border border-white/12 bg-[#1d1d1d] p-3 mob:rounded-2xl mob:p-2">
+            <div className="grid grid-cols-3 gap-3 mob:grid-cols-1 mob:gap-2">
+              {CONTENT_COVERS.map((cover, index) => (
+                <figure key={cover.src} className="group relative overflow-hidden rounded-[18px] bg-[#282828] mob:rounded-xl">
+                  <Image
+                    src={cover.src}
+                    alt={cover.alt}
+                    width={1600}
+                    height={900}
+                    className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
+                  />
+                  <figcaption className="absolute inset-x-0 bottom-0 flex justify-between bg-gradient-to-t from-black/80 to-transparent px-4 pb-3 pt-10 font-mono text-[11px] uppercase tracking-[0.12em] text-white/70">
+                    <span>Обложка</span>
+                    <span>0{index + 1}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="flex min-h-[30rem] flex-col items-start justify-between gap-16 border-t border-white/12 pt-10 mob:min-h-0">

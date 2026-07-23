@@ -156,13 +156,7 @@ export const ITEMS: SocialsItem[] = [
     slug: 'case-13',
     source: 'product',
     title: 'KODO. Брендинг',
-    image: '/cases/kodo-brand/stationery.jpg',
-    gallery: [
-      '/cases/kodo-brand/logo.jpg',
-      '/cases/kodo-brand/stationery.jpg',
-      '/cases/kodo-brand/merch.jpg',
-      '/cases/kodo-brand/social-media.jpg',
-    ],
+    image: '/cases/kodo-brand/poster.png',
     link: '/archive/case-13',
     content: [
       'Айдентика KODO — школы о программировании, технологиях и цифровом мышлении.',
