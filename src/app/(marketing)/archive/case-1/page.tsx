@@ -21,12 +21,25 @@ async function getContent() {
 }
 
 const META_LABELS = ['Case Study', 'Community Product']
-const META_ITEMS = [
+type MetaItem = {
+  label: string
+  value: string
+  href?: string
+  icon?: 'notion'
+}
+
+const META_ITEMS: MetaItem[] = [
   {label: 'Формат', value: 'Сообщество + инструменты'},
   {label: 'Роль', value: 'Продуктовый дизайн'},
   {label: 'Фокус', value: 'Структура, сценарии, UI'},
   {label: 'Продукт', value: 'KODO'},
   {label: 'Сайт', value: 'Открыть KODO', href: 'https://kodo-media.vercel.app/profile'},
+  {
+    label: 'PRD',
+    value: 'Product Requirements Document',
+    href: 'https://app.notion.com/p/3a76ff52ef1080ea972ccda39aea5d9b',
+    icon: 'notion',
+  },
 ]
 
 const PRODUCT_CYCLE = ['Нахожу', 'Обсуждаю', 'Сохраняю', 'Использую', 'Публикую']
@@ -133,13 +146,16 @@ export default async function CaseOnePage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-5 divide-x divide-white/10 border-y border-white/12 max-[1100px]:grid-cols-1 max-[1100px]:divide-x-0 max-[1100px]:divide-y">
+              <div className="grid grid-cols-6 divide-x divide-white/10 border-y border-white/12 max-[1280px]:grid-cols-3 max-[1280px]:divide-x-0 max-[1280px]:divide-y max-[760px]:grid-cols-1">
                 {META_ITEMS.map((item) =>
                   item.href ? (
-                    <Link key={item.label} href={item.href} target="_blank" className="group p-5 transition-colors duration-200 hover:bg-white/5 mob:px-0">
+                    <Link key={item.label} href={item.href} target="_blank" rel="noreferrer" className="group p-5 transition-colors duration-200 hover:bg-white/5 mob:px-0">
                       <div className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</div>
                       <div className="mt-3 flex items-center justify-between gap-3 text-base text-neutral-200">
-                        <span>{item.value}</span>
+                        <span className="flex items-center gap-2 leading-tight">
+                          {item.icon === 'notion' && <Image src="/icons/notion.png" alt="" width={18} height={18} className="size-[18px] shrink-0 rounded-[3px]" />}
+                          {item.value}
+                        </span>
                         <span className="text-neutral-600 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
                       </div>
                     </Link>
