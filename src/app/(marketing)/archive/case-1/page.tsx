@@ -61,7 +61,7 @@ export default function CaseOnePage() {
     <>
       <ScrollProgress />
 
-      <main className="overflow-hidden pb-32 mob:pb-20">
+      <main className="overflow-hidden">
         <Container variant="default">
           <section className="flex min-h-[calc(100dvh-7rem)] flex-col justify-between gap-12 pb-16 pt-10 mob:min-h-0 mob:gap-10 mob:pb-12 mob:pt-5">
             <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
@@ -89,9 +89,9 @@ export default function CaseOnePage() {
                     href={KODO_URL}
                     target="_blank"
                     rel="noreferrer"
-                    className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'w-full whitespace-nowrap')}
+                    className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'group w-full whitespace-nowrap')}
                   >
-                    <ArrowUpRight className="size-5" strokeWidth={1.5} />
+                    <ArrowUpRight className="size-5 transition-transform duration-300 ease-out group-hover:rotate-12" strokeWidth={1.5} />
                     Открыть KODO
                   </Link>
                   <Link
@@ -189,36 +189,43 @@ export default function CaseOnePage() {
             </div>
           </section>
 
-          <section className="space-y-8 pb-36 mob:space-y-5 mob:pb-20">
-            <div className="max-w-[56rem]">
-              <SectionLabel>Сообщество</SectionLabel>
-              <h2 className="mt-6 text-[clamp(3.5rem,7vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.06em] text-neutral-300">
-                Контент получает автора и контекст
-              </h2>
+        </Container>
+
+        <section className="bg-[#668ec4] py-24 text-[#0a0a0a] mob:py-14">
+          <Container variant="default">
+            <div className="space-y-8 mob:space-y-5">
+              <div className="max-w-[56rem]">
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Сообщество</p>
+                <h2 className="mt-6 text-[clamp(3.5rem,7vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.06em]">
+                  Контент получает автора и контекст
+                </h2>
+              </div>
+
+              <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+                <Visual
+                  src="/cases/kodo/community.jpg"
+                  alt="Редакционные и пользовательские публикации в KODO"
+                  className="aspect-[16/10]"
+                  imageClassName="object-left"
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                />
+                <Visual
+                  src="/cases/kodo/profile.jpg"
+                  alt="Профиль автора и его публикации в KODO"
+                  className="aspect-[4/5]"
+                  imageClassName="object-left"
+                  sizes="(max-width: 768px) 100vw, 34vw"
+                />
+              </div>
+
+              <p className="ml-auto max-w-[34ch] text-xl leading-[1.5] text-black/70 mob:ml-0 mob:text-lg">
+                Профили, реакции и комментарии помогают обсуждать материалы и понимать, чей опыт стоит за публикацией.
+              </p>
             </div>
+          </Container>
+        </section>
 
-            <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-              <Visual
-                src="/cases/kodo/community.jpg"
-                alt="Редакционные и пользовательские публикации в KODO"
-                className="aspect-[16/10]"
-                imageClassName="object-left"
-                sizes="(max-width: 768px) 100vw, 60vw"
-              />
-              <Visual
-                src="/cases/kodo/profile.jpg"
-                alt="Профиль автора и его публикации в KODO"
-                className="aspect-[4/5]"
-                imageClassName="object-left"
-                sizes="(max-width: 768px) 100vw, 34vw"
-              />
-            </div>
-
-            <p className="ml-auto max-w-[34ch] text-xl leading-[1.5] text-neutral-400 mob:ml-0 mob:text-lg">
-              Профили, реакции и комментарии помогают обсуждать материалы и понимать, чей опыт стоит за публикацией.
-            </p>
-          </section>
-
+        <Container variant="default">
           <section className="pb-36 mob:pb-20">
             <div className="grid gap-10 lg:grid-cols-[0.55fr_1.45fr] lg:items-end">
               <div>
@@ -241,7 +248,7 @@ export default function CaseOnePage() {
           </section>
         </Container>
 
-        <section className="bg-[#111] py-24 mob:py-14">
+        <section className="bg-[#a866a5] py-24 text-[#0a0a0a] mob:py-14">
           <Container variant="default">
             <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
               <Visual
@@ -252,11 +259,11 @@ export default function CaseOnePage() {
                 sizes="(max-width: 768px) 100vw, 58vw"
               />
               <div>
-                <SectionLabel>Prompt Lab</SectionLabel>
-                <h2 className="mt-6 text-[clamp(3.5rem,7vw,7rem)] font-medium leading-[0.9] tracking-[-0.06em] text-neutral-300">
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Prompt Lab</p>
+                <h2 className="mt-6 text-[clamp(3.5rem,7vw,7rem)] font-medium leading-[0.9] tracking-[-0.06em]">
                   Сначала задача. Потом промпт.
                 </h2>
-                <p className="mt-8 max-w-[33ch] text-xl leading-[1.5] text-neutral-400 mob:text-lg">
+                <p className="mt-8 max-w-[33ch] text-xl leading-[1.5] text-black/70 mob:text-lg">
                   Инструмент помогает задать контекст, ограничения и критерии готовности, чтобы улучшить исходный запрос.
                 </p>
               </div>
@@ -294,15 +301,18 @@ export default function CaseOnePage() {
             </div>
           </section>
 
-          <section className="rounded-[28px] bg-[#5f8d52] px-10 py-12 text-[#0a0a0a] mob:rounded-2xl mob:px-6 mob:py-8">
+        </Container>
+
+        <section className="bg-[#c5ad0b] py-24 text-[#0a0a0a] mob:py-14">
+          <Container variant="default">
             <div className="grid gap-10 lg:grid-cols-[0.4fr_1fr] lg:items-end">
               <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Следующий шаг</p>
               <h2 className="max-w-[15ch] text-[clamp(3rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em]">
                 Проверить, станет ли пользовательский контент причиной возвращаться в KODO
               </h2>
             </div>
-          </section>
-        </Container>
+          </Container>
+        </section>
       </main>
     </>
   )
