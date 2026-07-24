@@ -53,7 +53,7 @@ const ARCHIVE_FOLDERS: ReadonlyArray<{
     description: 'Веб-эксперименты, интерактивные истории и учебные проекты',
     tags: ['Эксперименты', 'Web'],
     href: '/archive/vibecode',
-    projectSlugs: ['case-6', 'case-7', 'case-8', 'case-9', 'case-10'],
+    projectSlugs: ['case-6', 'case-7', 'case-8', 'case-9', 'case-10', 'case-14'],
   },
   {
     source: 'research',
