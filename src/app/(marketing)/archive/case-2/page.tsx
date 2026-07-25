@@ -5,148 +5,197 @@ export const metadata = {
 
 import Image from 'next/image'
 import Link from 'next/link'
+import {ArrowUpRight} from 'lucide-react'
 
+import {cn} from '@/lib/utils'
 import Container from '~/Global/Container'
 import ScrollProgress from '~~/research/ScrollProgress'
+import {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
 
 const SOURCE_URL = 'https://nika-vitkovskaya-portfolio.vercel.app/cases/tempo'
-
+const TAGS = ['Product Design', 'Research', 'Mobile', 'HSE']
 const META = [
-  {label: 'Формат', value: 'Учебный проект HSE Design'},
-  {label: 'Продукт', value: 'Мобильное приложение'},
-  {label: 'Фокус', value: 'Исследование, UX, визуальный язык'},
+  {label: 'Формат', value: 'Прототип мобильного приложения'},
+  {label: 'Роль', value: 'Исследование, UX и визуальная система'},
+  {label: 'Контекст', value: 'Учебный проект HSE Design'},
 ]
+const PIPELINE = [
+  {title: 'Понять нагрузку', text: 'Разобрал контекст задач, отдыха и личных дел.', color: 'bg-[#ff8a3d]'},
+  {title: 'Собрать сценарии', text: 'Связал User Stories, Job Stories, JTBD и CJM.', color: 'bg-[#64a8ef]'},
+  {title: 'Построить модель', text: 'Собрал функции продукта вокруг единого календаря.', color: 'bg-[#e95d8f]'},
+  {title: 'Найти характер', text: 'Соединил спокойный интерфейс с эмоциональными персонажами.', color: 'bg-[#65c983]'},
+]
+const METHODS = ['User Story Mapping', 'User Stories', 'Job Stories', 'Jobs To Be Done', 'Два CJM', 'Функциональный паук']
 
-const RESEARCH_GROUPS = [
-  {
-    title: 'Структура опыта',
-    items: ['User Story Mapping', 'User Stories', 'Job Stories'],
-  },
-  {
-    title: 'Потребности и контекст',
-    items: ['Jobs To Be Done', 'CJM холодного сценария', 'CJM горячего сценария'],
-  },
-  {
-    title: 'Модель продукта',
-    items: ['Функциональный паук'],
-  },
-] as const
+function Visual({className, imageClassName}: {className?: string; imageClassName?: string}) {
+  return (
+    <figure className={cn('group relative overflow-hidden rounded-[28px] bg-[#f5f2eb] mob:rounded-2xl', className)}>
+      <Image
+        src="/cases/tempo/cover.webp"
+        alt="Интерфейс и эмоциональные персонажи приложения Темпо"
+        fill
+        sizes="(max-width: 768px) 100vw, 90vw"
+        className={cn('object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]', imageClassName)}
+      />
+    </figure>
+  )
+}
+
+function Label({children, dark = false}: {children: React.ReactNode; dark?: boolean}) {
+  return <p className={cn('font-mono text-xs uppercase tracking-[0.14em]', dark ? 'text-black/55' : 'text-neutral-500')}>{children}</p>
+}
 
 export default function TempoCasePage() {
   return (
     <>
       <ScrollProgress />
-
-      <Container variant="default" className="space-y-24 pb-32 mob:space-y-16 mob:pb-20">
-        <header className="space-y-12 mob:space-y-8">
-          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
-            <span>Product case</span>
-            <span>Tempo</span>
-          </div>
-
-          <div className="max-w-[76rem] space-y-7">
-            <h1 className="max-w-[13ch] text-[clamp(4.5rem,8vw,9rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-neutral-300 mob:text-[3.25rem] mob:leading-[0.96]">
-              Прототип приложения «Темпо»
-            </h1>
-            <p className="max-w-[38ch] text-2xl leading-[1.25] text-neutral-400 mob:text-lg">
-              Таск-менеджер для планирования задач и заботы о себе без давления и перегрузки.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-3 border-y border-white/12 max-[820px]:grid-cols-1 max-[820px]:divide-y max-[820px]:divide-white/12">
-            {META.map((item) => (
-              <div key={item.label} className="py-6 pr-8 max-[820px]:py-4">
-                <div className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</div>
-                <div className="mt-3 max-w-[24ch] text-lg leading-tight text-neutral-300 mob:text-base">{item.value}</div>
+      <main className="overflow-hidden">
+        <Container variant="default">
+          <section className="flex min-h-[calc(100dvh-7rem)] flex-col justify-between gap-12 pb-16 pt-10 mob:min-h-0 mob:pb-12 mob:pt-5">
+            <div className="flex items-start justify-between gap-6 mob:flex-col">
+              <span className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">Продуктовый кейс</span>
+              <div className="flex flex-wrap justify-end gap-2 mob:justify-start">
+                {TAGS.map((tag) => <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-xs uppercase text-neutral-400">{tag}</span>)}
               </div>
-            ))}
-          </div>
-        </header>
+            </div>
 
-        <figure className="overflow-hidden rounded-[28px] border border-white/12 bg-[#f4f4f2] mob:rounded-2xl">
-          <Image
-            src="/cases/tempo/cover.webp"
-            alt="Промо-визуал мобильного приложения Темпо"
-            width={2143}
-            height={1270}
-            priority
-            className="h-auto w-full"
-          />
-        </figure>
+            <div className="grid items-end gap-10 lg:grid-cols-[1fr_24rem]">
+              <div>
+                <h1 className="text-[clamp(6rem,18vw,17rem)] font-semibold leading-[0.74] tracking-[-0.09em] text-neutral-300 mob:text-[17vw]">ТЕМПО</h1>
+                <p className="mt-12 max-w-[29ch] text-[clamp(1.65rem,3vw,3.25rem)] leading-[1.08] tracking-[-0.04em] text-neutral-300 mob:mt-8 mob:text-2xl">
+                  Баланс задач и отдыха в одном приложении.
+                </p>
+              </div>
+              <div className="space-y-7">
+                <p className="max-w-[34ch] text-lg leading-[1.45] text-neutral-400">Таск-менеджер, который помогает планировать нагрузку и восстановление без давления.</p>
+                <Link href={SOURCE_URL} target="_blank" rel="noreferrer" className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'group w-full whitespace-nowrap')}>
+                  <ArrowUpRight className="size-5 transition-transform duration-300 group-hover:rotate-12" strokeWidth={1.5} />
+                  Открыть полный кейс
+                </Link>
+              </div>
+            </div>
 
-        <section className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-16 border-t border-white/12 pt-10 max-[900px]:grid-cols-1 max-[900px]:gap-8">
-          <h2 className="text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-neutral-400 mob:text-4xl">Задача</h2>
-          <div className="max-w-[44rem] space-y-6 text-2xl leading-[1.3] text-neutral-300 mob:text-lg">
-            <p>Собрать планирование задач и восстановление в одном мобильном продукте.</p>
-            <p className="text-neutral-500">Темпо помогает видеть рабочую нагрузку рядом с отдыхом и личными делами, а не вести их в разрозненных системах.</p>
-          </div>
-        </section>
-
-        <section className="space-y-14 border-t border-white/12 pt-10 mob:space-y-9">
-          <div className="max-w-[66rem] space-y-5">
-            <h2 className="text-7xl font-medium leading-[0.94] tracking-[-0.05em] text-neutral-300 mob:text-4xl">Исследовательская рамка</h2>
-            <p className="max-w-[48ch] text-xl leading-[1.4] text-neutral-500 mob:text-base">
-              В кейсе собраны методы, которые связывают потребности пользователя, сценарии и будущую структуру продукта.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-[minmax(15rem,0.75fr)_minmax(0,1.25fr)] gap-x-14 max-[760px]:grid-cols-1">
-            {RESEARCH_GROUPS.map((group) => (
-              <div key={group.title} className="col-span-2 grid grid-cols-subgrid border-t border-white/10 py-7 max-[760px]:col-span-1 max-[760px]:grid-cols-1 max-[760px]:gap-4">
-                <h3 className="text-xl font-medium text-neutral-500">{group.title}</h3>
-                <div className="flex flex-wrap gap-x-3 gap-y-2 text-2xl leading-tight text-neutral-300 mob:text-lg">
-                  {group.items.map((item, index) => (
-                    <span key={item}>
-                      {item}{index < group.items.length - 1 ? ',' : ''}
-                    </span>
-                  ))}
+            <dl className="grid gap-x-10 gap-y-7 border-t border-white/12 pt-6 lg:grid-cols-3">
+              {META.map((item) => (
+                <div key={item.label}>
+                  <dt className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</dt>
+                  <dd className="mt-3 max-w-[32ch] text-base leading-[1.4] text-neutral-300">{item.value}</dd>
                 </div>
+              ))}
+            </dl>
+          </section>
+
+          <Visual className="aspect-[1.687/1] w-full" />
+
+          <section className="grid gap-12 py-36 lg:grid-cols-[1fr_1.1fr] lg:items-end mob:py-20">
+            <Label>Задача</Label>
+            <div>
+              <h2 className="max-w-[13ch] text-[clamp(3.4rem,7vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.06em] text-neutral-300 mob:text-[3.1rem]">
+                Планировать работу и восстановление вместе
+              </h2>
+              <p className="mt-9 max-w-[38ch] text-xl leading-[1.5] text-neutral-400 mob:text-lg">
+                Рабочие задачи, отдых и личные дела обычно живут в разных системах. Темпо показывает их как одну нагрузку.
+              </p>
+            </div>
+          </section>
+        </Container>
+
+        <section className="bg-[#ff8a3d] py-24 text-[#111] mob:py-14">
+          <Container variant="default">
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+              <div>
+                <Label dark>Контекст</Label>
+                <h2 className="mt-7 max-w-[10ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.84] tracking-[-0.07em]">Планировщик не видит состояние человека</h2>
               </div>
-            ))}
-          </div>
+              <p className="max-w-[34ch] text-xl leading-[1.45] text-black/70 mob:text-lg">
+                Обычный календарь фиксирует время, но не помогает соотнести плотность дня, ресурс и необходимость восстановления.
+              </p>
+            </div>
+          </Container>
         </section>
 
-        <section className="grid min-h-[38rem] content-between gap-24 rounded-[28px] border border-white/12 bg-black-light p-12 mob:min-h-0 mob:gap-16 mob:rounded-2xl mob:p-6">
-          <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-600">Позиционирование</div>
-          <div className="max-w-[74rem]">
-            <h2 className="text-[clamp(3.5rem,7vw,8rem)] font-medium leading-[0.93] tracking-[-0.06em] text-neutral-300 mob:text-[2.75rem]">
-              Баланс задач и отдыха в одном приложении
-            </h2>
-          </div>
+        <Container variant="default">
+          <section className="grid gap-16 py-36 lg:grid-cols-[0.55fr_1.45fr] mob:py-20">
+            <div>
+              <Label>Пайплайн</Label>
+              <p className="mt-7 max-w-[30ch] text-xl leading-[1.5] text-neutral-400">От исследования нагрузки до визуального языка приложения.</p>
+            </div>
+            <div className="grid gap-14">
+              {PIPELINE.map((item) => (
+                <article key={item.title} className="grid gap-7 sm:grid-cols-[10rem_1fr] sm:items-center">
+                  <div className="grid h-24 grid-cols-4 grid-rows-3 gap-1.5" aria-hidden="true">
+                    <span className={cn(item.color, 'col-span-3')} />
+                    <span className={cn(item.color, 'col-start-2 col-span-2')} />
+                    <span className={cn(item.color, 'col-span-1')} />
+                  </div>
+                  <div>
+                    <h2 className="text-[clamp(2.25rem,4vw,4.5rem)] leading-[0.95] tracking-[-0.05em] text-neutral-300">{item.title}</h2>
+                    <p className="mt-4 max-w-[36ch] text-lg leading-[1.5] text-neutral-500">{item.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </Container>
+
+        <section className="bg-[#64a8ef] py-24 text-[#111] mob:py-14">
+          <Container variant="default">
+            <Label dark>Исследование</Label>
+            <h2 className="mt-7 max-w-[12ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.85] tracking-[-0.07em]">Потребности превращаются в структуру</h2>
+            <div className="mt-16 flex max-w-[70rem] flex-wrap gap-x-4 gap-y-3 text-[clamp(1.7rem,3.3vw,3.5rem)] leading-[1.05] tracking-[-0.04em]">
+              {METHODS.map((method) => <span key={method}>{method}</span>)}
+            </div>
+          </Container>
         </section>
 
-        <section className="grid grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] gap-16 border-t border-white/12 pt-10 max-[900px]:grid-cols-1 max-[900px]:gap-8">
-          <div className="space-y-6">
-            <h2 className="text-7xl font-medium leading-[0.94] tracking-[-0.05em] text-neutral-300 mob:text-4xl">Визуальная часть</h2>
-            <p className="max-w-[44ch] text-xl leading-[1.4] text-neutral-500 mob:text-base">
-              Светлая интерфейсная основа дополняется цветными эмоциональными персонажами. Они делают тему нагрузки и самочувствия понятнее без медицинского тона.
+        <Container variant="default">
+          <section className="py-36 mob:py-20">
+            <Label>Решение</Label>
+            <h2 className="mt-7 max-w-[12ch] text-[clamp(3.5rem,7vw,7rem)] font-medium leading-[0.9] tracking-[-0.06em] text-neutral-300">Один календарь для всей нагрузки</h2>
+            <Visual className="mt-12 aspect-[16/9]" imageClassName="object-right" />
+            <p className="ml-auto mt-8 max-w-[34ch] text-xl leading-[1.5] text-neutral-400 mob:ml-0 mob:text-lg">
+              Работа, рутины, фокусировка и восстановление видны рядом, а цвет помогает быстро различать тип активности.
             </p>
-          </div>
+          </section>
+        </Container>
 
-          <div className="space-y-6 text-lg leading-[1.45] text-neutral-400 mob:text-base">
-            <p>Крупная типографика удерживает продукт простым и дружелюбным.</p>
-            <p>Цвет используется как сигнал состояния, а не как декоративный фон.</p>
-          </div>
+        <section className="bg-[#e95d8f] py-24 text-[#111] mob:py-14">
+          <Container variant="default">
+            <div className="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+              <div>
+                <Label dark>Визуальный язык</Label>
+                <h2 className="mt-7 max-w-[12ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.85] tracking-[-0.07em]">Эмоции без медицинского тона</h2>
+              </div>
+              <p className="max-w-[34ch] text-xl leading-[1.5] text-black/70 mob:text-lg">
+                Персонажи показывают состояние, а спокойная интерфейсная основа сохраняет продукт понятным и функциональным.
+              </p>
+            </div>
+          </Container>
         </section>
 
-        <section className="flex min-h-[30rem] flex-col items-start justify-between gap-16 border-t border-white/12 pt-10 mob:min-h-0">
-          <div className="space-y-5">
-            <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-600">Исходный проект</div>
-            <h2 className="max-w-[15ch] text-6xl font-medium leading-[0.96] tracking-[-0.045em] text-neutral-300 mob:text-4xl">
-              Продолжить знакомство с проектом
-            </h2>
-          </div>
+        <Container variant="default">
+          <section className="grid gap-14 py-36 lg:grid-cols-2 mob:py-20">
+            <div>
+              <Label>Статус</Label>
+              <h2 className="mt-6 max-w-[11ch] text-[clamp(3.25rem,6vw,6rem)] font-medium leading-[0.92] tracking-[-0.055em] text-neutral-300">Учебный продуктовый прототип</h2>
+            </div>
+            <p className="self-end max-w-[39ch] text-xl leading-[1.5] text-neutral-400 mob:text-lg">
+              Концепция, исследовательская рамка, сценарии и визуальный язык собраны. Следующий этап: проверка планирования и восстановления на реальных пользователях.
+            </p>
+          </section>
+        </Container>
 
-          <Link
-            href={SOURCE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full border border-white bg-white px-7 py-4 font-mono text-sm uppercase tracking-[0.08em] text-black transition-transform duration-200 active:scale-[0.98]"
-          >
-            Открыть полный кейс
-          </Link>
+        <section className="bg-[#65c983] py-24 text-[#111] mob:py-14">
+          <Container variant="default">
+            <div className="grid gap-10 lg:grid-cols-[0.4fr_1fr] lg:items-end">
+              <Label dark>Следующий вопрос</Label>
+              <h2 className="max-w-[15ch] text-[clamp(3rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em]">
+                Помогает ли общий календарь реалистичнее оценивать собственную нагрузку?
+              </h2>
+            </div>
+          </Container>
         </section>
-      </Container>
+      </main>
     </>
   )
 }
