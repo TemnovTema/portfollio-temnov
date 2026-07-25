@@ -15,13 +15,28 @@ import {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
 const KODO_URL = 'https://kodo-media.vercel.app/profile'
 const KODO_PRD_URL = 'https://app.notion.com/p/3a76ff52ef1080ea972ccda39aea5d9b'
 
-const ROLE_ITEMS = [
-  'Концепция продукта',
-  'Информационная архитектура',
-  'Пользовательские сценарии',
-  'Интерфейс и прототип',
-  'Дизайн-система',
-  'Базовый брендинг',
+const HERO_TAGS = ['AI-first', 'CustDev', 'Web', 'Branding']
+
+const META_ITEMS = [
+  {
+    label: 'Формат',
+    value: 'Веб-прототип, опубликован на Vercel',
+  },
+  {
+    label: 'Срок разработки',
+    value: 'Брендинг и исследование: 1 учебный модуль. Прототип: 14 дней',
+  },
+  {
+    label: 'Роль',
+    value: 'Продуктовый дизайн, брендинг и прототипирование',
+  },
+]
+
+const PIPELINE = [
+  'Исследование темы, формулировка проблемы',
+  'Разработка брендинга, сборка прототипа в Cursor',
+  'Тестирование прототипа на интервью',
+  'Принятие решений и пересборка прототипа v2',
 ]
 
 const PRODUCT_LOOP = ['Найти', 'Обсудить', 'Сохранить', 'Применить', 'Поделиться']
@@ -64,9 +79,15 @@ export default function CaseOnePage() {
       <main className="overflow-hidden">
         <Container variant="default">
           <section className="flex min-h-[calc(100dvh-7rem)] flex-col justify-between gap-12 pb-16 pt-10 mob:min-h-0 mob:gap-10 mob:pb-12 mob:pt-5">
-            <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
+            <div className="flex items-start justify-between gap-6">
               <span>Продуктовый кейс</span>
-              <span>Сообщество и инструменты</span>
+              <div className="flex flex-wrap justify-end gap-2">
+                {HERO_TAGS.map((tag) => (
+                  <span key={tag} className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.08em] text-neutral-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
             <div className="grid items-end gap-10 lg:grid-cols-[1fr_24rem]">
@@ -107,6 +128,15 @@ export default function CaseOnePage() {
                 </div>
               </div>
             </div>
+
+            <dl className="grid gap-x-10 gap-y-7 border-t border-white/12 pt-6 lg:grid-cols-3">
+              {META_ITEMS.map((item) => (
+                <div key={item.label}>
+                  <dt className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</dt>
+                  <dd className="mt-3 max-w-[32ch] text-base leading-[1.4] text-neutral-300">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
           </section>
 
           <Visual
@@ -134,13 +164,13 @@ export default function CaseOnePage() {
             <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
               <div className="flex flex-col justify-between gap-16">
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Визуальная система</p>
-                  <h2 className="mt-7 max-w-[9ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.82] tracking-[-0.07em]">
-                    Код как культурный знак
+                  <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Контекст</p>
+                  <h2 className="mt-7 max-w-[10ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.82] tracking-[-0.07em]">
+                    Знания живут в десятках источников
                   </h2>
                 </div>
                 <p className="max-w-[34ch] text-xl leading-[1.45] text-black/70 mob:text-lg">
-                  Логотип, модульная графика и цветовая система связывают цифровой продукт с плакатами, мерчем и городской средой.
+                  Материалы о вайбкодинге распределены между соцсетями, блогами, GitHub, документацией и закрытыми чатами. Они быстро теряются, а обсуждения остаются без контекста.
                 </p>
               </div>
 
@@ -152,38 +182,30 @@ export default function CaseOnePage() {
               />
             </div>
 
-            <div className="mt-5 grid gap-5 lg:grid-cols-[1.4fr_0.8fr]">
-              <Visual
-                src="/cases/kodo-brand/posters.jpg"
-                alt="Плакаты KODO в городской среде"
-                className="aspect-[1.41/1]"
-                sizes="(max-width: 768px) 100vw, 58vw"
-              />
-              <Visual
-                src="/cases/kodo-brand/poster.png"
-                alt="Типографический плакат KODO"
-                className="aspect-[0.7/1]"
-                imageClassName="object-top"
-                sizes="(max-width: 768px) 100vw, 32vw"
-              />
+            <div className="mt-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Ответ KODO</p>
+              <p className="max-w-[31ch] text-[clamp(2.25rem,4.5vw,4.75rem)] leading-[1] tracking-[-0.05em]">
+                Объединить публикации, обсуждения и полезные ресурсы в одном сообществе.
+              </p>
             </div>
           </Container>
         </section>
 
         <Container variant="default">
           <section className="py-36 mob:py-20">
-            <div className="grid gap-16 lg:grid-cols-[0.7fr_1.3fr]">
+            <div className="grid gap-16 lg:grid-cols-[0.55fr_1.45fr]">
               <div>
-                <SectionLabel>Моя работа</SectionLabel>
+                <SectionLabel>Пайплайн</SectionLabel>
                 <p className="mt-7 max-w-[31ch] text-xl leading-[1.5] text-neutral-400">
-                  Я переосмыслил концепцию и собрал продукт от структуры до интерактивного веб-прототипа.
+                  Проект прошёл путь от исследования темы до второй версии интерактивного прототипа.
                 </p>
               </div>
-              <div className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
-                {ROLE_ITEMS.map((item) => (
-                  <p key={item} className="text-[clamp(1.7rem,3vw,3.25rem)] leading-[1.05] tracking-[-0.04em] text-neutral-300">
-                    {item}
-                  </p>
+              <div className="grid gap-8">
+                {PIPELINE.map((item, index) => (
+                  <div key={item} className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                    <h2 className="max-w-[24ch] text-[clamp(1.9rem,3.4vw,3.75rem)] leading-[1] tracking-[-0.045em] text-neutral-300">{item}</h2>
+                    {index < PIPELINE.length - 1 && <span className="text-4xl text-[#5f8d52]" aria-hidden="true">↓</span>}
+                  </div>
                 ))}
               </div>
             </div>
@@ -193,39 +215,62 @@ export default function CaseOnePage() {
 
         <section className="bg-[#668ec4] py-24 text-[#0a0a0a] mob:py-14">
           <Container variant="default">
-            <div className="space-y-8 mob:space-y-5">
-              <div className="max-w-[56rem]">
-                <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Сообщество</p>
-                <h2 className="mt-6 text-[clamp(3.5rem,7vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.06em]">
-                  Контент получает автора и контекст
-                </h2>
-              </div>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-black/55">Исследование</p>
+              <h2 className="mt-7 max-w-[13ch] text-[clamp(4rem,8vw,8rem)] font-semibold leading-[0.85] tracking-[-0.07em]">
+                Два типа интервью. Два этапа принятия решений.
+              </h2>
 
-              <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-                <Visual
-                  src="/cases/kodo/community.jpg"
-                  alt="Редакционные и пользовательские публикации в KODO"
-                  className="aspect-[16/10]"
-                  imageClassName="object-left"
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                />
-                <Visual
-                  src="/cases/kodo/profile.jpg"
-                  alt="Профиль автора и его публикации в KODO"
-                  className="aspect-[4/5]"
-                  imageClassName="object-left"
-                  sizes="(max-width: 768px) 100vw, 34vw"
-                />
-              </div>
+              <div className="mt-20 grid gap-12 lg:grid-cols-2 mob:mt-12">
+                <article>
+                  <h3 className="text-[clamp(2.3rem,4.5vw,4.75rem)] leading-[0.95] tracking-[-0.05em]">Глубинные интервью</h3>
+                  <p className="mt-6 max-w-[34ch] text-xl leading-[1.5] text-black/70 mob:text-lg">
+                    Помогли понять, где участники находят материалы об AI, как сохраняют ресурсы и чего им не хватает в существующих сообществах.
+                  </p>
+                </article>
 
-              <p className="ml-auto max-w-[34ch] text-xl leading-[1.5] text-black/70 mob:ml-0 mob:text-lg">
-                Профили, реакции и комментарии помогают обсуждать материалы и понимать, чей опыт стоит за публикацией.
-              </p>
+                <article>
+                  <h3 className="text-[clamp(2.3rem,4.5vw,4.75rem)] leading-[0.95] tracking-[-0.05em]">Интервью с прототипом</h3>
+                  <p className="mt-6 max-w-[34ch] text-xl leading-[1.5] text-black/70 mob:text-lg">
+                    Позволили проверить ленту, профили авторов, библиотеку и Prompt Lab до пересборки второй версии.
+                  </p>
+                </article>
+              </div>
             </div>
           </Container>
         </section>
 
         <Container variant="default">
+          <section className="space-y-8 py-36 mob:space-y-5 mob:py-20">
+            <div className="max-w-[56rem]">
+              <SectionLabel>Сообщество</SectionLabel>
+              <h2 className="mt-6 text-[clamp(3.5rem,7vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.06em] text-neutral-300">
+                Контент получает автора и контекст
+              </h2>
+            </div>
+
+            <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+              <Visual
+                src="/cases/kodo/community.jpg"
+                alt="Редакционные и пользовательские публикации в KODO"
+                className="aspect-[16/10]"
+                imageClassName="object-left"
+                sizes="(max-width: 768px) 100vw, 60vw"
+              />
+              <Visual
+                src="/cases/kodo/profile.jpg"
+                alt="Профиль автора и его публикации в KODO"
+                className="aspect-[4/5]"
+                imageClassName="object-left"
+                sizes="(max-width: 768px) 100vw, 34vw"
+              />
+            </div>
+
+            <p className="ml-auto max-w-[34ch] text-xl leading-[1.5] text-neutral-400 mob:ml-0 mob:text-lg">
+              Профили, реакции и комментарии помогают обсуждать материалы и понимать, чей опыт стоит за публикацией.
+            </p>
+          </section>
+
           <section className="pb-36 mob:pb-20">
             <div className="grid gap-10 lg:grid-cols-[0.55fr_1.45fr] lg:items-end">
               <div>
