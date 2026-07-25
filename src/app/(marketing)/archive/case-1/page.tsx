@@ -33,10 +33,30 @@ const META_ITEMS = [
 ]
 
 const PIPELINE = [
-  'Исследование темы, формулировка проблемы',
-  'Разработка брендинга, сборка прототипа в Cursor',
-  'Тестирование прототипа на интервью',
-  'Принятие решений и пересборка прототипа v2',
+  {
+    title: 'Найти проблему',
+    text: 'Исследовал тему и сформулировал продуктовую проблему.',
+    color: 'bg-[#5f8d52]',
+    blocks: ['col-span-3', 'col-start-2 col-span-2', 'col-span-1'],
+  },
+  {
+    title: 'Собрать первую версию',
+    text: 'Разработал брендинг и собрал прототип v1 в Cursor.',
+    color: 'bg-[#c5ad0b]',
+    blocks: ['col-start-2 col-span-3', 'col-span-2', 'col-start-4 col-span-1'],
+  },
+  {
+    title: 'Проверить на интервью',
+    text: 'Провёл интервью с прототипом и проверил ключевые сценарии.',
+    color: 'bg-[#a866a5]',
+    blocks: ['col-span-2', 'col-start-3 col-span-2', 'col-start-2 col-span-1'],
+  },
+  {
+    title: 'Пересобрать KODO',
+    text: 'Принял решения по итогам интервью и собрал прототип v2.',
+    color: 'bg-[#668ec4]',
+    blocks: ['col-start-2 col-span-2', 'col-span-4', 'col-start-4 col-span-1'],
+  },
 ]
 
 const PRODUCT_LOOP = ['Найти', 'Обсудить', 'Сохранить', 'Применить', 'Поделиться']
@@ -200,12 +220,19 @@ export default function CaseOnePage() {
                   Проект прошёл путь от исследования темы до второй версии интерактивного прототипа.
                 </p>
               </div>
-              <div className="grid gap-8">
-                {PIPELINE.map((item, index) => (
-                  <div key={item} className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-                    <h2 className="max-w-[24ch] text-[clamp(1.9rem,3.4vw,3.75rem)] leading-[1] tracking-[-0.045em] text-neutral-300">{item}</h2>
-                    {index < PIPELINE.length - 1 && <span className="text-4xl text-[#5f8d52]" aria-hidden="true">↓</span>}
-                  </div>
+              <div className="grid gap-14">
+                {PIPELINE.map((item) => (
+                  <article key={item.title} className="grid gap-7 sm:grid-cols-[10rem_1fr] sm:items-center">
+                    <div className="grid h-24 grid-cols-4 grid-rows-3 gap-1.5" aria-hidden="true">
+                      {item.blocks.map((block, index) => (
+                        <span key={`${item.title}-${index}`} className={cn(item.color, block)} />
+                      ))}
+                    </div>
+                    <div>
+                      <h2 className="max-w-[19ch] text-[clamp(2.25rem,4vw,4.5rem)] leading-[0.95] tracking-[-0.05em] text-neutral-300">{item.title}</h2>
+                      <p className="mt-4 max-w-[36ch] text-lg leading-[1.5] text-neutral-500">{item.text}</p>
+                    </div>
+                  </article>
                 ))}
               </div>
             </div>
