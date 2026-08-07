@@ -13,7 +13,7 @@ const PHOTO_SLOTS = ['Портрет 01', 'Портрет 02']
 
 export default function Content({data}: {data: string}) {
   return (
-    <Container variant="default" className="space-y-4 lap:space-y-3 mob:pt-24!">
+    <Container as="main" variant="default" className="space-y-4 lap:space-y-3 mob:pt-24!">
       <div className="w-full space-y-6">
         <div className="-mx-2.5 hidden mob:block">
           <div className="relative aspect-[4/5] w-full overflow-hidden">
@@ -44,7 +44,7 @@ export default function Content({data}: {data: string}) {
           ))}
         </div>
 
-        <main className="space-y-10">
+        <div className="space-y-10">
           <section className="space-y-8">
             <div className="grid grid-cols-[minmax(0,34rem)_minmax(0,1fr)] gap-x-10 gap-y-8 items-start max-[1280px]:grid-cols-1">
               <div className="max-w-[34rem] space-y-5 lap:space-y-4">
@@ -103,7 +103,7 @@ export default function Content({data}: {data: string}) {
               <MDXRemote source={data} components={MDX} />
             </article>
           </div>
-        </main>
+        </div>
       </div>
     </Container>
   )

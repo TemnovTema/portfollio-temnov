@@ -9,7 +9,7 @@ import Closing from '~~/teaser/Launch'
 
 export default function IndexPage() {
   return (
-    <Container variant="default" className="space-y-24 pb-40 mob:pt-0">
+    <Container as="main" variant="default" className="space-y-24 pb-40 mob:pt-0">
       <Hero />
       <Highlights />
       <Closing />

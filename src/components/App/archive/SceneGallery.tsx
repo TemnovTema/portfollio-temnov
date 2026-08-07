@@ -30,8 +30,8 @@ export default function SceneGallery({scenes}: {scenes: Scene[]}) {
   }
 
   return (
-    <section className="space-y-6" aria-labelledby="scene-gallery-title">
-      <div className="flex items-end justify-between gap-5 mob:items-start">
+    <section className="min-w-0 max-w-full space-y-6 overflow-x-clip" aria-labelledby="scene-gallery-title">
+      <div className="flex items-end justify-between gap-5 mob:flex-col mob:items-stretch">
         <div className="space-y-3">
           <h2 id="scene-gallery-title" className="text-[clamp(2.5rem,4.8vw,5rem)] font-medium leading-[0.96] tracking-[-0.055em] text-neutral-300 mob:text-[2.5rem]">
             Галерея сцен
@@ -41,7 +41,7 @@ export default function SceneGallery({scenes}: {scenes: Scene[]}) {
           </p>
         </div>
 
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 gap-2 mob:self-end">
           <button type="button" onClick={() => selectRelative(-1)} aria-label="Предыдущая сцена" className="grid size-11 place-items-center rounded-full border border-white/15 text-neutral-300 transition-colors hover:border-white/40 hover:bg-white hover:text-black active:scale-[0.97]">
             <ArrowLeft className="size-5" strokeWidth={1.5} />
           </button>

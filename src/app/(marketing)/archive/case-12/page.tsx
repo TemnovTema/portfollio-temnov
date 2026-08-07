@@ -48,7 +48,7 @@ export default function DzenPostersPage() {
     <>
       <ScrollProgress />
 
-      <Container variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
+      <Container as="main" variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
         <header className="space-y-12 mob:space-y-8">
           <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
             <Link href="/archive/graphics" className="transition-colors hover:text-neutral-200">← Графика</Link>

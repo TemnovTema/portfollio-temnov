@@ -30,12 +30,14 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
   })
 
   useEffect(() => {
+    if (shouldReduceMotion) return
+
     const intervalId = window.setInterval(() => {
       setIndex((prev) => (prev + 1) % WORDS.length)
     }, INTERVAL_MS)
 
     return () => window.clearInterval(intervalId)
-  }, [])
+  }, [shouldReduceMotion])
 
   useLayoutEffect(() => {
     const updateLayout = () => {
@@ -43,7 +45,6 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
       if (nextWidth) {
         setWidth(Math.ceil(nextWidth))
       }
-
     }
 
     updateLayout()

@@ -4,6 +4,7 @@ type Props = {
   children: React.ReactNode
   className?: string
   variant?: 'default' | 'compact'
+  as?: 'div' | 'main'
 }
 
 export const BOX_STYLES = {
@@ -20,8 +21,8 @@ export const BOX_STYLES = {
 export const HEADER_BOX = 'px-[10rem] lap:px-[2rem] mob:px-2'
 export const MINI_BLOCK = 'px-[42rem] lap:px-[25rem] mob:px-2'
 
-export default function Container({children, className, variant = 'default'}: Props) {
+export default function Container({children, className, variant = 'default', as: Element = 'div'}: Props) {
   const {box, padding} = BOX_STYLES[variant]
 
-  return <main className={cn(box, padding, className)}>{children}</main>
+  return <Element className={cn(box, padding, className)}>{children}</Element>
 }

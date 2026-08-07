@@ -35,7 +35,7 @@ export default async function CaseSixPage() {
     <>
       <ScrollProgress />
 
-      <Container variant="default" className="space-y-4 lap:space-y-3">
+      <Container as="main" variant="default" className="space-y-4 lap:space-y-3">
         <div className="w-full space-y-6">
           <div className="flex justify-between text-sm font-medium tracking-tight uppercase text-neutral-300">
             {META_LABELS.map((item) => (
@@ -43,7 +43,7 @@ export default async function CaseSixPage() {
             ))}
           </div>
 
-          <main className="space-y-10">
+          <div className="space-y-10">
             <section className="space-y-6">
               <div className="grid grid-cols-[minmax(0,34rem)_minmax(0,1fr)] gap-x-10 gap-y-8 items-end max-[1280px]:grid-cols-1">
                 <div className="max-w-[34rem] space-y-5 lap:space-y-4">
@@ -107,7 +107,7 @@ export default async function CaseSixPage() {
             <article className="max-w-[60rem]">
               <MDXRemote source={content} components={MDX} />
             </article>
-          </main>
+          </div>
         </div>
       </Container>
     </>

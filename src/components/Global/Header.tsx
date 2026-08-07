@@ -31,7 +31,7 @@ export default function Header() {
   }, [isMenuOpen])
 
   return (
-    <header className={cn('fixed z-[999] w-full pt-6 lap:pt-4 mob:pt-2', HEADER_BOX)}>
+    <header className={cn('fixed inset-x-0 z-[999] pt-6 lap:pt-4 mob:pt-2', HEADER_BOX)}>
       <motion.div
         className={cn('relative z-[150]', 'p-2 mob:p-1.5 grid grid-cols-5 mob:flex mob:justify-between items-center rounded-2xl', 'bg-black border border-gray-medium/70')}
         style={{

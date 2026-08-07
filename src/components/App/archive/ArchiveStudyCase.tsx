@@ -42,7 +42,7 @@ export default function ArchiveStudyCase({
   children,
 }: ArchiveStudyCaseProps) {
   return (
-    <Container variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
+    <Container as="main" variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
       <section className="space-y-8 mob:space-y-6">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
@@ -52,7 +52,7 @@ export default function ArchiveStudyCase({
           ))}
         </div>
 
-        <h1 className="max-w-[12ch] text-[clamp(4.5rem,8vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-neutral-300 mob:text-[3.25rem] mob:leading-[0.96]">
+        <h1 className="max-w-[12ch] text-[clamp(4.5rem,8vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-neutral-300 mob:text-[clamp(2.5rem,11vw,3.25rem)] mob:leading-[0.96] mob:break-words">
           {title}
         </h1>
 

@@ -10,7 +10,7 @@ import {useState} from 'react'
 
 import ArchiveDashboard from '~~/archive/ArchiveDashboard'
 import {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
-import {H2, H4} from '~/UI/Typography'
+import {H4, typoClasses} from '~/UI/Typography'
 
 type ArchiveMode = 'folder' | 'dashboard'
 
@@ -81,7 +81,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
     <div className="space-y-6">
       <section className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between mob:gap-4">
         <div className="space-y-3">
-          <H2>Архив</H2>
+          <h1 className={typoClasses.h2}>Архив</h1>
           <H4 className="max-w-[58ch] font-sans text-lg normal-case leading-[1.45] text-neutral-400 mob:max-w-[32ch] mob:text-sm">
             Четыре направления продуктовой работы в одном архиве.
           </H4>

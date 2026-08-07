@@ -7,21 +7,28 @@ const nextConfig: NextConfig = {
 
   experimental: {
     typedEnv: true,
-    browserDebugInfoInTerminal: true,
+  },
+
+  logging: {
+    browserToTerminal: true,
   },
 
   images: {
     qualities: [70, 100],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
   },
   transpilePackages: ['next-mdx-remote'],
-  async redirects() {
-    return []
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {key: 'X-Content-Type-Options', value: 'nosniff'},
+          {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
+          {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
+          {key: 'X-Frame-Options', value: 'DENY'},
+        ],
+      },
+    ]
   },
 }
 

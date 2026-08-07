@@ -28,7 +28,7 @@ export default function Button({text, icon, variant = 'solid', size = 'base', cl
 
   if (to) {
     return (
-      <Link href={to} className={cn(buttonStyles, className)} target={target} onClick={onClick}>
+      <Link href={to} className={cn(buttonStyles, className)} target={target} rel={target === '_blank' ? 'noopener noreferrer' : undefined} onClick={onClick}>
         {icon}
         {text}
       </Link>

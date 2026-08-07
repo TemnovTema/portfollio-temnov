@@ -2,7 +2,7 @@ import {ITEMS} from '@/app/archive/storage'
 
 import CaseCard from '~~/archive/CaseCard'
 import Container from '~/Global/Container'
-import {H2} from '~/UI/Typography'
+import {typoClasses} from '~/UI/Typography'
 
 export const metadata = {
   title: 'Графика',
@@ -14,9 +14,9 @@ const GRAPHICS_ITEMS = GRAPHICS_SLUGS.map((slug) => ITEMS.find((item) => item.sl
 
 export default function GraphicsPage() {
   return (
-    <Container variant="default" className="space-y-12 pb-32 mob:space-y-8 mob:pb-20">
+    <Container as="main" variant="default" className="space-y-12 pb-32 mob:space-y-8 mob:pb-20">
       <section className="space-y-5">
-        <H2>Графика</H2>
+        <h1 className={typoClasses.h2}>Графика</h1>
         <p className="max-w-[46ch] text-[clamp(1.35rem,2.15vw,2rem)] leading-[1.35] tracking-[-0.025em] text-neutral-300 mob:text-xl mob:leading-[1.4]">
           Плакаты, типографические серии и визуальные эксперименты — проекты, в которых композиция, изображение и шрифт становятся основным инструментом высказывания.
         </p>

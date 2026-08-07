@@ -1,7 +1,7 @@
 import {type NextRequest, NextResponse} from 'next/server'
 import {FONT_NAME, FONT_DIR, type FontWeight, weightMap} from './config'
 
-async function generateFontFace(weight: FontWeight): Promise<string> {
+function generateFontFace(weight: FontWeight): string {
   const weightName = weightMap[weight]
   const fileName = `SFProDisplay-${weightName}`
 
@@ -18,19 +18,17 @@ async function generateFontFace(weight: FontWeight): Promise<string> {
   `.trim()
 }
 
-export async function GET(request: NextRequest) {
+export function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const weights = (searchParams.get('weights')?.split(',') as FontWeight[]) || []
 
-  const validWeights = weights.filter((weight): weight is FontWeight => weight in weightMap)
+  const validWeights = [...new Set(weights.filter((weight): weight is FontWeight => weight in weightMap))]
 
   if (validWeights.length === 0) {
     return new NextResponse('Invalid or missing weight parameters', {status: 400})
   }
 
-  const fontFaces = await Promise.all(weights.flatMap((weight) => generateFontFace(weight)))
-
-  const css = fontFaces.filter(Boolean).join('\n\n')
+  const css = validWeights.map(generateFontFace).join('\n\n')
 
   return new NextResponse(css, {
     headers: {
