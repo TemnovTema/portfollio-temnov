@@ -1,6 +1,6 @@
 'use client'
 
-import {HEADER_DATA, WEBSITE_PATHS} from '@/lib/constants'
+import {HEADER_DATA} from '@/lib/constants'
 import {HEADER_BOX} from '~/Global/Container'
 import {MOB_SCREEN_HEIGHT} from '~~/index/Hero'
 import {Menu, X} from 'lucide-react'
@@ -50,7 +50,7 @@ export default function Header() {
         </nav>
 
         <div className={cn('justify-self-end', 'flex justify-between gap-[7px]')}>
-          <Button to={`${WEBSITE_PATHS.home}#featured-cases`} variant="solid" size="small" text="Смотреть кейсы" onClick={() => !isDesktop && isMenuOpen && setIsMenuOpen(false)} className="mob:hidden" />
+          <Button to="https://t.me/absolutnoretro" target="_blank" variant="solid" size="small" text="Связаться" onClick={() => !isDesktop && isMenuOpen && setIsMenuOpen(false)} className="mob:hidden" />
 
           {!isDesktop && (
             <button className={cn([BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.outline], BUTTON_SIZES.small, 'hidden mob:block mob:py-2 mob:px-2.5 border-white-dirty/40 text-white-dirty/90')} onClick={toggleMenu}>
