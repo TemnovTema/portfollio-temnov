@@ -1,42 +1,33 @@
 'use client'
 
-import {animate, AnimatePresence, motion, useMotionValue, useReducedMotion} from 'framer-motion'
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react'
+import {AnimatePresence, motion, useAnimationFrame, useMotionValue, useReducedMotion} from 'framer-motion'
+import {useEffect, useLayoutEffect, useRef, useState} from 'react'
 
 const WORDS = ['эйчар!', 'коллега!', 'заказчик!', 'Дмитрий!'] as const
 const INTERVAL_MS = 2000
 const FALLBACK_WORD = 'заказчик!'
-const SHIMMER_DURATION = 3
+const SHIMMER_DURATION_MS = 3000
+const SHIMMER_START = -120
+const SHIMMER_DISTANCE = 240
 
 export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'inline' | 'mobile-stage'}) {
   const shouldReduceMotion = useReducedMotion()
   const [index, setIndex] = useState(0)
   const [width, setWidth] = useState<number | null>(null)
   const measureRefs = useRef<Array<HTMLSpanElement | null>>([])
-  const shimmerRef = useRef<HTMLSpanElement>(null)
-  const shimmerPosition = useMotionValue(0)
-  const shimmerAnimation = useRef<ReturnType<typeof animate> | null>(null)
+  const shimmerPosition = useMotionValue(`${SHIMMER_START}%`)
   const currentWord = WORDS[index]
   const isMobileStage = variant === 'mobile-stage'
   const restingTransform = isMobileStage ? 'translate(-50%, -50%)' : 'translateY(-50%)'
   const enterTransform = isMobileStage ? 'translate(-50%, 0.18em)' : 'translateY(0.18em)'
   const exitTransform = isMobileStage ? 'translate(-50%, -1.18em)' : 'translateY(-1.18em)'
 
-  const updateShimmer = useCallback(() => {
-    if (!shimmerRef.current) return
+  useAnimationFrame((time) => {
+    if (shouldReduceMotion) return
 
-    const wordWidth = shimmerRef.current.offsetWidth
-    const startPos = wordWidth * -0.5
-    const endPos = wordWidth * 1.25
-
-    shimmerAnimation.current?.stop()
-    shimmerPosition.set(startPos)
-    shimmerAnimation.current = animate(shimmerPosition, endPos, {
-      duration: SHIMMER_DURATION,
-      ease: 'linear',
-      repeat: Infinity,
-    })
-  }, [shimmerPosition])
+    const phase = (time % SHIMMER_DURATION_MS) / SHIMMER_DURATION_MS
+    shimmerPosition.set(`${SHIMMER_START + phase * SHIMMER_DISTANCE}%`)
+  })
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -53,7 +44,6 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
         setWidth(Math.ceil(nextWidth))
       }
 
-      updateShimmer()
     }
 
     updateLayout()
@@ -62,14 +52,12 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
 
     return () => {
       window.removeEventListener('resize', updateLayout)
-      shimmerAnimation.current?.stop()
     }
-  }, [updateShimmer])
+  }, [])
 
   return (
     <>
       <motion.span
-        ref={shimmerRef}
         data-rotating-greeting
         className={isMobileStage
           ? 'relative flex h-[1.3em] w-full items-center justify-center overflow-hidden'
@@ -96,8 +84,8 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
               aria-hidden="true"
               className="absolute inset-0 block bg-clip-text text-transparent"
               style={{
-                backgroundImage: 'linear-gradient(to right, #707070 0%, #CFCFCF 10%, #707070 20%)',
-                backgroundSize: '200%',
+                backgroundImage: 'linear-gradient(90deg, #707070 0%, #707070 36%, #cfcfcf 50%, #707070 64%, #707070 100%)',
+                backgroundSize: '220% 100%',
                 backgroundPositionX: shimmerPosition,
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
