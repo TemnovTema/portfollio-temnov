@@ -1,6 +1,6 @@
 'use client'
 
-import {AnimatePresence, motion, useAnimationFrame, useMotionValue, useReducedMotion} from 'framer-motion'
+import {motion, useAnimationControls, useAnimationFrame, useMotionValue, useReducedMotion} from 'framer-motion'
 import {useEffect, useLayoutEffect, useRef, useState} from 'react'
 
 const WORDS = ['эйчар!', 'коллега!', 'заказчик!', 'Дмитрий!'] as const
@@ -15,12 +15,10 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
   const [index, setIndex] = useState(0)
   const [width, setWidth] = useState<number | null>(null)
   const measureRefs = useRef<Array<HTMLSpanElement | null>>([])
+  const wordControls = useAnimationControls()
   const shimmerPosition = useMotionValue(`${SHIMMER_START}%`)
   const currentWord = WORDS[index]
   const isMobileStage = variant === 'mobile-stage'
-  const restingTransform = isMobileStage ? 'translate(-50%, -50%)' : 'translateY(-50%)'
-  const enterTransform = isMobileStage ? 'translate(-50%, 0.18em)' : 'translateY(0.18em)'
-  const exitTransform = isMobileStage ? 'translate(-50%, -1.18em)' : 'translateY(-1.18em)'
 
   useAnimationFrame((time) => {
     if (shouldReduceMotion) return
@@ -32,12 +30,42 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
   useEffect(() => {
     if (shouldReduceMotion) return
 
-    const intervalId = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % WORDS.length)
-    }, INTERVAL_MS)
+    let isCancelled = false
+    let timeoutId: number
 
-    return () => window.clearInterval(intervalId)
-  }, [shouldReduceMotion])
+    const rotateWord = async () => {
+      await wordControls.start({
+        opacity: 0,
+        y: '-118%',
+        filter: 'blur(3px)',
+        transition: {duration: 0.26, ease: [0.55, 0, 1, 0.45]},
+      })
+
+      if (isCancelled) return
+
+      setIndex((prev) => (prev + 1) % WORDS.length)
+      wordControls.set({opacity: 0, y: '18%', filter: 'blur(3px)'})
+
+      await wordControls.start({
+        opacity: 1,
+        y: '-50%',
+        filter: 'blur(0px)',
+        transition: {duration: 0.34, ease: [0.23, 1, 0.32, 1]},
+      })
+
+      if (!isCancelled) {
+        timeoutId = window.setTimeout(rotateWord, INTERVAL_MS)
+      }
+    }
+
+    timeoutId = window.setTimeout(rotateWord, INTERVAL_MS)
+
+    return () => {
+      isCancelled = true
+      window.clearTimeout(timeoutId)
+      wordControls.stop()
+    }
+  }, [shouldReduceMotion, wordControls])
 
   useLayoutEffect(() => {
     const updateLayout = () => {
@@ -71,32 +99,25 @@ export default function RotatingGreetingWord({variant = 'inline'}: {variant?: 'i
           </span>
         )}
 
-        <AnimatePresence initial={false} mode="sync">
+        <motion.span
+          className={`absolute top-1/2 block whitespace-nowrap ${isMobileStage ? 'left-1/2' : 'left-0'}`}
+          initial={{opacity: 1, x: isMobileStage ? '-50%' : '0%', y: '-50%', filter: 'blur(0px)'}}
+          animate={wordControls}
+        >
           <motion.span
-            key={currentWord}
-            className={`absolute top-1/2 block whitespace-nowrap text-[#707070] ${isMobileStage ? 'left-1/2' : 'left-0'}`}
-            initial={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: enterTransform, filter: 'blur(3px)'}}
-            animate={shouldReduceMotion ? {opacity: 1, transform: restingTransform} : {opacity: 1, transform: restingTransform, filter: 'blur(0px)'}}
-            exit={shouldReduceMotion ? {opacity: 0} : {opacity: 0, transform: exitTransform, filter: 'blur(3px)'}}
-            transition={{duration: shouldReduceMotion ? 0.18 : 0.32, ease: [0.23, 1, 0.32, 1]}}
+            className="block bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #707070 0%, #707070 36%, #cfcfcf 50%, #707070 64%, #707070 100%)',
+              backgroundSize: '220% 100%',
+              backgroundPositionX: shimmerPosition,
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
           >
             {currentWord}
-            <motion.span
-              aria-hidden="true"
-              className="absolute inset-0 block bg-clip-text text-transparent"
-              style={{
-                backgroundImage: 'linear-gradient(90deg, #707070 0%, #707070 36%, #cfcfcf 50%, #707070 64%, #707070 100%)',
-                backgroundSize: '220% 100%',
-                backgroundPositionX: shimmerPosition,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              {currentWord}
-            </motion.span>
           </motion.span>
-        </AnimatePresence>
+        </motion.span>
       </motion.span>
 
       <span aria-hidden="true" className="pointer-events-none fixed left-0 top-0 -z-10 overflow-hidden opacity-0 select-none">
