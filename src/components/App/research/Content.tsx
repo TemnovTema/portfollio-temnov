@@ -9,7 +9,10 @@ import Button from '~/UI/Button'
 import {MDX} from '~/UI/MDX'
 
 const META_LABELS = ['About', 'Product Design']
-const PHOTO_SLOTS = ['Портрет 01', 'Портрет 02']
+const PHOTO_SLOTS = [
+  {label: 'Портрет 01', src: '/about/artem-studio-front-v5.png'},
+  {label: 'Портрет 02'},
+]
 
 export default function Content({data}: {data: string}) {
   return (
@@ -80,18 +83,31 @@ export default function Content({data}: {data: string}) {
               <div className="grid w-full max-w-[49rem] grid-cols-2 gap-4 justify-self-end self-start max-[1280px]:justify-self-start max-[740px]:grid-cols-1 mob:hidden">
                 {PHOTO_SLOTS.map((slot) => (
                   <div
-                    key={slot}
+                    key={slot.label}
                     className={cn(
-                      'relative aspect-[5/6] overflow-hidden rounded-xl border border-dashed border-white/15 bg-black-card',
+                      'relative aspect-[5/6] overflow-hidden rounded-xl border bg-black-card',
+                      slot.src ? 'border-white/10' : 'border-dashed border-white/15',
                       'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_45%),linear-gradient(180deg,_rgba(18,18,18,0.98),_rgba(8,8,8,1))]',
                       'max-[740px]:max-w-[24rem]',
                     )}
                   >
-                    <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:22px_22px]" />
-                    <div className="relative z-10 flex h-full flex-col justify-between p-4">
-                      <span className="text-xs font-mono uppercase text-neutral-400">{slot}</span>
-                      <span className="text-xs font-mono uppercase text-neutral-500">Место под фото</span>
-                    </div>
+                    {slot.src ? (
+                      <Image
+                        src={slot.src}
+                        alt="Студийный портрет Артема Темнова"
+                        fill
+                        sizes="(max-width: 1280px) 24rem, 24.5rem"
+                        className="object-cover object-top grayscale"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:22px_22px]" />
+                        <div className="relative z-10 flex h-full flex-col justify-between p-4">
+                          <span className="text-xs font-mono uppercase text-neutral-400">{slot.label}</span>
+                          <span className="text-xs font-mono uppercase text-neutral-500">Место под фото</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
