@@ -3,7 +3,7 @@
 import {HEADER_DATA} from '@/lib/constants'
 import {HEADER_BOX} from '~/Global/Container'
 import {MOB_SCREEN_HEIGHT} from '~~/index/Hero'
-import {Grid2X2, Menu, Send, X} from 'lucide-react'
+import {Menu, X} from 'lucide-react'
 
 import {useState, useLayoutEffect} from 'react'
 import {motion, AnimatePresence, useScroll, useTransform} from 'framer-motion'
@@ -11,7 +11,6 @@ import {useMediaQuery} from '@/hooks/use-media-query'
 import {cn} from '@/lib/utils'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import {usePathname} from 'next/navigation'
 import {HeaderLink} from '~/UI/HeaderLink'
 import Button, {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
@@ -39,54 +38,40 @@ export default function Header() {
     <header className={cn('fixed inset-x-0 z-[999] box-border max-w-[100vw] pt-6 lap:pt-4 mob:pt-2 max-[500px]:w-[100vw] max-[500px]:px-2', HEADER_BOX)}>
       {isStagePage ? (
         <motion.div
-          className="relative z-[150] mx-auto flex w-fit items-center gap-1 rounded-full border border-white/38 bg-black/[0.11] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.34),inset_0_-1px_0_rgba(255,255,255,0.08),0_1.25rem_3.5rem_rgba(36,36,34,0.16)] backdrop-blur-[28px] backdrop-saturate-150 mob:hidden"
+          className="relative z-[150] mx-auto flex w-fit flex-col items-center gap-1.5 mob:hidden"
           initial={{opacity: 0, y: -12}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.5, ease: [0.22, 1, 0.36, 1]}}
         >
           <Link
-            href="/archive"
-            aria-label="Открыть архив"
-            className="grid size-10 shrink-0 place-items-center rounded-full border border-white/30 bg-white/16 text-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-[background-color,transform] duration-200 hover:rotate-6 hover:bg-white/27 hover:text-white active:scale-[0.96]"
+            href="/"
+            aria-label="На главную"
+            className="flex h-7 w-[23rem] items-center justify-center gap-1.5 rounded-full border border-white/25 bg-black/[0.09] text-[0.68rem] font-medium tracking-[-0.01em] text-white/58 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/15 hover:text-white/85"
           >
-            <Grid2X2 className="size-[17px]" strokeWidth={1.5} />
+            <span className="size-1.5 rounded-full bg-white/55" />
+            Portfolio
           </Link>
 
-          <nav aria-label="Основная навигация" className="flex items-center gap-0.5 px-1.5">
+          <nav aria-label="Основная навигация" className="flex items-center gap-1.5">
             {HEADER_DATA.LINKS.map((link) => (
               <Link
                 href={link.to}
                 target={link.external ? '_blank' : '_self'}
-                aria-current={pathname === link.to ? 'page' : undefined}
-                className={cn(
-                  'rounded-full px-3.5 py-2 text-xs font-medium uppercase tracking-[0.035em] transition-colors',
-                  pathname === link.to ? 'bg-white/23 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]' : 'text-white/64 hover:bg-white/14 hover:text-white',
-                )}
+                className="rounded-full border border-white/25 bg-black/[0.1] px-4 py-2 text-xs font-medium uppercase tracking-[0.035em] text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/18 hover:text-white"
                 key={link.to}
               >
                 {link.label}
               </Link>
             ))}
-          </nav>
-
-          <div className="ml-1 flex items-center gap-1">
-            <Link
-              href="/about"
-              aria-label="Обо мне"
-              className="relative size-10 shrink-0 overflow-hidden rounded-full border border-white/45 bg-black/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] transition-transform duration-200 hover:scale-[1.06] active:scale-[0.97]"
-            >
-              <Image src="/about/artem-studio-front-v5.png" alt="Артём Темнов" fill sizes="40px" className="object-cover object-[50%_22%]" />
-            </Link>
             <Link
               href="https://t.me/absolutnoretro"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Написать в Telegram"
-              className="grid size-10 shrink-0 place-items-center rounded-full border border-white/45 bg-[radial-gradient(circle_at_35%_28%,rgba(194,221,255,0.95),rgba(78,126,188,0.72)_52%,rgba(34,55,88,0.8))] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.48),0_0.45rem_1.2rem_rgba(55,91,137,0.24)] transition-[transform,filter] duration-200 hover:rotate-12 hover:brightness-110 active:scale-[0.96]"
+              className="rounded-full border border-white/30 bg-white/22 px-4 py-2 text-xs font-medium uppercase tracking-[0.035em] text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/32 hover:text-white"
             >
-              <Send className="size-[17px]" strokeWidth={1.6} />
+              Связаться
             </Link>
-          </div>
+          </nav>
         </motion.div>
       ) : null}
 
