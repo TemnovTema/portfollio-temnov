@@ -14,12 +14,12 @@ const featuredCases = ['case-2', 'case-1', 'case-3', 'case-4']
 
 const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
 const tearOffMotion = [
-  '-rotate-2 translate-y-0.5',
-  'rotate-1 -translate-y-0.5',
-  '-rotate-1 translate-y-1',
-  'rotate-2 translate-y-0',
-  '-rotate-2 -translate-y-0.5',
-  'rotate-1 translate-y-0.5',
+  'hover:-rotate-2',
+  'hover:rotate-[1.5deg]',
+  'hover:-rotate-1',
+  'hover:rotate-2',
+  'hover:-rotate-[1.5deg]',
+  'hover:rotate-1',
 ]
 
 function TearOffContact() {
@@ -38,7 +38,7 @@ function TearOffContact() {
           <span className="absolute bottom-2 right-0 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-black/40">на связи</span>
         </div>
 
-        <div className="relative grid grid-cols-6">
+        <div className="relative grid grid-cols-6 gap-[3px] px-[2px]">
           {tearOffNumbers.map((number, index) => {
             const nextNumber = tearOffNumbers[(index + 1) % tearOffNumbers.length]
 
@@ -51,16 +51,20 @@ function TearOffContact() {
                 aria-label={`Написать в Telegram, номер ${number}`}
                 style={{transitionDelay: `${index * 24}ms`}}
                 className={cn(
-                  'relative h-[3.8rem] overflow-hidden border-r border-black/60 transition-transform duration-300 ease-out last:border-r-0 group-hover:translate-y-1 hover:!translate-y-2',
+                  'group/tab relative -mt-px h-[3.9rem] origin-top overflow-hidden border-x border-b border-black/12 bg-[#efeee8]',
+                  'shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] transition-[transform,box-shadow,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                  'hover:z-10 hover:translate-y-2 hover:scale-[1.035] hover:brightness-[1.02] hover:shadow-[0_0.65rem_0.9rem_rgba(40,40,37,0.22)]',
                   tearOffMotion[index],
                 )}
               >
+                <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
+                <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
                 <span
-                  className="flex h-[7.6rem] flex-col items-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2"
+                  className="relative flex h-[7.8rem] flex-col items-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/tab:-translate-y-1/2"
                   style={{transitionDelay: `${index * 35}ms`}}
                 >
-                  <span className="flex h-[3.8rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
-                  <span className="flex h-[3.8rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{nextNumber}</span>
+                  <span className="flex h-[3.9rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
+                  <span className="flex h-[3.9rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{nextNumber}</span>
                 </span>
               </Link>
             )
