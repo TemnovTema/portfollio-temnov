@@ -25,9 +25,9 @@ const tearOffMotion = [
 function TearOffContact() {
   return (
     <motion.aside
-      className="absolute left-[clamp(2rem,8vw,9rem)] top-[38%] z-30 w-[12.5rem] -rotate-[1.5deg] text-[#171715] mob:hidden"
-      initial={{opacity: 0, x: -20, rotate: -4}}
-      animate={{opacity: 1, x: 0, rotate: -1.5}}
+      className="absolute left-[clamp(2rem,8vw,9rem)] top-[38%] z-30 w-[12.5rem] text-[#171715] mob:hidden"
+      initial={{opacity: 0, x: -20}}
+      animate={{opacity: 1, x: 0}}
       transition={{duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1]}}
     >
       <div className="group relative bg-[#efeee8] px-4 pb-0 pt-4 shadow-[0_1.1rem_2.6rem_rgba(40,40,37,0.2),0_0.15rem_0.35rem_rgba(40,40,37,0.12)]">
@@ -78,16 +78,15 @@ function TearOffContact() {
 
 function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
   const href = item.link ?? `/archive#${item.slug}`
-  const isEven = index % 2 === 0
   const previousId = index === 0 ? 'home-intro' : `project-${index}`
   const nextId = index === featuredCases.length - 1 ? 'home-intro' : `project-${index + 2}`
 
   return (
     <section id={`project-${index + 1}`} className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-32 pt-24 mob:min-h-0 mob:px-3 mob:pb-36 mob:pt-24">
       <motion.article
-        className={cn('group relative z-10 w-[clamp(44rem,62vw,62rem)] text-white mob:w-full', isEven ? 'ml-[9vw] mr-auto' : 'ml-auto mr-[9vw]')}
-        initial={{opacity: 0, y: 56, rotate: isEven ? -1.5 : 1.5}}
-        whileInView={{opacity: 1, y: 0, rotate: isEven ? -0.45 : 0.45}}
+        className="group relative z-10 mx-auto w-[clamp(44rem,62vw,62rem)] text-white mob:w-full"
+        initial={{opacity: 0, y: 56}}
+        whileInView={{opacity: 1, y: 0}}
         viewport={{once: false, amount: 0.35}}
         transition={{duration: 0.7, ease: [0.22, 1, 0.36, 1]}}
     >
@@ -156,15 +155,6 @@ function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
       </div>
       </motion.article>
 
-      <motion.div
-        aria-hidden="true"
-        className={cn('absolute top-[30%] font-mono text-[clamp(5rem,11vw,11rem)] font-medium tracking-[-0.08em] text-black/[0.055] mob:hidden', isEven ? 'right-[3vw]' : 'left-[3vw]')}
-        initial={{opacity: 0}}
-        whileInView={{opacity: 1}}
-        viewport={{amount: 0.5}}
-      >
-        0{index + 1}
-      </motion.div>
     </section>
   )
 }
