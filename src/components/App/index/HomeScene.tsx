@@ -244,17 +244,18 @@ export default function HomeScene() {
         <TearOffContact />
 
         <motion.div
-          className="relative z-20 max-w-[54rem] text-center mob:text-left"
+          className="relative z-20 ml-[15vw] w-full max-w-[48rem] text-left mob:ml-0"
           initial={{opacity: 0, y: 24}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.75, ease: [0.22, 1, 0.36, 1]}}
         >
-          <p className="text-[clamp(2.8rem,6.4vw,6.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-black/82 mob:text-[clamp(3rem,14vw,4.8rem)]">
-            Здравствуйте.
-          </p>
-          <p className="mx-auto mt-5 max-w-[24ch] text-[clamp(1.05rem,1.55vw,1.45rem)] leading-[1.35] tracking-[-0.025em] text-black/48 mob:mx-0 mob:mt-6 mob:max-w-[28ch] mob:text-base">
-            Я Артём Темнов. Проектирую цифровые продукты, собираю прототипы и превращаю идеи в работающие интерфейсы.
-          </p>
+          <h1 className="text-[clamp(1.8rem,2.6vw,2.65rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-black/86 mob:text-[2rem]">Артём Темнов</h1>
+          <p className="mt-8 text-[clamp(1.65rem,2.35vw,2.35rem)] font-medium leading-[1.08] tracking-[-0.045em] text-black/82 mob:mt-6 mob:text-[1.65rem]">Продуктовый дизайнер</p>
+
+          <div className="mt-8 max-w-[46rem] space-y-5 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-[1.42] tracking-[-0.025em] text-black/48 mob:mt-6 mob:space-y-4 mob:text-base">
+            <p>Проектирую цифровые продукты: исследую задачу, формирую структуру и сценарии, работаю с интерфейсом, айдентикой и прототипом.</p>
+            <p>Собираю интерактивные веб-прототипы и использую код как часть дизайн-процесса.</p>
+          </div>
         </motion.div>
 
         <div className="absolute bottom-[10.5rem] right-[8vw] rounded-full border border-white/42 bg-white/14 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-black/42 shadow-[inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl mob:hidden">
