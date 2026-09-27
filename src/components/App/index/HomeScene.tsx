@@ -43,44 +43,44 @@ function ProjectTile({
   return (
     <motion.article
       className={cn(
-        'group absolute left-1/2 top-[50%] w-[clamp(40rem,52vw,48rem)] text-white will-change-transform',
+        'group absolute left-1/2 top-[50%] w-[clamp(34rem,46vw,42rem)] text-white will-change-transform',
         'mob:relative mob:left-auto mob:right-auto mob:top-auto mob:z-auto mob:w-[78vw] mob:max-w-[20rem] mob:shrink-0 mob:!transform-none mob:!opacity-100',
       )}
       initial={false}
       style={{opacity: cardOpacity, transform: cardTransform, zIndex: cardZIndex}}
     >
       <motion.div
-        className={cn('absolute bottom-full left-1/2 z-20 mb-2 flex -translate-x-1/2 flex-col items-center gap-1.5 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+        className={cn('absolute bottom-full left-1/2 z-20 mb-1.5 flex -translate-x-1/2 flex-col items-center gap-1 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
         style={{opacity: detailOpacity}}
         aria-hidden={!isActive}
       >
-        <div className="max-w-[26rem] truncate rounded-full border border-white/35 bg-black/68 px-4 py-1.5 text-xs font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
+        <div className="max-w-[22rem] truncate rounded-full border border-white/35 bg-black/68 px-3 py-1 text-[0.65rem] font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
           {item.title}
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
           <button
             type="button"
             onClick={() => onSelect(Math.max(0, index - 1))}
             disabled={!isActive || index === 0}
-            className="flex items-center gap-2 rounded-full border border-white/35 bg-black/48 px-3 py-2 text-[0.68rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
+            className="flex items-center gap-1.5 rounded-full border border-white/35 bg-black/48 px-2.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
           >
-            <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Назад
+            <ArrowLeft className="size-3" strokeWidth={1.5} /> Назад
           </button>
           <Link
             href="/archive"
             aria-label="Открыть архив"
             tabIndex={isActive ? 0 : -1}
-            className="grid size-9 place-items-center rounded-full border border-white/40 bg-black/58 text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/75 active:scale-[0.96]"
+            className="grid size-8 place-items-center rounded-full border border-white/40 bg-black/58 text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/75 active:scale-[0.96]"
           >
-            <Grid2X2 className="size-4" strokeWidth={1.5} />
+            <Grid2X2 className="size-3.5" strokeWidth={1.5} />
           </Link>
           <button
             type="button"
             onClick={() => onSelect(Math.min(featuredCases.length - 1, index + 1))}
             disabled={!isActive || index === featuredCases.length - 1}
-            className="flex items-center gap-2 rounded-full border border-white/35 bg-black/48 px-3 py-2 text-[0.68rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
+            className="flex items-center gap-1.5 rounded-full border border-white/35 bg-black/48 px-2.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
           >
-            Дальше <ArrowRight className="size-3.5" strokeWidth={1.5} />
+            Дальше <ArrowRight className="size-3" strokeWidth={1.5} />
           </button>
         </div>
       </motion.div>
@@ -101,11 +101,11 @@ function ProjectTile({
           <ArrowUpRight className="absolute right-3 top-3 size-8 rounded-full border border-white/25 bg-black/45 p-1.5 backdrop-blur-md transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.5} />
 
           <motion.div
-            className="absolute bottom-3 left-3 right-3 max-w-[34rem] rounded-[1.1rem] border border-white/25 bg-black/30 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
+            className="absolute bottom-3 left-3 right-3 max-w-[29rem] rounded-[1rem] border border-white/25 bg-black/30 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
             style={{opacity: detailOpacity, transform: detailTransform}}
           >
-            <p className="max-w-[48ch] text-sm leading-[1.4] text-white/82">{item.content[0]}</p>
-            <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.06em] text-white/58">
+            <p className="max-w-[48ch] text-xs leading-[1.4] text-white/82">{item.content[0]}</p>
+            <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] text-white/58">
               Открыть проект <ArrowUpRight className="size-3.5" strokeWidth={1.5} />
             </span>
           </motion.div>
