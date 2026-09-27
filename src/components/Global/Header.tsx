@@ -40,7 +40,7 @@ export default function Header() {
           'relative z-[150]',
           'grid w-full max-w-full grid-cols-5 items-center rounded-2xl border p-2 mob:flex mob:justify-between mob:p-1.5',
           isHome
-            ? 'border-white/25 bg-black/72 shadow-[0_1rem_3rem_rgba(41,41,38,0.2)] backdrop-blur-xl'
+            ? 'border-white/35 bg-black/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1rem_3rem_rgba(41,41,38,0.14)] backdrop-blur-[24px] backdrop-saturate-150'
             : 'border-gray-medium/70 bg-black',
         )}
         style={{
@@ -59,7 +59,7 @@ export default function Header() {
         </nav>
 
         <div className={cn('justify-self-end', 'flex justify-between gap-[7px]')}>
-          <Button to="https://t.me/absolutnoretro" target="_blank" variant="solid" size="small" text="Связаться" onClick={() => !isDesktop && isMenuOpen && setIsMenuOpen(false)} className="mob:hidden" />
+          <Button to="https://t.me/absolutnoretro" target="_blank" variant="solid" size="small" text="Связаться" onClick={() => !isDesktop && isMenuOpen && setIsMenuOpen(false)} className={cn('mob:hidden', isHome && '!border-white/35 !bg-white/28 !text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-xl hover:!bg-white/38')} />
 
           {!isDesktop && (
             <button className={cn([BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.outline], BUTTON_SIZES.small, 'hidden mob:block mob:py-2 mob:px-2.5 border-white-dirty/40 text-white-dirty/90')} onClick={toggleMenu}>

@@ -86,15 +86,16 @@ function ContactComposer() {
   return (
     <form
       onSubmit={submitMessage}
-      className="relative mx-auto w-full max-w-[54rem] rounded-[2rem] border border-white/20 bg-[#111]/92 p-2.5 text-white shadow-[0_1.8rem_5rem_rgba(20,20,18,0.42)] backdrop-blur-2xl mob:rounded-[1.5rem] mob:p-2"
+      className="relative isolate mx-auto w-full max-w-[54rem] overflow-hidden rounded-[2rem] border border-white/45 bg-white/16 p-2.5 text-[#181817] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),inset_0_-1px_0_rgba(255,255,255,0.14),0_1.8rem_5rem_rgba(45,45,42,0.2)] backdrop-blur-[28px] backdrop-saturate-[1.35] mob:rounded-[1.5rem] mob:p-2"
     >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(105deg,rgba(255,255,255,0.2),transparent_46%,rgba(255,255,255,0.12))]" />
       <div className="flex items-center gap-2 px-1 pb-1.5 mob:overflow-x-auto">
-        <span className="whitespace-nowrap rounded-full bg-[#f0e1d7] px-4 py-2 font-medium text-black mob:px-3 mob:py-1.5 mob:text-sm">Написать мне</span>
+        <span className="whitespace-nowrap rounded-full border border-white/45 bg-white/42 px-4 py-2 font-medium text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] mob:px-3 mob:py-1.5 mob:text-sm">Написать мне</span>
         <Link
           href="https://t.me/absolutnoretro"
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap rounded-full bg-white/8 px-4 py-2 font-medium text-white/85 transition-colors hover:bg-white/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white mob:px-3 mob:py-1.5 mob:text-sm"
+          className="whitespace-nowrap rounded-full border border-white/25 bg-black/[0.06] px-4 py-2 font-medium text-black/62 transition-colors hover:bg-white/30 hover:text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55 mob:px-3 mob:py-1.5 mob:text-sm"
         >
           Telegram
         </Link>
@@ -113,18 +114,18 @@ function ContactComposer() {
           placeholder="Расскажите о задаче..."
           aria-describedby={error ? 'portfolio-message-error' : undefined}
           aria-invalid={Boolean(error)}
-          className="min-w-0 flex-1 bg-transparent py-4 text-xl tracking-[-0.025em] text-white outline-none placeholder:text-white/38 mob:py-3 mob:text-base"
+          className="min-w-0 flex-1 bg-transparent py-4 text-xl tracking-[-0.025em] text-black/82 outline-none placeholder:text-black/35 mob:py-3 mob:text-base"
         />
         <button
           type="submit"
           aria-label="Отправить сообщение"
-          className="grid size-14 shrink-0 place-items-center rounded-full bg-[#f0e1d7] text-black transition-transform duration-200 hover:rotate-45 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#111] mob:size-11"
+          className="grid size-14 shrink-0 place-items-center rounded-full border border-white/35 bg-black/78 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] transition-transform duration-200 hover:rotate-45 hover:bg-black/88 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 mob:size-11"
         >
           <Send className="size-5" strokeWidth={1.7} />
         </button>
       </div>
 
-      {error ? <p id="portfolio-message-error" className="px-3 pb-1 font-mono text-xs text-[#f0b4ad]">{error}</p> : null}
+      {error ? <p id="portfolio-message-error" className="px-3 pb-1 font-mono text-xs text-[#7a2721]">{error}</p> : null}
     </form>
   )
 }
@@ -134,25 +135,7 @@ export default function HomeScene() {
     <main className="relative min-h-[100dvh] w-full max-w-[100vw] overflow-hidden bg-[#b8b8b3] text-[#181817]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-10%,rgba(255,255,255,0.98)_0%,rgba(245,245,241,0.72)_22%,rgba(202,202,197,0.72)_52%,rgba(151,151,146,0.9)_100%)]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[39%] bg-[linear-gradient(180deg,rgba(170,170,165,0)_0%,rgba(126,126,121,0.36)_44%,rgba(104,104,99,0.62)_100%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[28%] h-px bg-black/10 shadow-[0_1.8rem_4rem_rgba(47,47,44,0.18)]" />
       <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[18%] h-[52%] w-[62%] -translate-x-1/2 rounded-full bg-white/24 blur-[5rem] mob:top-[22%] mob:h-[38%] mob:w-[120%]" />
-
-      <header className="absolute inset-x-0 top-0 z-10 box-border max-w-[100vw] px-[10rem] pt-[7.6rem] lap:px-8 mob:px-4 mob:pt-[6.4rem] max-[500px]:w-[100vw] max-[500px]:px-4">
-        <div className="flex items-end justify-between gap-8 mob:items-start">
-          <div>
-            <h1 className="text-[clamp(2rem,3.2vw,3.6rem)] font-medium leading-[0.96] tracking-[-0.055em] text-[#1d1d1b] mob:max-w-[9ch] mob:text-[2.4rem]">
-              Выберите проект
-            </h1>
-            <p className="mt-2 max-w-[29rem] text-base leading-[1.4] text-black/55 mob:hidden">
-              Продуктовый дизайн, исследования и цифровые эксперименты.
-            </p>
-          </div>
-          <Link href="/archive" className="group flex shrink-0 items-center gap-2 text-sm font-medium text-black/65 transition-colors hover:text-black mob:absolute mob:right-4 mob:top-[6.65rem]">
-            Весь архив
-            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.5} />
-          </Link>
-        </div>
-      </header>
 
       <section id="featured-cases" aria-label="Избранные проекты" className="absolute inset-0 z-20 mob:inset-x-0 mob:bottom-[11.8rem] mob:top-[11.5rem] mob:flex mob:snap-x mob:snap-mandatory mob:items-center mob:overflow-x-auto mob:px-4 mob:pb-4 mob:[scrollbar-width:none]">
         <div className="contents mob:flex mob:w-max mob:gap-3 mob:pr-4 mob:[&>*]:snap-center">
