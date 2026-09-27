@@ -1,184 +1,67 @@
 'use client'
 
-import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storage'
+import {type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 
-import {ArrowRight, ArrowUpRight, FolderOpen, LayoutDashboard} from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import {useState} from 'react'
+import {AnimatePresence, motion} from 'framer-motion'
+import {useMemo, useState} from 'react'
 
 import ArchiveDashboard from '~~/archive/ArchiveDashboard'
-import {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
-import {H4, typoClasses} from '~/UI/Typography'
 
-type ArchiveMode = 'folder' | 'dashboard'
+const ARCHIVE_FILTERS = [
+  {id: 'all', label: 'Все', slugs: null},
+  {id: 'product', label: 'Продукты', slugs: ['case-1', 'case-2', 'case-3', 'case-4']},
+  {id: 'vibecode', label: 'Веб-кодинг', slugs: ['case-6', 'case-7', 'case-8', 'case-9', 'case-10', 'case-14']},
+  {id: 'graphics', label: 'Графика', slugs: ['case-2', 'case-12', 'case-13']},
+  {id: 'research', label: 'Исследования', slugs: ['case-1', 'case-4', 'case-6', 'case-8', 'case-10']},
+  {id: 'concepts', label: 'Концепты', slugs: ['case-1', 'case-3', 'case-11']},
+] as const
 
-const VIEW_MODES = [
-  {
-    id: 'folder',
-    label: 'Папочный',
-    icon: FolderOpen,
-  },
-  {
-    id: 'dashboard',
-    label: 'Дашборд',
-    icon: LayoutDashboard,
-  },
-] as const satisfies ReadonlyArray<{
-  id: ArchiveMode
-  label: string
-  icon: typeof FolderOpen
-}>
-
-const ARCHIVE_FOLDERS: ReadonlyArray<{
-  source: SocialSource
-  title?: string
-  description: string
-  tags: string[]
-  href?: string
-  projectSlugs?: string[]
-}> = [
-  {
-    source: 'product',
-    title: 'Графика',
-    description: 'Плакаты, типографические серии и визуальные эксперименты',
-    tags: ['Плакаты', 'Типографика'],
-    href: '/archive/graphics',
-    projectSlugs: ['case-2', 'case-12', 'case-13'],
-  },
-  {
-    source: 'systems',
-    title: 'VibeCode',
-    description: 'Веб-эксперименты, интерактивные истории и учебные проекты',
-    tags: ['Эксперименты', 'Web'],
-    href: '/archive/vibecode',
-    projectSlugs: ['case-6', 'case-7', 'case-8', 'case-9', 'case-10', 'case-14'],
-  },
-  {
-    source: 'research',
-    description: 'Эксперименты и интерактивные форматы',
-    tags: ['Интерактив', '3D'],
-  },
-  {
-    source: 'launches',
-    title: 'Концепты',
-    description: 'Учебные идеи, ранние продукты и проекты в стадии концепции',
-    tags: ['Идеи', 'Учебные'],
-    href: '/archive/concepts',
-    projectSlugs: ['case-1', 'case-3', 'case-11'],
-  },
-]
-
-function getProjectsLabel(count: number) {
-  return count === 1 ? '1 проект' : `${count} проекта`
-}
+type ArchiveFilter = (typeof ARCHIVE_FILTERS)[number]['id']
 
 export default function ArchiveView({items}: {items: SocialsItem[]}) {
-  const [mode, setMode] = useState<ArchiveMode>('folder')
+  const [activeFilter, setActiveFilter] = useState<ArchiveFilter>('all')
+  const filteredItems = useMemo(() => {
+    const filter = ARCHIVE_FILTERS.find((item) => item.id === activeFilter)
+    if (!filter || filter.slugs === null) return items
+    return items.filter((item) => (filter.slugs as readonly string[]).includes(item.slug))
+  }, [activeFilter, items])
 
   return (
-    <div className="mx-auto max-w-[88rem] space-y-5">
-      <section className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between mob:gap-4">
-        <div className="space-y-3">
-          <h1 className={cn(typoClasses.h2, 'text-black/85')}>Архив</h1>
-          <H4 className="max-w-[58ch] font-sans text-lg normal-case leading-[1.45] text-black/50 mob:max-w-[32ch] mob:text-sm">
-            Четыре направления продуктовой работы в одном архиве.
-          </H4>
-        </div>
-
-        <div className="inline-flex w-fit rounded-2xl border border-white/45 bg-white/16 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-2xl">
-          {VIEW_MODES.map((item) => {
-            const Icon = item.icon
-            const isActive = mode === item.id
+    <div className="mx-auto max-w-[88rem] space-y-4">
+      <nav aria-label="Фильтры архива" className="flex justify-center mob:justify-start">
+        <div className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-white/45 bg-white/16 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_1rem_3rem_rgba(45,45,42,0.1)] backdrop-blur-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {ARCHIVE_FILTERS.map((filter) => {
+            const isActive = filter.id === activeFilter
 
             return (
               <button
-                key={item.id}
+                key={filter.id}
                 type="button"
-                onClick={() => setMode(item.id)}
+                aria-pressed={isActive}
+                onClick={() => setActiveFilter(filter.id)}
                 className={cn(
-                  'flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-sm uppercase tracking-wide transition-colors duration-300',
-                  isActive ? 'bg-black/80 text-white' : 'text-black/50 hover:bg-white/25 hover:text-black/80',
+                  'relative shrink-0 rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-300 active:scale-[0.98] mob:px-3 mob:py-1.5 mob:text-xs',
+                  isActive ? 'text-white' : 'text-black/55 hover:bg-white/25 hover:text-black/85',
                 )}
               >
-                <Icon className="size-[17px]" strokeWidth={1.65} />
-                <span>{item.label}</span>
+                {isActive ? (
+                  <motion.span
+                    layoutId="archive-filter"
+                    className="absolute inset-0 -z-10 rounded-full border border-white/18 bg-black/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                    transition={{type: 'spring', stiffness: 380, damping: 32}}
+                  />
+                ) : null}
+                {filter.label}
               </button>
             )
           })}
         </div>
-      </section>
+      </nav>
 
-      {mode === 'folder' ? (
-        <section
-          data-section="archive-folders"
-          aria-label="Категории проектов"
-          className="grid grid-cols-4 gap-3 max-[1100px]:grid-cols-2 mob:grid-cols-1"
-        >
-          {ARCHIVE_FOLDERS.map((folder) => {
-            const folderItems = folder.projectSlugs ? items.filter((item) => folder.projectSlugs?.includes(item.slug)) : items.filter((item) => item.source === folder.source)
-            const projectsCount = folderItems.length
-            const cover = folderItems[0]
-            const folderTitle = folder.title ?? SOCIALS[folder.source]
-
-            return (
-              <article
-                key={folder.source}
-                className="group relative flex min-h-[26rem] flex-col gap-3 rounded-[22px] border border-white/35 bg-black/82 p-3 shadow-[0_1.8rem_4rem_rgba(40,40,37,0.18)] backdrop-blur-xl transition-[border-color,transform,background-color] duration-300 hover:-translate-y-1 hover:border-white/55 hover:bg-black/88 mob:min-h-0 mob:p-3.5"
-                aria-label={`${folderTitle}, ${getProjectsLabel(projectsCount)}`}
-              >
-                {folder.href && <Link href={folder.href} className="absolute inset-0 z-20 rounded-[22px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`Открыть папку ${folderTitle}`} />}
-
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex flex-wrap gap-1.5">
-                    {folder.tags.map((tag) => (
-                      <span key={tag} className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-xs uppercase text-white-dirty">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <span className="shrink-0 font-mono text-sm uppercase text-gray">{getProjectsLabel(projectsCount)}</span>
-                </div>
-
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] border border-white/15 bg-black-card">
-                  {cover?.image ? (
-                    <Image
-                      src={cover.image}
-                      alt={`Обложка категории ${folderTitle}`}
-                      fill
-                      sizes="(max-width: 500px) calc(100vw - 48px), 44vw"
-                      loading={folder.source === 'product' ? 'eager' : 'lazy'}
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
-                    />
-                  ) : cover?.video ? (
-                    <video autoPlay muted loop playsInline className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]">
-                      <source src={cover.video} type="video/mp4" />
-                    </video>
-                  ) : null}
-                </div>
-
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-medium leading-[1.12] tracking-[-0.025em] text-neutral-300 mob:text-xl">{folderTitle}</h2>
-                  <p className="max-w-[54ch] text-sm leading-[1.45] text-neutral-400">{folder.description}</p>
-                </div>
-
-                <div className="mt-auto">
-                  <span className={cn(BUTTON_VARIANTS.DEFAULT, BUTTON_VARIANTS.solid, BUTTON_SIZES.base, 'pointer-events-none group-hover:bg-white/80')} aria-hidden="true">
-                    <span className="relative size-5">
-                      <ArrowRight className="absolute inset-0 size-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-0" strokeWidth={1.5} />
-                      <ArrowUpRight className="absolute inset-0 size-5 -translate-x-1 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" strokeWidth={1.5} />
-                    </span>
-                    Открыть
-                  </span>
-                </div>
-              </article>
-            )
-          })}
-        </section>
-      ) : (
-        <ArchiveDashboard items={items} />
-      )}
+      <AnimatePresence mode="popLayout" initial={false}>
+        <ArchiveDashboard key={activeFilter} items={filteredItems} />
+      </AnimatePresence>
     </div>
   )
 }
