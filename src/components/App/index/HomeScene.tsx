@@ -258,9 +258,6 @@ export default function HomeScene() {
           </div>
         </motion.div>
 
-        <div className="absolute bottom-[10.5rem] right-[8vw] rounded-full border border-white/42 bg-white/14 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-black/42 shadow-[inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl mob:hidden">
-          Product design + code
-        </div>
       </section>
 
       <div aria-label="Избранные проекты">
