@@ -78,7 +78,7 @@ function ProjectTile({item, index, progress}: {item: SocialsItem; index: number;
   )
 }
 
-function ContactComposer() {
+export function ContactComposer() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -144,6 +144,16 @@ function ContactComposer() {
   )
 }
 
+export function StageBackdrop({fixed = false}: {fixed?: boolean}) {
+  return (
+    <div aria-hidden="true" className={cn('pointer-events-none inset-0 overflow-hidden', fixed ? 'fixed' : 'absolute')}>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-10%,rgba(255,255,255,0.98)_0%,rgba(245,245,241,0.72)_22%,rgba(202,202,197,0.72)_52%,rgba(151,151,146,0.9)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-[39%] bg-[linear-gradient(180deg,rgba(170,170,165,0)_0%,rgba(126,126,121,0.36)_44%,rgba(104,104,99,0.62)_100%)]" />
+      <div className="absolute left-1/2 top-[18%] h-[52%] w-[62%] -translate-x-1/2 rounded-full bg-white/24 blur-[5rem] mob:top-[22%] mob:h-[38%] mob:w-[120%]" />
+    </div>
+  )
+}
+
 export default function HomeScene() {
   const sceneRef = useRef<HTMLElement>(null)
   const {scrollYProgress} = useScroll({target: sceneRef, offset: ['start start', 'end end']})
@@ -152,9 +162,7 @@ export default function HomeScene() {
   return (
     <main ref={sceneRef} className="relative h-[340dvh] w-full max-w-[100vw] bg-[#b8b8b3] text-[#181817] mob:h-[100dvh]">
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-10%,rgba(255,255,255,0.98)_0%,rgba(245,245,241,0.72)_22%,rgba(202,202,197,0.72)_52%,rgba(151,151,146,0.9)_100%)]" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[39%] bg-[linear-gradient(180deg,rgba(170,170,165,0)_0%,rgba(126,126,121,0.36)_44%,rgba(104,104,99,0.62)_100%)]" />
-        <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[18%] h-[52%] w-[62%] -translate-x-1/2 rounded-full bg-white/24 blur-[5rem] mob:top-[22%] mob:h-[38%] mob:w-[120%]" />
+        <StageBackdrop />
 
         <section id="featured-cases" aria-label="Избранные проекты" className="absolute inset-0 z-20 mob:inset-x-0 mob:bottom-[9.8rem] mob:top-[7rem] mob:flex mob:snap-x mob:snap-mandatory mob:items-center mob:overflow-x-auto mob:px-4 mob:pb-4 mob:[scrollbar-width:none]">
           <div className="contents mob:flex mob:w-max mob:gap-3 mob:pr-4 mob:[&>*]:snap-center">

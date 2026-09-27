@@ -18,6 +18,7 @@ import Button, {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
 export default function Header() {
   const pathname = usePathname()
   const isHome = pathname === '/'
+  const isStagePage = isHome || pathname === '/archive' || pathname === '/about'
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const {scrollY} = useScroll()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -35,7 +36,7 @@ export default function Header() {
 
   return (
     <header className={cn('fixed inset-x-0 z-[999] box-border max-w-[100vw] pt-6 lap:pt-4 mob:pt-2 max-[500px]:w-[100vw] max-[500px]:px-2', HEADER_BOX)}>
-      {isHome ? (
+      {isStagePage ? (
         <motion.div
           className="relative z-[150] mx-auto flex w-fit flex-col items-center gap-1.5 mob:hidden"
           initial={{opacity: 0, y: -12}}
@@ -78,7 +79,7 @@ export default function Header() {
         className={cn(
           'relative z-[150]',
           'grid w-full max-w-full grid-cols-5 items-center rounded-2xl border p-2 mob:flex mob:justify-between mob:p-1.5',
-          isHome
+          isStagePage
             ? 'hidden border-white/35 bg-black/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1rem_3rem_rgba(41,41,38,0.14)] backdrop-blur-[24px] backdrop-saturate-150 mob:flex'
             : 'border-gray-medium/70 bg-black',
         )}

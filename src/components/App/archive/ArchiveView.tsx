@@ -78,16 +78,16 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
   const [mode, setMode] = useState<ArchiveMode>('folder')
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-[88rem] space-y-5">
       <section className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between mob:gap-4">
         <div className="space-y-3">
-          <h1 className={typoClasses.h2}>Архив</h1>
-          <H4 className="max-w-[58ch] font-sans text-lg normal-case leading-[1.45] text-neutral-400 mob:max-w-[32ch] mob:text-sm">
+          <h1 className={cn(typoClasses.h2, 'text-black/85')}>Архив</h1>
+          <H4 className="max-w-[58ch] font-sans text-lg normal-case leading-[1.45] text-black/50 mob:max-w-[32ch] mob:text-sm">
             Четыре направления продуктовой работы в одном архиве.
           </H4>
         </div>
 
-        <div className="inline-flex w-fit rounded-2xl border border-white/12 bg-black-light p-1">
+        <div className="inline-flex w-fit rounded-2xl border border-white/45 bg-white/16 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-2xl">
           {VIEW_MODES.map((item) => {
             const Icon = item.icon
             const isActive = mode === item.id
@@ -99,7 +99,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                 onClick={() => setMode(item.id)}
                 className={cn(
                   'flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-sm uppercase tracking-wide transition-colors duration-300',
-                  isActive ? 'bg-white text-black' : 'text-neutral-400 hover:text-white',
+                  isActive ? 'bg-black/80 text-white' : 'text-black/50 hover:bg-white/25 hover:text-black/80',
                 )}
               >
                 <Icon className="size-[17px]" strokeWidth={1.65} />
@@ -114,7 +114,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
         <section
           data-section="archive-folders"
           aria-label="Категории проектов"
-          className="grid grid-cols-2 gap-4 mob:grid-cols-1"
+          className="grid grid-cols-4 gap-3 max-[1100px]:grid-cols-2 mob:grid-cols-1"
         >
           {ARCHIVE_FOLDERS.map((folder) => {
             const folderItems = folder.projectSlugs ? items.filter((item) => folder.projectSlugs?.includes(item.slug)) : items.filter((item) => item.source === folder.source)
@@ -125,7 +125,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
             return (
               <article
                 key={folder.source}
-                className="group relative flex min-h-[34rem] flex-col gap-4 rounded-[22px] border border-white/15 bg-black-light p-4 transition-colors duration-300 hover:border-white/35 hover:bg-black-card mob:min-h-0 mob:p-3.5"
+                className="group relative flex min-h-[26rem] flex-col gap-3 rounded-[22px] border border-white/35 bg-black/82 p-3 shadow-[0_1.8rem_4rem_rgba(40,40,37,0.18)] backdrop-blur-xl transition-[border-color,transform,background-color] duration-300 hover:-translate-y-1 hover:border-white/55 hover:bg-black/88 mob:min-h-0 mob:p-3.5"
                 aria-label={`${folderTitle}, ${getProjectsLabel(projectsCount)}`}
               >
                 {folder.href && <Link href={folder.href} className="absolute inset-0 z-20 rounded-[22px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`Открыть папку ${folderTitle}`} />}
@@ -141,7 +141,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
                   <span className="shrink-0 font-mono text-sm uppercase text-gray">{getProjectsLabel(projectsCount)}</span>
                 </div>
 
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] border border-dashed border-white/15 bg-black-card">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] border border-white/15 bg-black-card">
                   {cover?.image ? (
                     <Image
                       src={cover.image}
@@ -160,7 +160,7 @@ export default function ArchiveView({items}: {items: SocialsItem[]}) {
 
                 <div className="space-y-3">
                   <h2 className="text-2xl font-medium leading-[1.12] tracking-[-0.025em] text-neutral-300 mob:text-xl">{folderTitle}</h2>
-                  <p className="min-h-[3rem] max-w-[54ch] text-base leading-[1.5] text-neutral-400">{folder.description}</p>
+                  <p className="max-w-[54ch] text-sm leading-[1.45] text-neutral-400">{folder.description}</p>
                 </div>
 
                 <div className="mt-auto">

@@ -16,7 +16,7 @@ const PHOTO_SLOTS = [
 
 export default function Content({data}: {data: string}) {
   return (
-    <Container as="main" variant="default" className="space-y-4 lap:space-y-3 mob:pt-24!">
+    <Container as="div" variant="default" className="space-y-4 pt-32 lap:space-y-3 mob:pt-24!">
       <div className="w-full space-y-6">
         <div className="-mx-2.5 hidden mob:block">
           <div className="relative aspect-[4/5] w-full overflow-hidden">
@@ -30,16 +30,16 @@ export default function Content({data}: {data: string}) {
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#040404_0%,transparent_18%,transparent_82%,#040404_100%)]"
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#b8b8b3_0%,transparent_18%,transparent_82%,#b8b8b3_100%)]"
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,transparent_0%,rgba(4,4,4,0.35)_42%,#040404_100%)]"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,transparent_0%,rgba(184,184,179,0.25)_42%,#b8b8b3_100%)]"
             />
           </div>
         </div>
 
-        <div className={cn('flex justify-between mob:hidden', 'text-sm font-medium tracking-tight uppercase text-neutral-300')}>
+        <div className={cn('flex justify-between mob:hidden', 'text-sm font-medium tracking-tight uppercase text-black/45')}>
           {META_LABELS.map((item, index) => (
             <span key={index} className={cn('border-b border-transparent duration-200')}>
               {item}
@@ -51,11 +51,11 @@ export default function Content({data}: {data: string}) {
           <section className="space-y-8">
             <div className="grid grid-cols-[minmax(0,34rem)_minmax(0,1fr)] gap-x-10 gap-y-8 items-start max-[1280px]:grid-cols-1">
               <div className="max-w-[34rem] space-y-5 lap:space-y-4">
-                <h1 className="text-4xl font-semibold tracking-tighter leading-[1.05]! lap:text-[2.15rem] mob:text-2xl text-neutral-500 max-w-[18ch]">
+                <h1 className="max-w-[18ch] text-4xl font-semibold leading-[1.05]! tracking-tighter text-black/80 lap:text-[2.15rem] mob:text-2xl">
                   Меня зовут Артем, рад знакомству! На этой странице вся нужная информация обо мне
                 </h1>
 
-                <div className="max-w-[33rem] space-y-3 text-lg leading-[1.45] text-neutral-400 mob:text-base">
+                <div className="max-w-[33rem] space-y-3 text-lg leading-[1.45] text-black/58 mob:text-base">
                   <p>Работаю на стыке продуктового мышления, UX и системности: помогаю командам упрощать сложные сценарии и делать интерфейс собраннее.</p>
                   <p>Ближе всего мне задачи, где нужно не просто оформить экран, а привести в порядок структуру, поведение и общую логику продукта.</p>
                 </div>
@@ -115,7 +115,7 @@ export default function Content({data}: {data: string}) {
           </section>
 
           <div className="w-full">
-            <article className="max-w-[58rem]">
+            <article className="max-w-[58rem] rounded-[1.6rem] border border-white/40 bg-white/18 p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_1.5rem_4rem_rgba(45,45,42,0.12)] backdrop-blur-2xl [&_h2]:!text-black/80 [&_h3]:!text-black/70 [&_li]:!text-black/60 [&_p]:!text-black/60 mob:p-5">
               <MDXRemote source={data} components={MDX} />
             </article>
           </div>
