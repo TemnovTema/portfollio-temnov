@@ -28,15 +28,16 @@ function TearOffContact() {
 
   return (
     <motion.aside
-      className="absolute left-[clamp(2rem,8vw,9rem)] top-[38%] z-30 w-[12.5rem] text-[#171715] mob:hidden"
+      className="absolute left-[clamp(2rem,8vw,9rem)] top-[calc(38%_-_100px)] z-30 w-[12.5rem] text-[#171715] mob:hidden"
       initial={{opacity: 0, x: -20}}
       animate={{opacity: 1, x: 0}}
       transition={{duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1]}}
     >
+      <div className="origin-top-left scale-[0.85]">
       <div className="group relative bg-[#efeee8] px-4 pb-0 pt-4 shadow-[0_1.1rem_2.6rem_rgba(40,40,37,0.2),0_0.15rem_0.35rem_rgba(40,40,37,0.12)]">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-25 [background-image:radial-gradient(rgba(30,30,28,0.42)_0.45px,transparent_0.45px)] [background-size:4px_4px]" />
         <div className="relative min-h-[7.6rem] border-b border-black/70">
-          <p className="max-w-[8ch] text-[1.72rem] font-semibold leading-[0.92] tracking-[-0.065em]">Устроюсь дизайнером дорого</p>
+          <p className="max-w-[9ch] text-[1.72rem] font-semibold leading-[0.92] tracking-[-0.065em]">Устроюсь дизайнером. Дорого</p>
           <span className="absolute bottom-2 right-0 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-black/40">на связи</span>
         </div>
 
@@ -49,7 +50,7 @@ function TearOffContact() {
                     <motion.button
                       key={number}
                       type="button"
-                      aria-label={`Оторвать номер ${number}`}
+                      aria-label={`Оторвать телефон, листок ${index + 1}`}
                       onClick={() => setRemovedNumbers((current) => [...current, number])}
                       whileHover={{
                         y: 5,
@@ -73,7 +74,7 @@ function TearOffContact() {
                     >
                       <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
                       <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
-                      <span className="relative flex h-full items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
+                      <span className="relative flex h-full items-center justify-center font-mono text-[0.5rem] tracking-[0.035em] [writing-mode:vertical-rl]">+79533150751</span>
                     </motion.button>
                   ) : null}
                 </AnimatePresence>
@@ -81,6 +82,8 @@ function TearOffContact() {
             )
           })}
         </div>
+      </div>
+      <p className="mt-3 text-center text-sm font-medium tracking-[-0.02em]">ну пожалуйста</p>
       </div>
     </motion.aside>
   )
