@@ -11,10 +11,13 @@ import {useMediaQuery} from '@/hooks/use-media-query'
 import {cn} from '@/lib/utils'
 
 import Link from 'next/link'
+import {usePathname} from 'next/navigation'
 import {HeaderLink} from '~/UI/HeaderLink'
 import Button, {BUTTON_SIZES, BUTTON_VARIANTS} from '~/UI/Button'
 
 export default function Header() {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const {scrollY} = useScroll()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -31,9 +34,15 @@ export default function Header() {
   }, [isMenuOpen])
 
   return (
-    <header className={cn('fixed inset-x-0 z-[999] pt-6 lap:pt-4 mob:pt-2', HEADER_BOX)}>
+    <header className={cn('fixed inset-x-0 z-[999] box-border max-w-[100vw] pt-6 lap:pt-4 mob:pt-2 max-[500px]:w-[100vw] max-[500px]:px-2', HEADER_BOX)}>
       <motion.div
-        className={cn('relative z-[150]', 'p-2 mob:p-1.5 grid grid-cols-5 mob:flex mob:justify-between items-center rounded-2xl', 'bg-black border border-gray-medium/70')}
+        className={cn(
+          'relative z-[150]',
+          'grid w-full max-w-full grid-cols-5 items-center rounded-2xl border p-2 mob:flex mob:justify-between mob:p-1.5',
+          isHome
+            ? 'border-white/25 bg-black/72 shadow-[0_1rem_3rem_rgba(41,41,38,0.2)] backdrop-blur-xl'
+            : 'border-gray-medium/70 bg-black',
+        )}
         style={{
           boxShadow: useTransform(shadowOpacity, (opacity) => `0px 0px 22px rgba(204, 204, 204, ${opacity})`),
         }}
