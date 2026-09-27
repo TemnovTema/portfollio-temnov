@@ -50,38 +50,12 @@ function ProjectTile({
       style={{opacity: cardOpacity, transform: cardTransform, zIndex: cardZIndex}}
     >
       <motion.div
-        className={cn('absolute bottom-full left-1/2 z-20 mb-1.5 flex -translate-x-1/2 flex-col items-center gap-1 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+        className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 mob:hidden"
         style={{opacity: detailOpacity}}
         aria-hidden={!isActive}
       >
         <div className="max-w-[22rem] truncate rounded-full border border-white/35 bg-black/68 px-3 py-1 text-[0.65rem] font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
           {item.title}
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            onClick={() => onSelect(Math.max(0, index - 1))}
-            disabled={!isActive || index === 0}
-            className="flex items-center gap-1.5 rounded-full border border-white/35 bg-black/48 px-2.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
-          >
-            <ArrowLeft className="size-3" strokeWidth={1.5} /> Назад
-          </button>
-          <Link
-            href="/archive"
-            aria-label="Открыть архив"
-            tabIndex={isActive ? 0 : -1}
-            className="grid size-8 place-items-center rounded-full border border-white/40 bg-black/58 text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/75 active:scale-[0.96]"
-          >
-            <Grid2X2 className="size-3.5" strokeWidth={1.5} />
-          </Link>
-          <button
-            type="button"
-            onClick={() => onSelect(Math.min(featuredCases.length - 1, index + 1))}
-            disabled={!isActive || index === featuredCases.length - 1}
-            className="flex items-center gap-1.5 rounded-full border border-white/35 bg-black/48 px-2.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
-          >
-            Дальше <ArrowRight className="size-3" strokeWidth={1.5} />
-          </button>
         </div>
       </motion.div>
 
@@ -121,6 +95,37 @@ function ProjectTile({
           <span className="shrink-0 font-mono text-[0.68rem] text-white/45">0{index + 1}</span>
         </div>
       </Link>
+
+      <motion.div
+        className={cn('absolute bottom-4 right-4 z-30 flex items-center gap-1 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+        style={{opacity: detailOpacity, transform: detailTransform}}
+        aria-hidden={!isActive}
+      >
+        <button
+          type="button"
+          onClick={() => onSelect(Math.max(0, index - 1))}
+          disabled={!isActive || index === 0}
+          className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
+        >
+          <ArrowLeft className="size-3" strokeWidth={1.5} /> Назад
+        </button>
+        <Link
+          href="/archive"
+          aria-label="Открыть архив"
+          tabIndex={isActive ? 0 : -1}
+          className="grid size-8 place-items-center rounded-full border border-white/28 bg-black/48 text-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/70 hover:text-white active:scale-[0.96]"
+        >
+          <Grid2X2 className="size-3.5" strokeWidth={1.5} />
+        </Link>
+        <button
+          type="button"
+          onClick={() => onSelect(Math.min(featuredCases.length - 1, index + 1))}
+          disabled={!isActive || index === featuredCases.length - 1}
+          className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
+        >
+          Дальше <ArrowRight className="size-3" strokeWidth={1.5} />
+        </button>
+      </motion.div>
     </motion.article>
   )
 }
