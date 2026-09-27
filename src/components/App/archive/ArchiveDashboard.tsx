@@ -3,15 +3,12 @@
 import {SOCIALS, type SocialSource, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 
-import {ArrowUpRight, Grid2X2, Grid3X3, Rows3} from 'lucide-react'
+import {ArrowUpRight} from 'lucide-react'
 import {motion} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useState} from 'react'
 
 import SocialsIcon from '~~/socials/SocialsIcon'
-
-type DashboardScale = 'compact' | 'balanced' | 'large'
 
 const DASHBOARD_ACCENTS: Record<SocialSource, string> = {
   product: 'from-[#2b2b2b] via-[#111111] to-[#466ac4]',
@@ -20,47 +17,14 @@ const DASHBOARD_ACCENTS: Record<SocialSource, string> = {
   launches: 'from-[#2b2b2b] via-[#111111] to-[#6f9951]',
 }
 
-const SCALE_OPTIONS = [
-  {id: 'compact', label: 'Компактно', icon: Grid3X3},
-  {id: 'balanced', label: 'Баланс', icon: Grid2X2},
-  {id: 'large', label: 'Крупно', icon: Rows3},
-] as const satisfies ReadonlyArray<{
-  id: DashboardScale
-  label: string
-  icon: typeof Grid2X2
-}>
-
-const GRID_CLASSES: Record<DashboardScale, string> = {
-  compact: 'grid-cols-4 auto-rows-[3.75rem]',
-  balanced: 'grid-cols-12 auto-rows-[4.75rem]',
-  large: 'grid-cols-2 auto-rows-[5.75rem]',
-}
-
-const ITEM_LAYOUTS: Record<DashboardScale, string[]> = {
-  compact: [
-    'col-span-2 row-span-5',
-    'col-span-1 row-span-5',
-    'col-span-1 row-span-5',
-    'col-span-1 row-span-4',
-    'col-span-2 row-span-4',
-    'col-span-1 row-span-4',
-  ],
-  balanced: [
-    'col-span-7 row-span-5',
-    'col-span-5 row-span-5',
-    'col-span-4 row-span-4',
-    'col-span-8 row-span-4',
-    'col-span-5 row-span-5',
-    'col-span-7 row-span-5',
-  ],
-  large: [
-    'col-span-2 row-span-6',
-    'col-span-1 row-span-5',
-    'col-span-1 row-span-5',
-    'col-span-1 row-span-5',
-    'col-span-1 row-span-5',
-  ],
-}
+const BALANCED_LAYOUTS = [
+  'col-span-7 row-span-5',
+  'col-span-5 row-span-5',
+  'col-span-4 row-span-4',
+  'col-span-8 row-span-4',
+  'col-span-5 row-span-5',
+  'col-span-7 row-span-5',
+]
 
 const MOBILE_LAYOUTS = [
   'mob:col-span-2 mob:row-span-4',
@@ -144,64 +108,18 @@ function DashboardCard({item, prominent, eager}: {item: SocialsItem; prominent: 
 }
 
 export default function ArchiveDashboard({items}: {items: SocialsItem[]}) {
-  const [scale, setScale] = useState<DashboardScale>('balanced')
-  const layouts = ITEM_LAYOUTS[scale]
-
   return (
-    <section data-section="archive-dashboard" className="overflow-hidden rounded-[30px] border border-white/10 bg-black-light p-4 mob:rounded-[20px] mob:p-2.5">
+    <section data-section="archive-dashboard" className="relative">
       <div
         className={cn(
-          'relative overflow-hidden rounded-[24px] border border-white/8 bg-[#090909]',
-          'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.06),_transparent_34%),linear-gradient(180deg,_rgba(11,11,11,1),_rgba(6,6,6,1))]',
-          'mob:rounded-[16px]',
+          'relative grid grid-flow-dense grid-cols-12 auto-rows-[4.75rem] gap-3',
+          'mob:grid-cols-2 mob:auto-rows-[4.25rem] mob:gap-2.5',
         )}
       >
-        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:32px_32px] mob:[background-size:24px_24px]" />
-
-        <div className="relative flex items-end justify-between gap-6 border-b border-white/10 px-5 py-5 mob:flex-col mob:items-start mob:gap-4 mob:px-3.5 mob:py-4">
-          <div className="space-y-1.5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/40">Все проекты</p>
-            <p className="max-w-[38ch] text-base leading-[1.4] text-neutral-400 mob:text-sm">
-              Непрерывная карта архива. Масштаб меняет плотность всей композиции.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-black/50 p-1" aria-label="Масштаб карточек">
-            {SCALE_OPTIONS.map((option) => {
-              const Icon = option.icon
-              const isActive = scale === option.id
-
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  onClick={() => setScale(option.id)}
-                  aria-pressed={isActive}
-                  title={option.label}
-                  className={cn(
-                    'flex items-center gap-2 rounded-lg px-3 py-2 font-mono text-xs uppercase transition-colors duration-200 mob:px-2.5',
-                    isActive ? 'bg-white text-black' : 'text-neutral-500 hover:bg-white/8 hover:text-neutral-200',
-                  )}
-                >
-                  <Icon className="size-4" strokeWidth={1.6} />
-                  <span className="mob:sr-only">{option.label}</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <div
-          className={cn(
-            'relative grid grid-flow-dense gap-3 p-4 transition-[grid-template-rows] duration-300',
-            GRID_CLASSES[scale],
-            'mob:grid-cols-2 mob:auto-rows-[4.25rem] mob:gap-2.5 mob:p-2.5',
-          )}
-        >
-          {items.map((item, index) => {
-            const layout = layouts[index % layouts.length]
+        {items.map((item, index) => {
+            const layout = BALANCED_LAYOUTS[index % BALANCED_LAYOUTS.length]
             const mobileLayout = MOBILE_LAYOUTS[index % MOBILE_LAYOUTS.length]
-            const prominent = layout.includes('col-span-7') || layout.includes('col-span-8') || layout.includes('col-span-2')
+            const prominent = layout.includes('col-span-7') || layout.includes('col-span-8')
 
             return (
               <motion.article
@@ -214,7 +132,6 @@ export default function ArchiveDashboard({items}: {items: SocialsItem[]}) {
               </motion.article>
             )
           })}
-        </div>
       </div>
     </section>
   )
