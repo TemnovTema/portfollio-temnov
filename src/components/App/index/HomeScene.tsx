@@ -3,7 +3,7 @@
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 import {ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Send} from 'lucide-react'
-import {motion} from 'framer-motion'
+import {AnimatePresence, motion} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FormEvent, useState} from 'react'
@@ -14,8 +14,18 @@ const featuredCases = ['case-2', 'case-1', 'case-3', 'case-4']
 
 const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
 const tearOffRotation = [-0.8, 0.6, -0.5, 0.8, -0.6, 0.5]
+const tearOffFlight = [
+  {x: -82, y: -128, rotate: -32},
+  {x: -58, y: -152, rotate: -24},
+  {x: -30, y: -138, rotate: -17},
+  {x: 32, y: -148, rotate: 18},
+  {x: 60, y: -132, rotate: 25},
+  {x: 84, y: -156, rotate: 34},
+]
 
 function TearOffContact() {
+  const [removedNumbers, setRemovedNumbers] = useState<string[]>([])
+
   return (
     <motion.aside
       className="absolute left-[clamp(2rem,8vw,9rem)] top-[38%] z-30 w-[12.5rem] text-[#171715] mob:hidden"
@@ -33,25 +43,41 @@ function TearOffContact() {
         <div className="relative grid grid-cols-6 gap-[3px] px-[2px]">
           {tearOffNumbers.map((number, index) => {
             return (
-              <motion.button
-                key={number}
-                type="button"
-                aria-label={`Отрывной номер ${number}`}
-                whileHover={{
-                  y: 5,
-                  rotate: tearOffRotation[index],
-                  scale: 1.018,
-                  filter: 'brightness(1.02)',
-                  boxShadow: '0 0.55rem 0.8rem rgba(40,40,37,0.2)',
-                }}
-                whileTap={{y: 10, rotate: tearOffRotation[index] * 0.35, scale: 0.985}}
-                transition={{type: 'spring', stiffness: 95, damping: 19, mass: 0.9}}
-                className="relative -mt-px h-[3.9rem] origin-top cursor-grab overflow-hidden border-x border-b border-black/12 bg-[#efeee8] shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/45 active:z-10 active:cursor-grabbing hover:z-10"
-              >
-                <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
-                <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
-                <span className="relative flex h-full items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
-              </motion.button>
+              <div key={number} className="relative -mt-px h-[3.9rem]">
+                <AnimatePresence initial={false}>
+                  {!removedNumbers.includes(number) ? (
+                    <motion.button
+                      key={number}
+                      type="button"
+                      aria-label={`Оторвать номер ${number}`}
+                      onClick={() => setRemovedNumbers((current) => [...current, number])}
+                      whileHover={{
+                        y: 5,
+                        rotate: tearOffRotation[index],
+                        scale: 1.018,
+                        filter: 'brightness(1.02)',
+                        boxShadow: '0 0.55rem 0.8rem rgba(40,40,37,0.2)',
+                      }}
+                      whileTap={{y: 10, rotate: tearOffRotation[index] * 0.35, scale: 0.985}}
+                      exit={{
+                        x: [0, tearOffFlight[index].x * 0.12, tearOffFlight[index].x],
+                        y: [5, 16, tearOffFlight[index].y],
+                        rotate: [tearOffRotation[index], tearOffRotation[index] * 4, tearOffFlight[index].rotate],
+                        scale: [1.018, 0.98, 0.72],
+                        opacity: [1, 1, 0],
+                        filter: ['brightness(1.02) blur(0px)', 'brightness(1.02) blur(0px)', 'brightness(1.02) blur(4px)'],
+                        transition: {duration: 1.35, times: [0, 0.2, 1], ease: [0.4, 0, 0.2, 1]},
+                      }}
+                      transition={{type: 'spring', stiffness: 95, damping: 19, mass: 0.9}}
+                      className="absolute inset-0 origin-top cursor-grab overflow-hidden border-x border-b border-black/12 bg-[#efeee8] shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/45 active:z-10 active:cursor-grabbing hover:z-10"
+                    >
+                      <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
+                      <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
+                      <span className="relative flex h-full items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
+                    </motion.button>
+                  ) : null}
+                </AnimatePresence>
+              </div>
             )
           })}
         </div>
