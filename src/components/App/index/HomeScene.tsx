@@ -2,7 +2,7 @@
 
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
-import {ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Send} from 'lucide-react'
+import {ArrowUpRight, Send} from 'lucide-react'
 import {AnimatePresence, motion} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -124,83 +124,54 @@ function PhotoGalleryWidget() {
 
 function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
   const href = item.link ?? `/archive#${item.slug}`
-  const previousId = index === 0 ? 'home-intro' : `project-${index}`
-  const nextId = index === featuredCases.length - 1 ? 'home-intro' : `project-${index + 2}`
 
   return (
-    <section id={`project-${index + 1}`} className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-32 pt-24 mob:min-h-0 mob:px-3 mob:pb-36 mob:pt-24">
+    <section id={`project-${index + 1}`} className="group relative min-h-[100dvh] overflow-hidden bg-[#111]">
+      {item.image ? (
+        <motion.div
+          className="absolute inset-0"
+          initial={{scale: 1.04}}
+          whileInView={{scale: 1}}
+          viewport={{once: false, amount: 0.35}}
+          transition={{duration: 1.2, ease: [0.16, 1, 0.3, 1]}}
+        >
+          <Image
+            src={item.image}
+            alt={item.title ?? 'Обложка проекта'}
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+          />
+        </motion.div>
+      ) : null}
+
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,transparent_38%,rgba(0,0,0,0.34)_100%)]" />
+
       <motion.article
-        className="group relative z-10 mx-auto w-[clamp(44rem,62vw,62rem)] text-white mob:w-full"
-        initial={{opacity: 0, y: 56}}
+        className="absolute bottom-[8.5rem] left-1/2 z-10 w-[min(34rem,calc(100%_-_2rem))] -translate-x-1/2 rounded-[1.5rem] border border-white/55 bg-white/72 p-5 text-[#171715] shadow-[0_1.5rem_4rem_rgba(18,18,17,0.28),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-2xl mob:bottom-[7.5rem] mob:p-4"
+        initial={{opacity: 0, y: 42}}
         whileInView={{opacity: 1, y: 0}}
         viewport={{once: false, amount: 0.35}}
-        transition={{duration: 0.7, ease: [0.22, 1, 0.36, 1]}}
-    >
-      <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 mob:hidden">
-        <div className="max-w-[22rem] truncate rounded-full border border-white/35 bg-black/68 px-3 py-1 text-[0.65rem] font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
-          {item.title}
-        </div>
-      </div>
-
-      <Link href={href} className="block overflow-hidden rounded-[1.35rem] border border-white/45 bg-[#111] p-2 shadow-[0_2.4rem_5rem_rgba(30,30,28,0.34),0_0.25rem_0.8rem_rgba(30,30,28,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-        <div className="relative aspect-[2/1] overflow-hidden rounded-[1rem] bg-neutral-900 mob:aspect-[16/10]">
-          {item.image ? (
-            <Image
-              src={item.image}
-              alt={item.title ?? 'Обложка проекта'}
-              fill
-              priority={index === 0}
-              sizes="(max-width: 500px) calc(100vw - 24px), 62vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
-            />
-          ) : null}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/10" />
-          <ArrowUpRight className="absolute right-3 top-3 size-8 rounded-full border border-white/25 bg-black/45 p-1.5 backdrop-blur-md transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.5} />
-
-          <div
-            className="absolute bottom-3 left-3 right-3 max-w-[29rem] rounded-[1rem] border border-white/25 bg-black/30 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
-          >
-            <p className="max-w-[48ch] text-xs leading-[1.4] text-white/82">{item.content[0]}</p>
-            <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] text-white/58">
-              Открыть проект <ArrowUpRight className="size-3.5" strokeWidth={1.5} />
-            </span>
+        transition={{duration: 0.8, ease: [0.22, 1, 0.36, 1]}}
+      >
+        <div className="flex items-start justify-between gap-6">
+          <div>
+            <span className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-black/45">{SOCIALS[item.source]}</span>
+            <h2 className="mt-2 text-[clamp(1.75rem,2.4vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.055em]">{item.title}</h2>
           </div>
+          <span className="font-mono text-xs text-black/38">0{index + 1}</span>
         </div>
 
-        <div className="hidden items-end justify-between gap-4 px-2 pb-1 pt-3 mob:flex">
-          <div className="space-y-1">
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-white/45">{SOCIALS[item.source]}</span>
-            <h2 className="max-w-[18ch] text-[clamp(1.15rem,1.45vw,1.55rem)] font-medium leading-[1.08] tracking-[-0.035em] text-white mob:text-lg">
-              {item.title}
-            </h2>
-          </div>
-          <span className="shrink-0 font-mono text-[0.68rem] text-white/45">0{index + 1}</span>
-        </div>
-      </Link>
+        <p className="mt-4 max-w-[48ch] text-sm leading-[1.45] text-black/58 mob:line-clamp-2">{item.content[0]}</p>
 
-      <div className="absolute bottom-4 right-4 z-30 flex items-center gap-1 mob:hidden">
-        <a
-          href={`#${previousId}`}
-          className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
-        >
-          <ArrowLeft className="size-3" strokeWidth={1.5} /> Назад
-        </a>
         <Link
-          href="/archive"
-          aria-label="Открыть архив"
-          className="grid size-8 place-items-center rounded-full border border-white/28 bg-black/48 text-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/70 hover:text-white active:scale-[0.96]"
+          href={href}
+          className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-[0.85rem] bg-black text-sm font-medium text-white transition-[transform,background-color] duration-300 hover:bg-black/82 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white/60"
         >
-          <Grid2X2 className="size-3.5" strokeWidth={1.5} />
+          Открыть кейс <ArrowUpRight className="size-4" strokeWidth={1.6} />
         </Link>
-        <a
-          href={`#${nextId}`}
-          className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
-        >
-          Дальше <ArrowRight className="size-3" strokeWidth={1.5} />
-        </a>
-      </div>
       </motion.article>
-
     </section>
   )
 }
