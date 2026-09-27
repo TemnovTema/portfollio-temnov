@@ -122,56 +122,51 @@ function PhotoGalleryWidget() {
   )
 }
 
-function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
-  const href = item.link ?? `/archive#${item.slug}`
-
+function ProjectsSection() {
   return (
-    <section id={`project-${index + 1}`} className="group relative min-h-[100dvh] overflow-hidden bg-[#111]">
-      {item.image ? (
-        <motion.div
-          className="absolute inset-0"
-          initial={{scale: 1.04}}
-          whileInView={{scale: 1}}
-          viewport={{once: false, amount: 0.35}}
-          transition={{duration: 1.2, ease: [0.16, 1, 0.3, 1]}}
-        >
-          <Image
-            src={item.image}
-            alt={item.title ?? 'Обложка проекта'}
-            fill
-            priority={index === 0}
-            sizes="100vw"
-            className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
-          />
-        </motion.div>
-      ) : null}
+    <section id="projects" aria-label="Избранные проекты" className="relative flex min-h-[100dvh] items-center px-6 pb-40 pt-28 mob:min-h-0 mob:px-3 mob:pb-36 mob:pt-24">
+      <div className="mx-auto grid w-full max-w-[72rem] grid-cols-2 gap-4 mob:grid-cols-1 mob:gap-3">
+        {featuredCases.map((item, index) => {
+          const href = item.link ?? `/archive#${item.slug}`
 
-      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,transparent_38%,rgba(0,0,0,0.34)_100%)]" />
+          return (
+            <motion.div
+              key={item.slug}
+              initial={{opacity: 0, y: 36}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true, amount: 0.25}}
+              transition={{duration: 0.7, delay: index * 0.06, ease: [0.22, 1, 0.36, 1]}}
+            >
+              <Link
+                href={href}
+                className="group relative block aspect-[16/8.7] overflow-hidden rounded-[1.45rem] border-[0.45rem] border-[#111] bg-[#111] text-white shadow-[0_1.4rem_3.2rem_rgba(35,35,32,0.24)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white/50 mob:aspect-[16/10]"
+              >
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.title ?? 'Обложка проекта'}
+                    fill
+                    priority={index === 0}
+                    sizes="(max-width: 500px) calc(100vw - 24px), 36rem"
+                    className="rounded-[1rem] object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.035]"
+                  />
+                ) : null}
+                <div aria-hidden="true" className="absolute inset-0 rounded-[1rem] bg-[linear-gradient(180deg,transparent_38%,rgba(0,0,0,0.74)_100%)]" />
 
-      <motion.article
-        className="absolute bottom-[8.5rem] left-1/2 z-10 w-[min(34rem,calc(100%_-_2rem))] -translate-x-1/2 rounded-[1.5rem] border border-white/55 bg-white/72 p-5 text-[#171715] shadow-[0_1.5rem_4rem_rgba(18,18,17,0.28),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-2xl mob:bottom-[7.5rem] mob:p-4"
-        initial={{opacity: 0, y: 42}}
-        whileInView={{opacity: 1, y: 0}}
-        viewport={{once: false, amount: 0.35}}
-        transition={{duration: 0.8, ease: [0.22, 1, 0.36, 1]}}
-      >
-        <div className="flex items-start justify-between gap-6">
-          <div>
-            <span className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-black/45">{SOCIALS[item.source]}</span>
-            <h2 className="mt-2 text-[clamp(1.75rem,2.4vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.055em]">{item.title}</h2>
-          </div>
-          <span className="font-mono text-xs text-black/38">0{index + 1}</span>
-        </div>
-
-        <p className="mt-4 max-w-[48ch] text-sm leading-[1.45] text-black/58 mob:line-clamp-2">{item.content[0]}</p>
-
-        <Link
-          href={href}
-          className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-[0.85rem] bg-black text-sm font-medium text-white transition-[transform,background-color] duration-300 hover:bg-black/82 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white/60"
-        >
-          Открыть кейс <ArrowUpRight className="size-4" strokeWidth={1.6} />
-        </Link>
-      </motion.article>
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 mob:p-4">
+                  <div>
+                    <span className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-white/58">{SOCIALS[item.source]}</span>
+                    <h2 className="mt-1.5 max-w-[20ch] text-[clamp(1.25rem,1.8vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.045em]">{item.title}</h2>
+                  </div>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/25 bg-white/12 backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:rotate-45">
+                    <ArrowUpRight className="size-4" strokeWidth={1.6} />
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+          )
+        })}
+      </div>
     </section>
   )
 }
@@ -278,11 +273,7 @@ export default function HomeScene() {
 
       </section>
 
-      <div aria-label="Избранные проекты">
-        {featuredCases.map((item, index) => (
-          <ProjectSection item={item} index={index} key={item.slug} />
-        ))}
-      </div>
+      <ProjectsSection />
 
       <div className="fixed inset-x-0 bottom-0 z-50 box-border max-w-[100vw] px-6 pb-6 lap:px-8 mob:px-3 mob:pb-3 max-[500px]:w-[100vw] max-[500px]:px-3">
         <ContactComposer />
