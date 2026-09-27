@@ -96,6 +96,32 @@ function TearOffContact() {
   )
 }
 
+function PhotoGalleryWidget() {
+  return (
+    <motion.figure
+      className="group absolute right-[clamp(2rem,8vw,9rem)] top-[56%] z-20 w-[9.5rem] text-center mob:hidden"
+      initial={{opacity: 0, y: 18, scale: 0.96}}
+      animate={{opacity: 1, y: 0, scale: 1}}
+      transition={{duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1]}}
+      whileHover={{y: -5, scale: 1.018}}
+    >
+      <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/65 bg-white/30 p-[0.28rem] shadow-[0_1.25rem_2.8rem_rgba(50,50,47,0.24),inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl">
+        <div className="relative size-full overflow-hidden rounded-[1.72rem] bg-[#111]">
+          <Image
+            src="/about/artem-front-portrait.png"
+            alt="Портрет Артёма Темнова"
+            fill
+            sizes="9.5rem"
+            className="object-cover object-[center_30%] transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.18),transparent_38%,rgba(0,0,0,0.08))]" />
+        </div>
+      </div>
+      <figcaption className="mt-2.5 text-sm font-medium tracking-[-0.025em] text-black/72">Фото</figcaption>
+    </motion.figure>
+  )
+}
+
 function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
   const href = item.link ?? `/archive#${item.slug}`
   const previousId = index === 0 ? 'home-intro' : `project-${index}`
@@ -262,6 +288,7 @@ export default function HomeScene() {
 
       <section id="home-intro" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-6 pb-32 pt-24 mob:min-h-[100dvh] mob:items-start mob:px-4 mob:pb-36 mob:pt-32">
         <TearOffContact />
+        <PhotoGalleryWidget />
 
         <motion.div
           className="relative z-20 mx-auto w-full max-w-[42rem] text-left"
