@@ -86,22 +86,22 @@ function ContactComposer() {
   return (
     <form
       onSubmit={submitMessage}
-      className="relative isolate mx-auto w-full max-w-[54rem] overflow-hidden rounded-[2rem] border border-white/45 bg-white/16 p-2.5 text-[#181817] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),inset_0_-1px_0_rgba(255,255,255,0.14),0_1.8rem_5rem_rgba(45,45,42,0.2)] backdrop-blur-[28px] backdrop-saturate-[1.35] mob:rounded-[1.5rem] mob:p-2"
+      className="relative isolate mx-auto w-full max-w-[42rem] overflow-hidden rounded-[1.6rem] border border-white/45 bg-white/16 p-2 text-[#181817] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),inset_0_-1px_0_rgba(255,255,255,0.14),0_1.8rem_5rem_rgba(45,45,42,0.2)] backdrop-blur-[28px] backdrop-saturate-[1.35] mob:rounded-[1.5rem]"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(105deg,rgba(255,255,255,0.2),transparent_46%,rgba(255,255,255,0.12))]" />
-      <div className="flex items-center gap-2 px-1 pb-1.5 mob:overflow-x-auto">
-        <span className="whitespace-nowrap rounded-full border border-white/45 bg-white/42 px-4 py-2 font-medium text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] mob:px-3 mob:py-1.5 mob:text-sm">Написать мне</span>
+      <div className="flex items-center gap-1.5 px-0.5 pb-0.5 mob:overflow-x-auto">
+        <span className="whitespace-nowrap rounded-full border border-white/45 bg-white/42 px-3 py-1.5 text-sm font-medium text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">Написать мне</span>
         <Link
           href="https://t.me/absolutnoretro"
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap rounded-full border border-white/25 bg-black/[0.06] px-4 py-2 font-medium text-black/62 transition-colors hover:bg-white/30 hover:text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55 mob:px-3 mob:py-1.5 mob:text-sm"
+          className="whitespace-nowrap rounded-full border border-white/25 bg-black/[0.06] px-3 py-1.5 text-sm font-medium text-black/62 transition-colors hover:bg-white/30 hover:text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55"
         >
           Telegram
         </Link>
       </div>
 
-      <div className="flex items-center gap-3 pl-3 mob:gap-2 mob:pl-2">
+      <div className="flex items-center gap-2.5 pl-2.5 mob:gap-2 mob:pl-2">
         <label htmlFor="portfolio-message" className="sr-only">Сообщение Артему</label>
         <input
           id="portfolio-message"
@@ -114,12 +114,12 @@ function ContactComposer() {
           placeholder="Расскажите о задаче..."
           aria-describedby={error ? 'portfolio-message-error' : undefined}
           aria-invalid={Boolean(error)}
-          className="min-w-0 flex-1 bg-transparent py-4 text-xl tracking-[-0.025em] text-black/82 outline-none placeholder:text-black/35 mob:py-3 mob:text-base"
+          className="min-w-0 flex-1 bg-transparent py-2.5 text-lg tracking-[-0.025em] text-black/82 outline-none placeholder:text-black/35 mob:py-3 mob:text-base"
         />
         <button
           type="submit"
           aria-label="Отправить сообщение"
-          className="grid size-14 shrink-0 place-items-center rounded-full border border-white/35 bg-black/78 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] transition-transform duration-200 hover:rotate-45 hover:bg-black/88 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 mob:size-11"
+          className="grid size-12 shrink-0 place-items-center rounded-full border border-white/35 bg-black/78 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] transition-transform duration-200 hover:rotate-45 hover:bg-black/88 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/55 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 mob:size-11"
         >
           <Send className="size-5" strokeWidth={1.7} />
         </button>
