@@ -3,12 +3,14 @@
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 import {ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Send} from 'lucide-react'
-import {motion, type MotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform} from 'framer-motion'
+import {motion} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import {FormEvent, useRef, useState} from 'react'
+import {FormEvent, useState} from 'react'
 
-const featuredCases = ITEMS.slice(0, 4)
+const featuredCases = ['case-2', 'case-1', 'case-3', 'case-4']
+  .map((slug) => ITEMS.find((item) => item.slug === slug))
+  .filter((item): item is SocialsItem => Boolean(item))
 
 const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
 const tearOffMotion = [
@@ -20,17 +22,13 @@ const tearOffMotion = [
   'rotate-1 translate-y-0.5',
 ]
 
-function TearOffContact({visible}: {visible: boolean}) {
+function TearOffContact() {
   return (
     <motion.aside
-      aria-hidden={!visible}
-      className={cn(
-        'absolute left-[clamp(2rem,5vw,6rem)] top-[37%] z-[65] w-[12.5rem] -rotate-[1.5deg] text-[#171715] mob:hidden',
-        visible ? 'pointer-events-auto' : 'pointer-events-none',
-      )}
-      initial={false}
-      animate={{opacity: visible ? 1 : 0, x: visible ? 0 : -18, y: visible ? 0 : 10, scale: visible ? 1 : 0.94}}
-      transition={{duration: 0.45, ease: [0.22, 1, 0.36, 1]}}
+      className="absolute left-[clamp(2rem,8vw,9rem)] top-[38%] z-30 w-[12.5rem] -rotate-[1.5deg] text-[#171715] mob:hidden"
+      initial={{opacity: 0, x: -20, rotate: -4}}
+      animate={{opacity: 1, x: 0, rotate: -1.5}}
+      transition={{duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1]}}
     >
       <div className="group relative bg-[#efeee8] px-4 pb-0 pt-4 shadow-[0_1.1rem_2.6rem_rgba(40,40,37,0.2),0_0.15rem_0.35rem_rgba(40,40,37,0.12)]">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-25 [background-image:radial-gradient(rgba(30,30,28,0.42)_0.45px,transparent_0.45px)] [background-size:4px_4px]" />
@@ -78,54 +76,26 @@ function TearOffContact({visible}: {visible: boolean}) {
   )
 }
 
-function ProjectTile({
-  item,
-  index,
-  progress,
-  isActive,
-  onSelect,
-}: {
-  item: SocialsItem
-  index: number
-  progress: MotionValue<number>
-  isActive: boolean
-  onSelect: (index: number) => void
-}) {
-  const reduceMotion = useReducedMotion()
+function ProjectSection({item, index}: {item: SocialsItem; index: number}) {
   const href = item.link ?? `/archive#${item.slug}`
-  const relativePosition = useTransform(progress, (value) => index - value * (featuredCases.length - 1))
-  const cardTransform = useTransform(relativePosition, (position) => {
-    const distance = Math.abs(position)
-    const direction = Math.sign(position)
-    const translateX = direction * (distance * 37 + Math.max(0, distance - 1) * 7)
-    const scale = Math.max(0.34, 1 - Math.min(distance, 1) * 0.52 - Math.max(0, distance - 1) * 0.14)
-    const rotation = reduceMotion ? 0 : direction * Math.min(8, distance * 5)
-
-    return `translate(calc(-50% + ${translateX}vw), -50%) scale(${scale}) rotate(${rotation}deg)`
-  })
-  const cardOpacity = useTransform(relativePosition, (position) => Math.max(0, 1 - Math.max(0, Math.abs(position) - 0.15) * 0.28))
-  const cardZIndex = useTransform(relativePosition, (position) => 50 - Math.round(Math.abs(position) * 10))
-  const detailOpacity = useTransform(relativePosition, (position) => Math.max(0, 1 - Math.abs(position) * 2.4))
-  const detailTransform = useTransform(relativePosition, (position) => `translateY(${Math.min(12, Math.abs(position) * 18)}px)`)
+  const isEven = index % 2 === 0
+  const previousId = index === 0 ? 'home-intro' : `project-${index}`
+  const nextId = index === featuredCases.length - 1 ? 'home-intro' : `project-${index + 2}`
 
   return (
-    <motion.article
-      className={cn(
-        'group absolute left-1/2 top-[50%] w-[clamp(44rem,58vw,58rem)] text-white will-change-transform',
-        'mob:relative mob:left-auto mob:right-auto mob:top-auto mob:z-auto mob:w-[78vw] mob:max-w-[20rem] mob:shrink-0 mob:!transform-none mob:!opacity-100',
-      )}
-      initial={false}
-      style={{opacity: cardOpacity, transform: cardTransform, zIndex: cardZIndex}}
+    <section id={`project-${index + 1}`} className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-32 pt-24 mob:min-h-0 mob:px-3 mob:pb-36 mob:pt-24">
+      <motion.article
+        className={cn('group relative z-10 w-[clamp(44rem,62vw,62rem)] text-white mob:w-full', isEven ? 'ml-[9vw] mr-auto' : 'ml-auto mr-[9vw]')}
+        initial={{opacity: 0, y: 56, rotate: isEven ? -1.5 : 1.5}}
+        whileInView={{opacity: 1, y: 0, rotate: isEven ? -0.45 : 0.45}}
+        viewport={{once: false, amount: 0.35}}
+        transition={{duration: 0.7, ease: [0.22, 1, 0.36, 1]}}
     >
-      <motion.div
-        className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 mob:hidden"
-        style={{opacity: detailOpacity}}
-        aria-hidden={!isActive}
-      >
+      <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 mob:hidden">
         <div className="max-w-[22rem] truncate rounded-full border border-white/35 bg-black/68 px-3 py-1 text-[0.65rem] font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
           {item.title}
         </div>
-      </motion.div>
+      </div>
 
       <Link href={href} className="block overflow-hidden rounded-[1.35rem] border border-white/45 bg-[#111] p-2 shadow-[0_2.4rem_5rem_rgba(30,30,28,0.34),0_0.25rem_0.8rem_rgba(30,30,28,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
         <div className="relative aspect-[2/1] overflow-hidden rounded-[1rem] bg-neutral-900 mob:aspect-[16/10]">
@@ -135,22 +105,21 @@ function ProjectTile({
               alt={item.title ?? 'Обложка проекта'}
               fill
               priority={index === 0}
-              sizes={index === 0 ? '(max-width: 500px) 78vw, 38vw' : '(max-width: 500px) 78vw, 22vw'}
+              sizes="(max-width: 500px) calc(100vw - 24px), 62vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
             />
           ) : null}
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/10" />
           <ArrowUpRight className="absolute right-3 top-3 size-8 rounded-full border border-white/25 bg-black/45 p-1.5 backdrop-blur-md transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.5} />
 
-          <motion.div
+          <div
             className="absolute bottom-3 left-3 right-3 max-w-[29rem] rounded-[1rem] border border-white/25 bg-black/30 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
-            style={{opacity: detailOpacity, transform: detailTransform}}
           >
             <p className="max-w-[48ch] text-xs leading-[1.4] text-white/82">{item.content[0]}</p>
             <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] text-white/58">
               Открыть проект <ArrowUpRight className="size-3.5" strokeWidth={1.5} />
             </span>
-          </motion.div>
+          </div>
         </div>
 
         <div className="hidden items-end justify-between gap-4 px-2 pb-1 pt-3 mob:flex">
@@ -164,37 +133,39 @@ function ProjectTile({
         </div>
       </Link>
 
-      <motion.div
-        className={cn('absolute bottom-4 right-4 z-30 flex items-center gap-1 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
-        style={{opacity: detailOpacity, transform: detailTransform}}
-        aria-hidden={!isActive}
-      >
-        <button
-          type="button"
-          onClick={() => onSelect(Math.max(0, index - 1))}
-          disabled={!isActive || index === 0}
+      <div className="absolute bottom-4 right-4 z-30 flex items-center gap-1 mob:hidden">
+        <a
+          href={`#${previousId}`}
           className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
         >
           <ArrowLeft className="size-3" strokeWidth={1.5} /> Назад
-        </button>
+        </a>
         <Link
           href="/archive"
           aria-label="Открыть архив"
-          tabIndex={isActive ? 0 : -1}
           className="grid size-8 place-items-center rounded-full border border-white/28 bg-black/48 text-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/70 hover:text-white active:scale-[0.96]"
         >
           <Grid2X2 className="size-3.5" strokeWidth={1.5} />
         </Link>
-        <button
-          type="button"
-          onClick={() => onSelect(Math.min(featuredCases.length - 1, index + 1))}
-          disabled={!isActive || index === featuredCases.length - 1}
+        <a
+          href={`#${nextId}`}
           className="flex items-center gap-1.5 rounded-full border border-white/25 bg-black/42 px-2.5 py-1.5 text-[0.58rem] font-medium uppercase tracking-[0.045em] text-white/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/65 hover:text-white active:scale-[0.97] disabled:opacity-30"
         >
           Дальше <ArrowRight className="size-3" strokeWidth={1.5} />
-        </button>
+        </a>
+      </div>
+      </motion.article>
+
+      <motion.div
+        aria-hidden="true"
+        className={cn('absolute top-[30%] font-mono text-[clamp(5rem,11vw,11rem)] font-medium tracking-[-0.08em] text-black/[0.055] mob:hidden', isEven ? 'right-[3vw]' : 'left-[3vw]')}
+        initial={{opacity: 0}}
+        whileInView={{opacity: 1}}
+        viewport={{amount: 0.5}}
+      >
+        0{index + 1}
       </motion.div>
-    </motion.article>
+    </section>
   )
 }
 
@@ -275,41 +246,40 @@ export function StageBackdrop({fixed = false}: {fixed?: boolean}) {
 }
 
 export default function HomeScene() {
-  const sceneRef = useRef<HTMLElement>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const {scrollYProgress} = useScroll({target: sceneRef, offset: ['start start', 'end end']})
-  const smoothProgress = useSpring(scrollYProgress, {stiffness: 82, damping: 26, mass: 0.42, restDelta: 0.0005})
-
-  useMotionValueEvent(smoothProgress, 'change', (value) => {
-    const nextIndex = Math.min(featuredCases.length - 1, Math.max(0, Math.round(value * (featuredCases.length - 1))))
-    setActiveIndex((currentIndex) => currentIndex === nextIndex ? currentIndex : nextIndex)
-  })
-
-  const selectProject = (index: number) => {
-    if (!sceneRef.current) return
-    const sceneTop = sceneRef.current.getBoundingClientRect().top + window.scrollY
-    const scrollRange = sceneRef.current.offsetHeight - window.innerHeight
-    window.scrollTo({top: sceneTop + (index / (featuredCases.length - 1)) * scrollRange, behavior: 'smooth'})
-  }
-
   return (
-    <main ref={sceneRef} className="relative h-[340dvh] w-full max-w-[100vw] bg-[#b8b8b3] text-[#181817] mob:h-[100dvh]">
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
-        <StageBackdrop />
+    <main className="relative w-full max-w-[100vw] overflow-hidden bg-[#b8b8b3] text-[#181817]">
+      <StageBackdrop fixed />
 
-        <section id="featured-cases" aria-label="Избранные проекты" className="absolute inset-0 z-20 mob:inset-x-0 mob:bottom-[9.8rem] mob:top-[7rem] mob:flex mob:snap-x mob:snap-mandatory mob:items-center mob:overflow-x-auto mob:px-4 mob:pb-4 mob:[scrollbar-width:none]">
-          <div className="contents mob:flex mob:w-max mob:gap-3 mob:pr-4 mob:[&>*]:snap-center">
-            {featuredCases.map((item, index) => (
-              <ProjectTile item={item} index={index} progress={smoothProgress} isActive={activeIndex === index} onSelect={selectProject} key={item.slug} />
-            ))}
-          </div>
-        </section>
+      <section id="home-intro" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-6 pb-32 pt-24 mob:min-h-[100dvh] mob:items-start mob:px-4 mob:pb-36 mob:pt-32">
+        <TearOffContact />
 
-        <TearOffContact visible={activeIndex === 2} />
+        <motion.div
+          className="relative z-20 max-w-[54rem] text-center mob:text-left"
+          initial={{opacity: 0, y: 24}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.75, ease: [0.22, 1, 0.36, 1]}}
+        >
+          <p className="text-[clamp(2.8rem,6.4vw,6.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-black/82 mob:text-[clamp(3rem,14vw,4.8rem)]">
+            Здравствуйте.
+          </p>
+          <p className="mx-auto mt-5 max-w-[24ch] text-[clamp(1.05rem,1.55vw,1.45rem)] leading-[1.35] tracking-[-0.025em] text-black/48 mob:mx-0 mob:mt-6 mob:max-w-[28ch] mob:text-base">
+            Я Артём Темнов. Проектирую цифровые продукты, собираю прототипы и превращаю идеи в работающие интерфейсы.
+          </p>
+        </motion.div>
 
-        <div className="absolute inset-x-0 bottom-0 z-50 box-border max-w-[100vw] px-6 pb-6 lap:px-8 mob:px-3 mob:pb-3 max-[500px]:w-[100vw] max-[500px]:px-3">
-          <ContactComposer />
+        <div className="absolute bottom-[10.5rem] right-[8vw] rounded-full border border-white/42 bg-white/14 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-black/42 shadow-[inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl mob:hidden">
+          Product design + code
         </div>
+      </section>
+
+      <div aria-label="Избранные проекты">
+        {featuredCases.map((item, index) => (
+          <ProjectSection item={item} index={index} key={item.slug} />
+        ))}
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-50 box-border max-w-[100vw] px-6 pb-6 lap:px-8 mob:px-3 mob:pb-3 max-[500px]:w-[100vw] max-[500px]:px-3">
+        <ContactComposer />
       </div>
     </main>
   )
