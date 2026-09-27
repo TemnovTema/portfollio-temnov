@@ -35,12 +35,51 @@ export default function Header() {
 
   return (
     <header className={cn('fixed inset-x-0 z-[999] box-border max-w-[100vw] pt-6 lap:pt-4 mob:pt-2 max-[500px]:w-[100vw] max-[500px]:px-2', HEADER_BOX)}>
+      {isHome ? (
+        <motion.div
+          className="relative z-[150] mx-auto flex w-fit flex-col items-center gap-1.5 mob:hidden"
+          initial={{opacity: 0, y: -12}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.5, ease: [0.22, 1, 0.36, 1]}}
+        >
+          <Link
+            href="/"
+            aria-label="На главную"
+            className="flex h-7 w-[23rem] items-center justify-center gap-1.5 rounded-full border border-white/25 bg-black/[0.09] text-[0.68rem] font-medium tracking-[-0.01em] text-white/58 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/15 hover:text-white/85"
+          >
+            <span className="size-1.5 rounded-full bg-white/55" />
+            Portfolio
+          </Link>
+
+          <nav aria-label="Основная навигация" className="flex items-center gap-1.5">
+            {HEADER_DATA.LINKS.map((link) => (
+              <Link
+                href={link.to}
+                target={link.external ? '_blank' : '_self'}
+                className="rounded-full border border-white/25 bg-black/[0.1] px-4 py-2 text-xs font-medium uppercase tracking-[0.035em] text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/18 hover:text-white"
+                key={link.to}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="https://t.me/absolutnoretro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-white/30 bg-white/22 px-4 py-2 text-xs font-medium uppercase tracking-[0.035em] text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-[22px] backdrop-saturate-150 transition-colors hover:bg-white/32 hover:text-white"
+            >
+              Связаться
+            </Link>
+          </nav>
+        </motion.div>
+      ) : null}
+
       <motion.div
         className={cn(
           'relative z-[150]',
           'grid w-full max-w-full grid-cols-5 items-center rounded-2xl border p-2 mob:flex mob:justify-between mob:p-1.5',
           isHome
-            ? 'border-white/35 bg-black/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1rem_3rem_rgba(41,41,38,0.14)] backdrop-blur-[24px] backdrop-saturate-150'
+            ? 'hidden border-white/35 bg-black/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1rem_3rem_rgba(41,41,38,0.14)] backdrop-blur-[24px] backdrop-saturate-150 mob:flex'
             : 'border-gray-medium/70 bg-black',
         )}
         style={{
