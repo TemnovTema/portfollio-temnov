@@ -13,14 +13,7 @@ const featuredCases = ['case-2', 'case-1', 'case-3', 'case-4']
   .filter((item): item is SocialsItem => Boolean(item))
 
 const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
-const tearOffMotion = [
-  'hover:-rotate-[0.8deg]',
-  'hover:rotate-[0.6deg]',
-  'hover:-rotate-[0.5deg]',
-  'hover:rotate-[0.8deg]',
-  'hover:-rotate-[0.6deg]',
-  'hover:rotate-[0.5deg]',
-]
+const tearOffRotation = [-0.8, 0.6, -0.5, 0.8, -0.6, 0.5]
 
 function TearOffContact() {
   return (
@@ -39,42 +32,29 @@ function TearOffContact() {
 
         <div className="relative grid grid-cols-6 gap-[3px] px-[2px]">
           {tearOffNumbers.map((number, index) => {
-            const nextNumber = tearOffNumbers[(index + 1) % tearOffNumbers.length]
-
             return (
-              <Link
+              <motion.button
                 key={number}
-                href="https://t.me/absolutnoretro"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Написать в Telegram, номер ${number}`}
-                style={{transitionDelay: `${index * 24}ms`}}
-                className={cn(
-                  'group/tab relative -mt-px h-[3.9rem] origin-top overflow-hidden border-x border-b border-black/12 bg-[#efeee8]',
-                  'shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] transition-[transform,box-shadow,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-                  'hover:z-10 hover:translate-y-1.5 hover:scale-[1.018] hover:brightness-[1.02] hover:shadow-[0_0.55rem_0.8rem_rgba(40,40,37,0.2)]',
-                  'active:translate-y-2.5 active:scale-[0.99] active:duration-200',
-                  tearOffMotion[index],
-                )}
+                type="button"
+                aria-label={`Отрывной номер ${number}`}
+                whileHover={{
+                  y: 5,
+                  rotate: tearOffRotation[index],
+                  scale: 1.018,
+                  filter: 'brightness(1.02)',
+                  boxShadow: '0 0.55rem 0.8rem rgba(40,40,37,0.2)',
+                }}
+                whileTap={{y: 10, rotate: tearOffRotation[index] * 0.35, scale: 0.985}}
+                transition={{type: 'spring', stiffness: 95, damping: 19, mass: 0.9}}
+                className="relative -mt-px h-[3.9rem] origin-top cursor-grab overflow-hidden border-x border-b border-black/12 bg-[#efeee8] shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/45 active:z-10 active:cursor-grabbing hover:z-10"
               >
                 <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
                 <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
-                <span
-                  className="relative flex h-[7.8rem] flex-col items-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/tab:-translate-y-1/2"
-                  style={{transitionDelay: `${index * 35}ms`}}
-                >
-                  <span className="flex h-[3.9rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
-                  <span className="flex h-[3.9rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{nextNumber}</span>
-                </span>
-              </Link>
+                <span className="relative flex h-full items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
+              </motion.button>
             )
           })}
         </div>
-      </div>
-
-      <div className="mt-3 text-center">
-        <p className="text-sm font-medium">Связаться</p>
-        <p className="mt-1 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-black/48">отрывные контакты</p>
       </div>
     </motion.aside>
   )
