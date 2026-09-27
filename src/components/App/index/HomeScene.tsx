@@ -3,7 +3,7 @@
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
 import {ArrowUpRight, Send} from 'lucide-react'
-import {AnimatePresence, motion} from 'framer-motion'
+import {AnimatePresence, motion, useReducedMotion} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FormEvent, useState} from 'react'
@@ -97,13 +97,24 @@ function TearOffContact() {
 }
 
 function PhotoGalleryWidget() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <motion.figure
       className="group absolute right-[clamp(2rem,8vw,9rem)] top-[56%] z-20 w-[9.5rem] text-center mob:hidden"
       initial={{opacity: 0, y: 18, scale: 0.96}}
       animate={{opacity: 1, y: 0, scale: 1}}
       transition={{duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1]}}
-      whileHover={{y: -5, scale: 1.018}}
+      whileHover={shouldReduceMotion ? {scale: 1.015, transition: {duration: 0.2}} : {
+        x: [0, 16, 0, -16, 0],
+        y: [0, -10, 0, 10, 0],
+        rotateX: [-12, 0, 12, 0, -12],
+        rotateY: [0, 42, 0, -42, 0],
+        rotateZ: [0, 2, 0, -2, 0],
+        scale: [1, 1.025, 0.95, 1.025, 1],
+        transition: {duration: 1.35, times: [0, 0.25, 0.5, 0.75, 1], ease: [0.77, 0, 0.175, 1]},
+      }}
+      style={{transformPerspective: 900, transformStyle: 'preserve-3d'}}
     >
       <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/65 bg-white/30 p-[0.28rem] shadow-[0_1.25rem_2.8rem_rgba(50,50,47,0.24),inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl">
         <div className="relative size-full overflow-hidden rounded-[1.72rem] bg-[#111]">
