@@ -14,12 +14,12 @@ const featuredCases = ['case-2', 'case-1', 'case-3', 'case-4']
 
 const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
 const tearOffMotion = [
-  'hover:-rotate-2',
-  'hover:rotate-[1.5deg]',
-  'hover:-rotate-1',
-  'hover:rotate-2',
-  'hover:-rotate-[1.5deg]',
-  'hover:rotate-1',
+  'hover:-rotate-[0.8deg]',
+  'hover:rotate-[0.6deg]',
+  'hover:-rotate-[0.5deg]',
+  'hover:rotate-[0.8deg]',
+  'hover:-rotate-[0.6deg]',
+  'hover:rotate-[0.5deg]',
 ]
 
 function TearOffContact() {
@@ -33,8 +33,7 @@ function TearOffContact() {
       <div className="group relative bg-[#efeee8] px-4 pb-0 pt-4 shadow-[0_1.1rem_2.6rem_rgba(40,40,37,0.2),0_0.15rem_0.35rem_rgba(40,40,37,0.12)]">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-25 [background-image:radial-gradient(rgba(30,30,28,0.42)_0.45px,transparent_0.45px)] [background-size:4px_4px]" />
         <div className="relative min-h-[7.6rem] border-b border-black/70">
-          <p className="text-[1.72rem] font-semibold leading-[0.92] tracking-[-0.065em]">Есть задача?</p>
-          <p className="mt-2 max-w-[15ch] text-[0.68rem] leading-[1.3] text-black/56">Оторвите номер и напишите мне.</p>
+          <p className="max-w-[8ch] text-[1.72rem] font-semibold leading-[0.92] tracking-[-0.065em]">Устроюсь дизайнером дорого</p>
           <span className="absolute bottom-2 right-0 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-black/40">на связи</span>
         </div>
 
@@ -52,15 +51,16 @@ function TearOffContact() {
                 style={{transitionDelay: `${index * 24}ms`}}
                 className={cn(
                   'group/tab relative -mt-px h-[3.9rem] origin-top overflow-hidden border-x border-b border-black/12 bg-[#efeee8]',
-                  'shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] transition-[transform,box-shadow,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
-                  'hover:z-10 hover:translate-y-2 hover:scale-[1.035] hover:brightness-[1.02] hover:shadow-[0_0.65rem_0.9rem_rgba(40,40,37,0.22)]',
+                  'shadow-[0_0.2rem_0.35rem_rgba(40,40,37,0.1)] transition-[transform,box-shadow,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                  'hover:z-10 hover:translate-y-1.5 hover:scale-[1.018] hover:brightness-[1.02] hover:shadow-[0_0.55rem_0.8rem_rgba(40,40,37,0.2)]',
+                  'active:translate-y-2.5 active:scale-[0.99] active:duration-200',
                   tearOffMotion[index],
                 )}
               >
                 <span aria-hidden="true" className="absolute inset-x-1 top-0 z-10 border-t border-dashed border-black/28" />
                 <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(30,30,28,0.5)_0.4px,transparent_0.4px)] [background-size:4px_4px]" />
                 <span
-                  className="relative flex h-[7.8rem] flex-col items-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/tab:-translate-y-1/2"
+                  className="relative flex h-[7.8rem] flex-col items-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/tab:-translate-y-1/2"
                   style={{transitionDelay: `${index * 35}ms`}}
                 >
                   <span className="flex h-[3.9rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
