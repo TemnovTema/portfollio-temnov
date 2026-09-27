@@ -42,6 +42,14 @@ function TearOffContact() {
         </div>
 
         <div className="relative grid grid-cols-6 gap-[3px] px-[2px]">
+          <motion.p
+            aria-hidden="true"
+            animate={{opacity: removedNumbers.length > 0 ? 1 : 0}}
+            transition={{duration: 0.6, delay: removedNumbers.length > 0 ? 0.24 : 0}}
+            className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap text-sm font-medium tracking-[-0.02em]"
+          >
+            ну пожалуйста
+          </motion.p>
           {tearOffNumbers.map((number, index) => {
             return (
               <div key={number} className="relative -mt-px h-[3.9rem]">
@@ -83,7 +91,6 @@ function TearOffContact() {
           })}
         </div>
       </div>
-      <p className="mt-3 text-center text-sm font-medium tracking-[-0.02em]">ну пожалуйста</p>
       </div>
     </motion.aside>
   )
