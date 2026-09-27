@@ -39,7 +39,7 @@ export default function Header() {
     <header className={cn('fixed inset-x-0 z-[999] box-border max-w-[100vw] pt-6 lap:pt-4 mob:pt-2 max-[500px]:w-[100vw] max-[500px]:px-2', HEADER_BOX)}>
       {isStagePage ? (
         <motion.div
-          className="relative z-[150] mx-auto flex h-11 w-full max-w-[42rem] items-center rounded-full border border-white/38 bg-black/[0.1] px-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.34),inset_0_-1px_0_rgba(255,255,255,0.08),0_1.1rem_3rem_rgba(36,36,34,0.14)] backdrop-blur-[28px] backdrop-saturate-150 mob:hidden"
+          className="relative z-[150] mx-auto flex h-12 w-full max-w-[42rem] items-center rounded-full border border-white/38 bg-black/[0.1] px-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.34),inset_0_-1px_0_rgba(255,255,255,0.08),0_1.1rem_3rem_rgba(36,36,34,0.14)] backdrop-blur-[28px] backdrop-saturate-150 mob:hidden"
           initial={{opacity: 0, y: -12}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.5, ease: [0.22, 1, 0.36, 1]}}
