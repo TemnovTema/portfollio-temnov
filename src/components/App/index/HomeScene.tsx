@@ -10,6 +10,74 @@ import {FormEvent, useRef, useState} from 'react'
 
 const featuredCases = ITEMS.slice(0, 4)
 
+const tearOffNumbers = ['01', '02', '03', '04', '05', '06']
+const tearOffMotion = [
+  '-rotate-2 translate-y-0.5',
+  'rotate-1 -translate-y-0.5',
+  '-rotate-1 translate-y-1',
+  'rotate-2 translate-y-0',
+  '-rotate-2 -translate-y-0.5',
+  'rotate-1 translate-y-0.5',
+]
+
+function TearOffContact({visible}: {visible: boolean}) {
+  return (
+    <motion.aside
+      aria-hidden={!visible}
+      className={cn(
+        'absolute left-[clamp(2rem,5vw,6rem)] top-[37%] z-[65] w-[12.5rem] -rotate-[1.5deg] text-[#171715] mob:hidden',
+        visible ? 'pointer-events-auto' : 'pointer-events-none',
+      )}
+      initial={false}
+      animate={{opacity: visible ? 1 : 0, x: visible ? 0 : -18, y: visible ? 0 : 10, scale: visible ? 1 : 0.94}}
+      transition={{duration: 0.45, ease: [0.22, 1, 0.36, 1]}}
+    >
+      <div className="group relative bg-[#efeee8] px-4 pb-0 pt-4 shadow-[0_1.1rem_2.6rem_rgba(40,40,37,0.2),0_0.15rem_0.35rem_rgba(40,40,37,0.12)]">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-25 [background-image:radial-gradient(rgba(30,30,28,0.42)_0.45px,transparent_0.45px)] [background-size:4px_4px]" />
+        <div className="relative min-h-[7.6rem] border-b border-black/70">
+          <p className="text-[1.72rem] font-semibold leading-[0.92] tracking-[-0.065em]">Есть задача?</p>
+          <p className="mt-2 max-w-[15ch] text-[0.68rem] leading-[1.3] text-black/56">Оторвите номер и напишите мне.</p>
+          <span className="absolute bottom-2 right-0 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-black/40">на связи</span>
+        </div>
+
+        <div className="relative grid grid-cols-6">
+          {tearOffNumbers.map((number, index) => {
+            const nextNumber = tearOffNumbers[(index + 1) % tearOffNumbers.length]
+
+            return (
+              <Link
+                key={number}
+                href="https://t.me/absolutnoretro"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Написать в Telegram, номер ${number}`}
+                style={{transitionDelay: `${index * 24}ms`}}
+                className={cn(
+                  'relative h-[3.8rem] overflow-hidden border-r border-black/60 transition-transform duration-300 ease-out last:border-r-0 group-hover:translate-y-1 hover:!translate-y-2',
+                  tearOffMotion[index],
+                )}
+              >
+                <span
+                  className="flex h-[7.6rem] flex-col items-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1/2"
+                  style={{transitionDelay: `${index * 35}ms`}}
+                >
+                  <span className="flex h-[3.8rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{number}</span>
+                  <span className="flex h-[3.8rem] items-center justify-center font-mono text-[0.62rem] tracking-[0.08em] [writing-mode:vertical-rl]">{nextNumber}</span>
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="mt-3 text-center">
+        <p className="text-sm font-medium">Связаться</p>
+        <p className="mt-1 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-black/48">отрывные контакты</p>
+      </div>
+    </motion.aside>
+  )
+}
+
 function ProjectTile({
   item,
   index,
@@ -236,6 +304,8 @@ export default function HomeScene() {
             ))}
           </div>
         </section>
+
+        <TearOffContact visible={activeIndex === 2} />
 
         <div className="absolute inset-x-0 bottom-0 z-50 box-border max-w-[100vw] px-6 pb-6 lap:px-8 mob:px-3 mob:pb-3 max-[500px]:w-[100vw] max-[500px]:px-3">
           <ContactComposer />
