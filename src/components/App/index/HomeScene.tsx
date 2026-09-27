@@ -1,26 +1,32 @@
 'use client'
 
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
-import {useMediaQuery} from '@/hooks/use-media-query'
 import {cn} from '@/lib/utils'
 import {ArrowUpRight, Send} from 'lucide-react'
-import {AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll} from 'framer-motion'
+import {motion, type MotionValue, useReducedMotion, useScroll, useSpring, useTransform} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FormEvent, useRef, useState} from 'react'
 
 const featuredCases = ITEMS.slice(0, 4)
 
-function ProjectTile({item, index, activeIndex}: {item: SocialsItem; index: number; activeIndex: number}) {
+function ProjectTile({item, index, progress}: {item: SocialsItem; index: number; progress: MotionValue<number>}) {
   const reduceMotion = useReducedMotion()
-  const isMobile = useMediaQuery('(max-width: 767px)')
   const href = item.link ?? `/archive#${item.slug}`
-  const offset = index - activeIndex
-  const distance = Math.abs(offset)
-  const isActive = offset === 0
-  const translateX = offset === 0 ? 0 : Math.sign(offset) * (37 + Math.max(0, distance - 1) * 19)
-  const scale = isActive ? 1 : distance === 1 ? 0.48 : 0.34
-  const rotation = isActive ? 0 : Math.sign(offset) * (distance === 1 ? 5 : 8)
+  const relativePosition = useTransform(progress, (value) => index - value * (featuredCases.length - 1))
+  const cardTransform = useTransform(relativePosition, (position) => {
+    const distance = Math.abs(position)
+    const direction = Math.sign(position)
+    const translateX = direction * (distance * 37 + Math.max(0, distance - 1) * 7)
+    const scale = Math.max(0.34, 1 - Math.min(distance, 1) * 0.52 - Math.max(0, distance - 1) * 0.14)
+    const rotation = reduceMotion ? 0 : direction * Math.min(8, distance * 5)
+
+    return `translate(calc(-50% + ${translateX}vw), -50%) scale(${scale}) rotate(${rotation}deg)`
+  })
+  const cardOpacity = useTransform(relativePosition, (position) => Math.max(0, 1 - Math.max(0, Math.abs(position) - 0.15) * 0.28))
+  const cardZIndex = useTransform(relativePosition, (position) => 50 - Math.round(Math.abs(position) * 10))
+  const detailOpacity = useTransform(relativePosition, (position) => Math.max(0, 1 - Math.abs(position) * 2.4))
+  const detailTransform = useTransform(relativePosition, (position) => `translateY(${Math.min(12, Math.abs(position) * 18)}px)`)
 
   return (
     <motion.article
@@ -30,12 +36,7 @@ function ProjectTile({item, index, activeIndex}: {item: SocialsItem; index: numb
         'mob:relative mob:left-auto mob:right-auto mob:top-auto mob:z-auto mob:w-[78vw] mob:max-w-[20rem] mob:shrink-0 mob:!transform-none mob:!opacity-100',
       )}
       initial={false}
-      animate={{
-        opacity: isMobile ? 1 : distance > 2 ? 0 : isActive ? 1 : 0.72,
-        transform: isMobile ? 'none' : `translate(calc(-50% + ${translateX}vw), -50%) scale(${scale}) rotate(${rotation}deg)`,
-      }}
-      transition={reduceMotion ? {duration: 0.01} : {type: 'spring', duration: 0.62, bounce: 0.08}}
-      style={{zIndex: 40 - distance}}
+      style={{opacity: cardOpacity, transform: cardTransform, zIndex: cardZIndex}}
     >
       <Link href={href} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
         <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] bg-neutral-900">
@@ -52,22 +53,15 @@ function ProjectTile({item, index, activeIndex}: {item: SocialsItem; index: numb
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/10" />
           <ArrowUpRight className="absolute right-3 top-3 size-8 rounded-full border border-white/25 bg-black/45 p-1.5 backdrop-blur-md transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.5} />
 
-          <AnimatePresence initial={false}>
-            {isActive ? (
-              <motion.div
-                className="absolute bottom-3 left-3 right-3 max-w-[34rem] rounded-[1.1rem] border border-white/25 bg-black/30 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
-                initial={reduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(10px)'}}
-                animate={{opacity: 1, transform: 'translateY(0px)'}}
-                exit={reduceMotion ? {opacity: 0} : {opacity: 0, transform: 'translateY(6px)'}}
-                transition={{duration: 0.22, ease: [0.23, 1, 0.32, 1]}}
-              >
-                <p className="max-w-[48ch] text-sm leading-[1.4] text-white/82">{item.content[0]}</p>
-                <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.06em] text-white/58">
-                  Открыть проект <ArrowUpRight className="size-3.5" strokeWidth={1.5} />
-                </span>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+          <motion.div
+            className="absolute bottom-3 left-3 right-3 max-w-[34rem] rounded-[1.1rem] border border-white/25 bg-black/30 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl mob:hidden"
+            style={{opacity: detailOpacity, transform: detailTransform}}
+          >
+            <p className="max-w-[48ch] text-sm leading-[1.4] text-white/82">{item.content[0]}</p>
+            <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.06em] text-white/58">
+              Открыть проект <ArrowUpRight className="size-3.5" strokeWidth={1.5} />
+            </span>
+          </motion.div>
         </div>
 
         <div className="flex items-end justify-between gap-4 px-2 pb-1 pt-3">
@@ -152,16 +146,11 @@ function ContactComposer() {
 
 export default function HomeScene() {
   const sceneRef = useRef<HTMLElement>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
   const {scrollYProgress} = useScroll({target: sceneRef, offset: ['start start', 'end end']})
-
-  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
-    const nextIndex = Math.min(featuredCases.length - 1, Math.round(progress * (featuredCases.length - 1)))
-    setActiveIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex))
-  })
+  const smoothProgress = useSpring(scrollYProgress, {stiffness: 82, damping: 26, mass: 0.42, restDelta: 0.0005})
 
   return (
-    <main ref={sceneRef} className="relative h-[400dvh] w-full max-w-[100vw] bg-[#b8b8b3] text-[#181817] mob:h-[100dvh]">
+    <main ref={sceneRef} className="relative h-[340dvh] w-full max-w-[100vw] bg-[#b8b8b3] text-[#181817] mob:h-[100dvh]">
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-10%,rgba(255,255,255,0.98)_0%,rgba(245,245,241,0.72)_22%,rgba(202,202,197,0.72)_52%,rgba(151,151,146,0.9)_100%)]" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[39%] bg-[linear-gradient(180deg,rgba(170,170,165,0)_0%,rgba(126,126,121,0.36)_44%,rgba(104,104,99,0.62)_100%)]" />
@@ -169,7 +158,7 @@ export default function HomeScene() {
 
         <section id="featured-cases" aria-label="Избранные проекты" className="absolute inset-0 z-20 mob:inset-x-0 mob:bottom-[9.8rem] mob:top-[7rem] mob:flex mob:snap-x mob:snap-mandatory mob:items-center mob:overflow-x-auto mob:px-4 mob:pb-4 mob:[scrollbar-width:none]">
           <div className="contents mob:flex mob:w-max mob:gap-3 mob:pr-4 mob:[&>*]:snap-center">
-            {featuredCases.map((item, index) => <ProjectTile item={item} index={index} activeIndex={activeIndex} key={item.slug} />)}
+            {featuredCases.map((item, index) => <ProjectTile item={item} index={index} progress={smoothProgress} key={item.slug} />)}
           </div>
         </section>
 
