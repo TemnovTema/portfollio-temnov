@@ -43,7 +43,7 @@ function ProjectTile({
   return (
     <motion.article
       className={cn(
-        'group absolute left-1/2 top-[50%] w-[clamp(34rem,46vw,42rem)] text-white will-change-transform',
+        'group absolute left-1/2 top-[50%] w-[clamp(44rem,58vw,58rem)] text-white will-change-transform',
         'mob:relative mob:left-auto mob:right-auto mob:top-auto mob:z-auto mob:w-[78vw] mob:max-w-[20rem] mob:shrink-0 mob:!transform-none mob:!opacity-100',
       )}
       initial={false}
@@ -86,7 +86,7 @@ function ProjectTile({
       </motion.div>
 
       <Link href={href} className="block overflow-hidden rounded-[1.35rem] border border-white/45 bg-[#111] p-2 shadow-[0_2.4rem_5rem_rgba(30,30,28,0.34),0_0.25rem_0.8rem_rgba(30,30,28,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] bg-neutral-900">
+        <div className="relative aspect-[2/1] overflow-hidden rounded-[1rem] bg-neutral-900 mob:aspect-[16/10]">
           {item.image ? (
             <Image
               src={item.image}
@@ -111,7 +111,7 @@ function ProjectTile({
           </motion.div>
         </div>
 
-        <div className="flex items-end justify-between gap-4 px-2 pb-1 pt-3">
+        <div className="hidden items-end justify-between gap-4 px-2 pb-1 pt-3 mob:flex">
           <div className="space-y-1">
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-white/45">{SOCIALS[item.source]}</span>
             <h2 className="max-w-[18ch] text-[clamp(1.15rem,1.45vw,1.55rem)] font-medium leading-[1.08] tracking-[-0.035em] text-white mob:text-lg">
