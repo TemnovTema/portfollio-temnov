@@ -2,15 +2,27 @@
 
 import {ITEMS, SOCIALS, type SocialsItem} from '@/app/archive/storage'
 import {cn} from '@/lib/utils'
-import {ArrowUpRight, Send} from 'lucide-react'
-import {motion, type MotionValue, useReducedMotion, useScroll, useSpring, useTransform} from 'framer-motion'
+import {ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Send} from 'lucide-react'
+import {motion, type MotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform} from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FormEvent, useRef, useState} from 'react'
 
 const featuredCases = ITEMS.slice(0, 4)
 
-function ProjectTile({item, index, progress}: {item: SocialsItem; index: number; progress: MotionValue<number>}) {
+function ProjectTile({
+  item,
+  index,
+  progress,
+  isActive,
+  onSelect,
+}: {
+  item: SocialsItem
+  index: number
+  progress: MotionValue<number>
+  isActive: boolean
+  onSelect: (index: number) => void
+}) {
   const reduceMotion = useReducedMotion()
   const href = item.link ?? `/archive#${item.slug}`
   const relativePosition = useTransform(progress, (value) => index - value * (featuredCases.length - 1))
@@ -31,14 +43,49 @@ function ProjectTile({item, index, progress}: {item: SocialsItem; index: number;
   return (
     <motion.article
       className={cn(
-        'group absolute left-1/2 top-[46%] w-[clamp(40rem,52vw,48rem)] overflow-hidden rounded-[1.35rem] border border-white/45 bg-[#111] p-2 text-white will-change-transform',
-        'shadow-[0_2.4rem_5rem_rgba(30,30,28,0.34),0_0.25rem_0.8rem_rgba(30,30,28,0.16)]',
+        'group absolute left-1/2 top-[50%] w-[clamp(40rem,52vw,48rem)] text-white will-change-transform',
         'mob:relative mob:left-auto mob:right-auto mob:top-auto mob:z-auto mob:w-[78vw] mob:max-w-[20rem] mob:shrink-0 mob:!transform-none mob:!opacity-100',
       )}
       initial={false}
       style={{opacity: cardOpacity, transform: cardTransform, zIndex: cardZIndex}}
     >
-      <Link href={href} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+      <motion.div
+        className={cn('absolute bottom-full left-1/2 z-20 mb-2 flex -translate-x-1/2 flex-col items-center gap-1.5 mob:hidden', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+        style={{opacity: detailOpacity}}
+        aria-hidden={!isActive}
+      >
+        <div className="max-w-[26rem] truncate rounded-full border border-white/35 bg-black/68 px-4 py-1.5 text-xs font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl">
+          {item.title}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => onSelect(Math.max(0, index - 1))}
+            disabled={!isActive || index === 0}
+            className="flex items-center gap-2 rounded-full border border-white/35 bg-black/48 px-3 py-2 text-[0.68rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
+          >
+            <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Назад
+          </button>
+          <Link
+            href="/archive"
+            aria-label="Открыть архив"
+            tabIndex={isActive ? 0 : -1}
+            className="grid size-9 place-items-center rounded-full border border-white/40 bg-black/58 text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-2xl transition-[background-color,transform] duration-200 hover:bg-black/75 active:scale-[0.96]"
+          >
+            <Grid2X2 className="size-4" strokeWidth={1.5} />
+          </Link>
+          <button
+            type="button"
+            onClick={() => onSelect(Math.min(featuredCases.length - 1, index + 1))}
+            disabled={!isActive || index === featuredCases.length - 1}
+            className="flex items-center gap-2 rounded-full border border-white/35 bg-black/48 px-3 py-2 text-[0.68rem] font-medium uppercase tracking-[0.045em] text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl transition-[background-color,transform,opacity] duration-200 hover:bg-black/68 active:scale-[0.97] disabled:opacity-35"
+          >
+            Дальше <ArrowRight className="size-3.5" strokeWidth={1.5} />
+          </button>
+        </div>
+      </motion.div>
+
+      <Link href={href} className="block overflow-hidden rounded-[1.35rem] border border-white/45 bg-[#111] p-2 shadow-[0_2.4rem_5rem_rgba(30,30,28,0.34),0_0.25rem_0.8rem_rgba(30,30,28,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
         <div className="relative aspect-[16/10] overflow-hidden rounded-[1rem] bg-neutral-900">
           {item.image ? (
             <Image
@@ -156,8 +203,21 @@ export function StageBackdrop({fixed = false}: {fixed?: boolean}) {
 
 export default function HomeScene() {
   const sceneRef = useRef<HTMLElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
   const {scrollYProgress} = useScroll({target: sceneRef, offset: ['start start', 'end end']})
   const smoothProgress = useSpring(scrollYProgress, {stiffness: 82, damping: 26, mass: 0.42, restDelta: 0.0005})
+
+  useMotionValueEvent(smoothProgress, 'change', (value) => {
+    const nextIndex = Math.min(featuredCases.length - 1, Math.max(0, Math.round(value * (featuredCases.length - 1))))
+    setActiveIndex((currentIndex) => currentIndex === nextIndex ? currentIndex : nextIndex)
+  })
+
+  const selectProject = (index: number) => {
+    if (!sceneRef.current) return
+    const sceneTop = sceneRef.current.getBoundingClientRect().top + window.scrollY
+    const scrollRange = sceneRef.current.offsetHeight - window.innerHeight
+    window.scrollTo({top: sceneTop + (index / (featuredCases.length - 1)) * scrollRange, behavior: 'smooth'})
+  }
 
   return (
     <main ref={sceneRef} className="relative h-[340dvh] w-full max-w-[100vw] bg-[#b8b8b3] text-[#181817] mob:h-[100dvh]">
@@ -166,7 +226,9 @@ export default function HomeScene() {
 
         <section id="featured-cases" aria-label="Избранные проекты" className="absolute inset-0 z-20 mob:inset-x-0 mob:bottom-[9.8rem] mob:top-[7rem] mob:flex mob:snap-x mob:snap-mandatory mob:items-center mob:overflow-x-auto mob:px-4 mob:pb-4 mob:[scrollbar-width:none]">
           <div className="contents mob:flex mob:w-max mob:gap-3 mob:pr-4 mob:[&>*]:snap-center">
-            {featuredCases.map((item, index) => <ProjectTile item={item} index={index} progress={smoothProgress} key={item.slug} />)}
+            {featuredCases.map((item, index) => (
+              <ProjectTile item={item} index={index} progress={smoothProgress} isActive={activeIndex === index} onSelect={selectProject} key={item.slug} />
+            ))}
           </div>
         </section>
 
