@@ -32,37 +32,37 @@ export default function ProjectNavigation() {
   const next = PROJECTS[(currentIndex + 1) % PROJECTS.length]
 
   return (
-    <section className="border-t border-black/10 bg-[#e7e7e2] py-10 mob:py-5" aria-label="Навигация между проектами">
+    <section className="border-t border-black/10 bg-[#e7e7e2] py-10 mob:py-6" aria-label="Навигация между проектами">
       <Container variant="default">
-        <div className="grid grid-cols-2 overflow-hidden rounded-[28px] border border-black/12 bg-white/28 mob:grid-cols-1 mob:rounded-2xl">
+        <nav className="grid grid-cols-2 gap-3 mob:grid-cols-1" aria-label="Перейти к соседнему проекту">
           <Link
             href={previous.href}
-            className="group flex min-h-[15rem] flex-col justify-between gap-10 border-r border-black/12 p-7 text-black/85 transition-colors duration-300 hover:bg-white/45 mob:min-h-[12rem] mob:border-b mob:border-r-0 mob:p-5"
+            className="group flex min-h-24 items-center gap-4 rounded-full border border-black/12 bg-white/30 px-6 py-4 text-black/80 transition-[background-color,transform] duration-300 hover:bg-white/65 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black mob:min-h-20 mob:px-5"
             aria-label={`Предыдущий проект: ${previous.title}`}
           >
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-black/45">
+            <span className="grid size-11 shrink-0 place-items-center rounded-full border border-black/12 bg-white/45 mob:size-10">
               <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={1.5} />
-              Предыдущий проект
+            </span>
+            <div className="min-w-0">
+              <div className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-black/42">Предыдущий проект</div>
+              <div className="mt-1 truncate text-lg font-medium tracking-[-0.025em] mob:text-base">{previous.title}</div>
             </div>
-            <h2 className="max-w-[16ch] text-[clamp(2rem,3.6vw,4rem)] font-medium leading-[0.96] tracking-[-0.05em]">
-              {previous.title}
-            </h2>
           </Link>
 
           <Link
             href={next.href}
-            className="group flex min-h-[15rem] flex-col justify-between gap-10 p-7 text-black/85 transition-colors duration-300 hover:bg-white/45 mob:min-h-[12rem] mob:p-5"
+            className="group flex min-h-24 items-center justify-end gap-4 rounded-full border border-black/12 bg-white/30 px-6 py-4 text-right text-black/80 transition-[background-color,transform] duration-300 hover:bg-white/65 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black mob:min-h-20 mob:px-5"
             aria-label={`Следующий проект: ${next.title}`}
           >
-            <div className="flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.12em] text-black/55">
-              Следующий проект
-              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            <div className="min-w-0">
+              <div className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-black/42">Следующий проект</div>
+              <div className="mt-1 truncate text-lg font-medium tracking-[-0.025em] mob:text-base">{next.title}</div>
             </div>
-            <h2 className="max-w-[16ch] text-[clamp(2rem,3.6vw,4rem)] font-medium leading-[0.96] tracking-[-0.05em]">
-              {next.title}
-            </h2>
+            <span className="grid size-11 shrink-0 place-items-center rounded-full bg-black text-white mob:size-10">
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </span>
           </Link>
-        </div>
+        </nav>
       </Container>
     </section>
   )
