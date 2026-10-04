@@ -43,42 +43,42 @@ export default function KodoBrandPage() {
 
       <Container as="main" variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
         <header className="space-y-12 mob:space-y-8">
-          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
-            <Link href="/archive/graphics" className="transition-colors hover:text-neutral-200">← Графика</Link>
+          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-black/46">
+            <Link href="/archive/graphics" className="transition-colors hover:text-black">← Графика</Link>
             <span>Brand identity</span>
           </div>
 
           <div className="max-w-[78rem] space-y-7">
-            <h1 className="max-w-[11ch] text-[clamp(4.5rem,8vw,9rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-neutral-300 mob:text-[3.25rem] mob:leading-[0.96]">
+            <h1 className="max-w-[11ch] text-[clamp(4.5rem,8vw,9rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-black/85 mob:text-[3.25rem] mob:leading-[0.96]">
               KODO. Брендинг
             </h1>
-            <p className="max-w-[46ch] text-2xl leading-[1.3] text-neutral-400 mob:text-lg">
+            <p className="max-w-[46ch] text-2xl leading-[1.3] text-black/58 mob:text-lg">
               Айдентика школы о программировании, технологиях и цифровом мышлении — гибкая система, которая соединяет строгую структуру кода и живой визуальный ритм.
             </p>
           </div>
 
-          <div className="grid grid-cols-3 border-y border-white/12 max-[820px]:grid-cols-1 max-[820px]:divide-y max-[820px]:divide-white/12">
+          <div className="grid grid-cols-3 border-y border-black/12 max-[820px]:grid-cols-1 max-[820px]:divide-y max-[820px]:divide-black/12">
             {META.map((item) => (
               <div key={item.label} className="py-6 pr-8 max-[820px]:py-4">
-                <div className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</div>
-                <div className="mt-3 max-w-[25ch] text-lg leading-tight text-neutral-300 mob:text-base">{item.value}</div>
+                <div className="font-mono text-xs uppercase tracking-[0.12em] text-black/36">{item.label}</div>
+                <div className="mt-3 max-w-[25ch] text-lg leading-tight text-black/85 mob:text-base">{item.value}</div>
               </div>
             ))}
           </div>
         </header>
 
-        <section className="grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-16 border-t border-white/12 pt-10 max-[900px]:grid-cols-1 max-[900px]:gap-8">
-          <h2 className="text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-neutral-400 mob:text-4xl">Система бренда</h2>
-          <div className="max-w-[44rem] space-y-6 text-2xl leading-[1.35] text-neutral-300 mob:text-lg">
+        <section className="grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-16 border-t border-black/12 pt-10 max-[900px]:grid-cols-1 max-[900px]:gap-8">
+          <h2 className="text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-black/58 mob:text-4xl">Система бренда</h2>
+          <div className="max-w-[44rem] space-y-6 text-2xl leading-[1.35] text-black/85 mob:text-lg">
             <p>Основа айдентики — геометрический логотип и модульная графика, напоминающая одновременно фрагменты кода, схему и развивающуюся цифровую структуру.</p>
-            <p className="text-neutral-500">Система масштабируется от небольших печатных форматов до наружной рекламы и сохраняет узнаваемый характер в мерче и социальных сетях.</p>
+            <p className="text-black/46">Система масштабируется от небольших печатных форматов до наружной рекламы и сохраняет узнаваемый характер в мерче и социальных сетях.</p>
           </div>
         </section>
 
         <section className="space-y-16 mob:space-y-8" aria-label="Носители фирменного стиля KODO">
           {BRAND_ASSETS.map((asset, index) => (
             <figure key={asset.src} className="space-y-3">
-              <div className="overflow-hidden rounded-[28px] border border-white/12 bg-[#1d1d1d] mob:rounded-2xl">
+              <div className="overflow-hidden rounded-[28px] border border-black/12 bg-[#1d1d1d] mob:rounded-2xl">
                 <Image
                   src={asset.src}
                   alt={asset.alt}
@@ -88,7 +88,7 @@ export default function KodoBrandPage() {
                   className="h-auto w-full"
                 />
               </div>
-              <figcaption className="flex justify-between font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">
+              <figcaption className="flex justify-between font-mono text-xs uppercase tracking-[0.12em] text-black/36">
                 <span>{asset.caption}</span>
                 <span>{String(index + 1).padStart(2, '0')} / {String(BRAND_ASSETS.length).padStart(2, '0')}</span>
               </figcaption>
@@ -96,17 +96,17 @@ export default function KodoBrandPage() {
           ))}
         </section>
 
-        <section className="space-y-10 border-t border-white/12 pt-10 mob:space-y-7">
+        <section className="space-y-10 border-t border-black/12 pt-10 mob:space-y-7">
           <div className="grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-16 max-[900px]:grid-cols-1 max-[900px]:gap-5">
-            <h2 className="max-w-[9ch] text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-neutral-400 mob:text-4xl">
+            <h2 className="max-w-[9ch] text-6xl font-medium leading-[0.95] tracking-[-0.045em] text-black/58 mob:text-4xl">
               Обложки для контента
             </h2>
-            <p className="max-w-[42ch] text-xl leading-[1.4] text-neutral-500 mob:text-base">
+            <p className="max-w-[42ch] text-xl leading-[1.4] text-black/46 mob:text-base">
               Единая серия обложек для публикаций и образовательных материалов KODO. Модульная графика связывает разные темы, а персонажи помогают быстро различать содержание.
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-[28px] border border-white/12 bg-[#1d1d1d] p-3 mob:rounded-2xl mob:p-2">
+          <div className="overflow-hidden rounded-[28px] border border-black/12 bg-[#1d1d1d] p-3 mob:rounded-2xl mob:p-2">
             <div className="grid grid-cols-3 gap-3 mob:grid-cols-1 mob:gap-2">
               {CONTENT_COVERS.map((cover, index) => (
                 <figure key={cover.src} className="group relative overflow-hidden rounded-[18px] bg-[#282828] mob:rounded-xl">
@@ -127,13 +127,13 @@ export default function KodoBrandPage() {
           </div>
         </section>
 
-        <section className="flex min-h-[30rem] flex-col items-start justify-between gap-16 border-t border-white/12 pt-10 mob:min-h-0">
+        <section className="flex min-h-[30rem] flex-col items-start justify-between gap-16 border-t border-black/12 pt-10 mob:min-h-0">
           <div className="space-y-5">
-            <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-600">Digital product</div>
-            <h2 className="max-w-[16ch] text-6xl font-medium leading-[0.96] tracking-[-0.045em] text-neutral-300 mob:text-4xl">
+            <div className="font-mono text-xs uppercase tracking-[0.14em] text-black/36">Digital product</div>
+            <h2 className="max-w-[16ch] text-6xl font-medium leading-[0.96] tracking-[-0.045em] text-black/85 mob:text-4xl">
               Для KODO также разработан сайт
             </h2>
-            <p className="max-w-[42ch] text-xl leading-[1.4] text-neutral-500 mob:text-base">
+            <p className="max-w-[42ch] text-xl leading-[1.4] text-black/46 mob:text-base">
               Айдентика продолжается в цифровом продукте: интерфейс использует тот же визуальный язык, типографику и принципы модульной композиции.
             </p>
           </div>

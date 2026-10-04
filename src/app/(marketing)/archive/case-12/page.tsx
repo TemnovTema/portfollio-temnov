@@ -50,25 +50,25 @@ export default function DzenPostersPage() {
 
       <Container as="main" variant="default" className="space-y-20 pb-32 mob:space-y-12 mob:pb-20">
         <header className="space-y-12 mob:space-y-8">
-          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
-            <Link href="/archive/graphics" className="transition-colors hover:text-neutral-200">← Графика</Link>
+          <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-black/46">
+            <Link href="/archive/graphics" className="transition-colors hover:text-black">← Графика</Link>
             <span>Poster series</span>
           </div>
 
           <div className="max-w-[78rem] space-y-7">
-            <h1 className="max-w-[12ch] text-[clamp(4.5rem,8vw,9rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-neutral-300 mob:text-[3.25rem] mob:leading-[0.96]">
+            <h1 className="max-w-[12ch] text-[clamp(4.5rem,8vw,9rem)] font-semibold leading-[0.92] tracking-[-0.065em] text-black/85 mob:text-[3.25rem] mob:leading-[0.96]">
               Серия плакатов. Дзен
             </h1>
-            <p className="max-w-[44ch] text-2xl leading-[1.3] text-neutral-400 mob:text-lg">
+            <p className="max-w-[44ch] text-2xl leading-[1.3] text-black/58 mob:text-lg">
               Визуальная серия для школы новых самураев: от строгих типографических композиций до фотоколлажей и афиш событий.
             </p>
           </div>
 
-          <div className="grid grid-cols-3 border-y border-white/12 max-[820px]:grid-cols-1 max-[820px]:divide-y max-[820px]:divide-white/12">
+          <div className="grid grid-cols-3 border-y border-black/12 max-[820px]:grid-cols-1 max-[820px]:divide-y max-[820px]:divide-black/12">
             {META.map((item) => (
               <div key={item.label} className="py-6 pr-8 max-[820px]:py-4">
-                <div className="font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{item.label}</div>
-                <div className="mt-3 max-w-[25ch] text-lg leading-tight text-neutral-300 mob:text-base">{item.value}</div>
+                <div className="font-mono text-xs uppercase tracking-[0.12em] text-black/36">{item.label}</div>
+                <div className="mt-3 max-w-[25ch] text-lg leading-tight text-black/85 mob:text-base">{item.value}</div>
               </div>
             ))}
           </div>
@@ -77,7 +77,7 @@ export default function DzenPostersPage() {
         <section className="space-y-16 mob:space-y-8" aria-label="Плакаты серии Дзен">
           {POSTERS.map((poster, index) => (
             <figure key={poster.src} className="space-y-3">
-              <div className="overflow-hidden rounded-[28px] border border-white/12 bg-[#111] mob:rounded-2xl">
+              <div className="overflow-hidden rounded-[28px] border border-black/12 bg-[#111] mob:rounded-2xl">
                 <Image
                   src={poster.src}
                   alt={poster.alt}
@@ -87,7 +87,7 @@ export default function DzenPostersPage() {
                   className="h-auto w-full"
                 />
               </div>
-              <figcaption className="flex justify-between font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">
+              <figcaption className="flex justify-between font-mono text-xs uppercase tracking-[0.12em] text-black/36">
                 <span>{poster.caption}</span>
                 <span>{String(index + 1).padStart(2, '0')} / {String(POSTERS.length).padStart(2, '0')}</span>
               </figcaption>

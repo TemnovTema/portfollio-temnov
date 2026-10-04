@@ -32,15 +32,15 @@ export default function ProjectNavigation() {
   const next = PROJECTS[(currentIndex + 1) % PROJECTS.length]
 
   return (
-    <section className="border-t border-white/12 bg-black py-10 mob:py-5" aria-label="Навигация между проектами">
+    <section className="border-t border-black/10 bg-[#e7e7e2] py-10 mob:py-5" aria-label="Навигация между проектами">
       <Container variant="default">
-        <div className="grid grid-cols-2 overflow-hidden rounded-2xl border border-white/15 mob:grid-cols-1">
+        <div className="grid grid-cols-2 overflow-hidden rounded-[28px] border border-black/12 bg-white/28 mob:grid-cols-1 mob:rounded-2xl">
           <Link
             href={previous.href}
-            className="group flex min-h-[17rem] flex-col justify-between gap-10 border-r border-white/15 bg-black p-7 text-neutral-300 transition-colors duration-300 hover:bg-neutral-900 mob:min-h-[12rem] mob:border-b mob:border-r-0 mob:p-5"
+            className="group flex min-h-[15rem] flex-col justify-between gap-10 border-r border-black/12 p-7 text-black/85 transition-colors duration-300 hover:bg-white/45 mob:min-h-[12rem] mob:border-b mob:border-r-0 mob:p-5"
             aria-label={`Предыдущий проект: ${previous.title}`}
           >
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-neutral-500">
+            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-black/45">
               <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={1.5} />
               Предыдущий проект
             </div>
@@ -51,7 +51,7 @@ export default function ProjectNavigation() {
 
           <Link
             href={next.href}
-            className="group flex min-h-[17rem] flex-col justify-between gap-10 bg-white p-7 text-black transition-colors duration-300 hover:bg-neutral-200 mob:min-h-[12rem] mob:p-5"
+            className="group flex min-h-[15rem] flex-col justify-between gap-10 p-7 text-black/85 transition-colors duration-300 hover:bg-white/45 mob:min-h-[12rem] mob:p-5"
             aria-label={`Следующий проект: ${next.title}`}
           >
             <div className="flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.12em] text-black/55">
